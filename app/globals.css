@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand: #2ba0db;
+  --color-brand-dark: #1d87bf;
+  --color-brand-50: #eef8fd;
+  --color-brand-100: #d9eefb;
+
+  --color-ink: #0b0b0b;
+  --color-muted: #5b6573;
+  --color-line: #e8ebef;
+  --color-surface: #f5f6f7;
+  --color-accent: #f5c33b;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b0b0b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+/* Display / XL — matches Figma Display/XL token (Inter 800, -2% tracking) */
+.h-display {
+  font-weight: 800;
+  font-size: clamp(1.6rem, 0.2rem + 4.9vw, 4.25rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  font-size: 1.125rem;
+  line-height: 1.667;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
