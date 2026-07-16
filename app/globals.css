@@ -33,7 +33,7 @@ body {
 /* Display / XL — matches Figma Display/XL token (Inter 800, -2% tracking) */
 .h-display {
   font-weight: 800;
-  font-size: clamp(1.6rem, 0.2rem + 4.9vw, 4.25rem);
+  font-size: clamp(1.95rem, 0.55rem + 5vw, 4.25rem);
   line-height: 1.06;
   letter-spacing: -0.02em;
 }
@@ -43,21 +43,97 @@ body {
   line-height: 1.667;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scroll-reveal — hidden until GSAP ScrollTrigger animates it in.
+   Kept invisible (not display:none) so layout is stable; GSAP sets autoAlpha. */
 .reveal {
-  opacity: 0;
+  visibility: hidden;
 }
 
-.reveal.is-visible {
-  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* CTA-Buttons — periodischer Licht-Sweep + Text-Roll beim Hover
+   (nachgebaut von go.ruempelwelt.de: .button-gradient + t-cta Roll) */
+.btn-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.7) 50%,
+    transparent 60%
+  );
+  transform: translateX(-110%);
+  animation: btn-flash 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Variante für helle Buttons (weißer Sweep wäre unsichtbar) */
+.btn-cta--light::after {
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(43, 160, 219, 0.28) 50%,
+    transparent 60%
+  );
+}
+
+@keyframes btn-flash {
+  0% {
+    transform: translateX(-110%);
+  }
+  28% {
+    transform: translateX(110%);
+  }
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+/* Hover: sichtbares Label rollt nach oben raus, Duplikat rollt von unten rein.
+   Das Duplikat parkt VOLLSTÄNDIG unterhalb des Buttons (Abstand > padding),
+   damit es im Ruhezustand nicht in den Button hineinragt. */
+.btn-label {
+  --roll-gap: 1.25rem;
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.btn-label::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: calc(100% + var(--roll-gap));
+  white-space: nowrap;
+}
+
+.btn-cta:hover .btn-label {
+  transform: translateY(calc(-100% - var(--roll-gap)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    visibility: visible;
+  }
+  .btn-cta::after {
+    animation: none;
+  }
+  .btn-cta:hover .btn-label {
+    transform: none;
+  }
 }

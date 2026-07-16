@@ -11,7 +11,7 @@ export default function Traumbad() {
   return (
     <section id="traumbad" className="bg-white py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
-        <div>
+        <div className="reveal">
           <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
             Ihr Traumbad
           </p>
@@ -48,17 +48,19 @@ export default function Traumbad() {
 
           <a
             href="#kontakt"
-            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-brand px-6 py-3.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
+            className="btn-cta mt-8 inline-flex items-center rounded-full bg-brand px-7 py-3.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
           >
-            Badplanung starten <span aria-hidden>→</span>
+            <span className="btn-label" data-text="Badplanung starten →">
+              Badplanung starten →
+            </span>
           </a>
         </div>
 
-        <div className="relative">
+        <div className="reveal relative">
           <div className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-gradient-to-br from-brand-100 to-surface shadow-xl ring-1 ring-line">
             <Image
-              src="/bad.jpg"
-              alt="Modernes Badezimmer"
+              src="/bad.webp"
+              alt="Moderne Badsanierung durch NOUH-WEHRES"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"

@@ -49,11 +49,11 @@ export default function Why() {
   return (
     <section id="ueber-uns" className="bg-white py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
-        <div className="relative order-2 lg:order-1">
+        <div className="reveal relative order-2 lg:order-1">
           <div className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-gradient-to-br from-brand-100 to-surface shadow-xl ring-1 ring-line">
             <Image
-              src="/team.jpg"
-              alt="Team / Monteur vor Ort"
+              src="/team.webp"
+              alt="NOUH-WEHRES Team vor dem Firmenfahrzeug"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -67,7 +67,7 @@ export default function Why() {
           </div>
         </div>
 
-        <div className="order-1 lg:order-2">
+        <div className="reveal order-1 lg:order-2">
           <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
             Warum Nouh-Wehres
           </p>

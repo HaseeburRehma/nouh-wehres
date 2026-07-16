@@ -1,6 +1,4 @@
-"use client";
-
-import { useState, type FormEvent } from "react";
+import AnfrageForm from "./AnfrageForm";
 
 const info = [
   {
@@ -45,17 +43,10 @@ const info = [
 ];
 
 export default function Contact() {
-  const [sent, setSent] = useState(false);
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setSent(true);
-  }
-
   return (
     <section id="kontakt" className="bg-surface py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
-        <div>
+        <div className="reveal">
           <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
             Kontakt
           </p>
@@ -108,108 +99,10 @@ export default function Contact() {
           </ul>
         </div>
 
-        <div className="rounded-2xl border border-line bg-white p-7 shadow-sm sm:p-9">
-          {sent ? (
-            <div className="flex h-full min-h-80 flex-col items-center justify-center text-center">
-              <span className="grid h-16 w-16 place-items-center rounded-full bg-brand-50 text-brand">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="32"
-                  height="32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </span>
-              <h3 className="mt-5 text-xl font-bold text-ink">
-                Vielen Dank für Ihre Anfrage!
-              </h3>
-              <p className="mt-2 text-muted">
-                Wir melden uns innerhalb von 24 Stunden bei Ihnen.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <h3 className="text-xl font-bold text-ink">Anfrageformular</h3>
-              <Field id="name" label="Name">
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  placeholder="Ihr Name"
-                  className={inputClass}
-                />
-              </Field>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field id="email" label="E-Mail">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="ihre@email.de"
-                    className={inputClass}
-                  />
-                </Field>
-                <Field id="tel" label="Telefon">
-                  <input
-                    id="tel"
-                    name="tel"
-                    type="tel"
-                    placeholder="Ihre Telefonnummer"
-                    className={inputClass}
-                  />
-                </Field>
-              </div>
-              <Field id="message" label="Nachricht">
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  placeholder="Worum geht es? (z. B. neue Heizung, Bad sanieren …)"
-                  className={`${inputClass} resize-none`}
-                />
-              </Field>
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-6 py-3.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
-              >
-                Anfrage senden <span aria-hidden>→</span>
-              </button>
-              <p className="text-center text-xs text-muted">
-                Wir melden uns innerhalb von 24 Stunden bei Ihnen.
-              </p>
-            </form>
-          )}
+        <div className="reveal rounded-2xl border border-line bg-white p-7 shadow-sm sm:p-9">
+          <AnfrageForm />
         </div>
       </div>
     </section>
-  );
-}
-
-const inputClass =
-  "w-full rounded-lg border border-line bg-white px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-brand focus:ring-2 focus:ring-brand/20";
-
-function Field({
-  id,
-  label,
-  children,
-}: {
-  id: string;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-ink">
-        {label}
-      </label>
-      {children}
-    </div>
   );
 }

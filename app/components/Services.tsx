@@ -66,7 +66,7 @@ export default function Services() {
   return (
     <section id="leistungen" className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="reveal mx-auto max-w-2xl text-center">
           <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
             Unsere Leistungen
           </p>
@@ -79,7 +79,7 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="reveal mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
             <article
               id={s.id}

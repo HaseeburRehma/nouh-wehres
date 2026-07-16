@@ -21,7 +21,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="de"
+      className={`${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        <noscript>
+          {/* Without JS, GSAP can't reveal — show everything. */}
+          <style>{`.reveal{visibility:visible!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-full flex flex-col bg-white text-ink">
         {children}
       </body>

@@ -4,20 +4,20 @@ const cols = [
   {
     title: "Leistungen",
     links: [
-      { label: "Heizung", href: "#leistungen" },
-      { label: "Bad", href: "#leistungen" },
-      { label: "Lüftung", href: "#leistungen" },
-      { label: "Gebäudetechnik", href: "#leistungen" },
-      { label: "Fliesen", href: "#leistungen" },
+      { label: "Heizung", href: "/#leistungen" },
+      { label: "Bad", href: "/#leistungen" },
+      { label: "Lüftung", href: "/#leistungen" },
+      { label: "Gebäudetechnik", href: "/#leistungen" },
+      { label: "Fliesen", href: "/#leistungen" },
     ],
   },
   {
     title: "Unternehmen",
     links: [
-      { label: "Über uns", href: "#ueber-uns" },
-      { label: "Jobs & Ausbildung SHK", href: "#kontakt" },
-      { label: "Förderung", href: "#foerderung" },
-      { label: "Gewerbekunden", href: "#gewerbe" },
+      { label: "Über uns", href: "/#ueber-uns" },
+      { label: "Jobs & Ausbildung SHK", href: "/kontakt" },
+      { label: "Förderung", href: "/#foerderung" },
+      { label: "Gewerbekunden", href: "/#gewerbe" },
     ],
   },
 ];

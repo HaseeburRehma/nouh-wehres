@@ -25,7 +25,7 @@ export default function Ablauf() {
   return (
     <section id="ablauf" className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="reveal mx-auto max-w-2xl text-center">
           <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
             Ablauf
           </p>
@@ -38,7 +38,7 @@ export default function Ablauf() {
           </p>
         </div>
 
-        <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="reveal mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s) => (
             <li
               key={s.no}
