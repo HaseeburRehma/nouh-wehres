@@ -65,11 +65,11 @@ export default function Vergleich() {
                 <th className="rounded-tl-2xl border-b border-line bg-white p-5" />
                 <th className="border-b border-brand/30 border-t-2 border-x-2 border-t-brand/60 border-x-brand/60 bg-brand-50/60 p-5">
                   <Image
-                    src="/logo.png"
+                    src="/logo-color.png"
                     alt="NOUH-WEHRES"
-                    width={208}
-                    height={40}
-                    className="mx-auto h-6 w-auto"
+                    width={1913}
+                    height={370}
+                    className="mx-auto h-7 w-auto"
                   />
                 </th>
                 <th className="border-b border-line bg-white p-5 text-[15px] font-semibold text-muted">

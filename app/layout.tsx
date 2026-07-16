@@ -12,7 +12,10 @@ export const metadata: Metadata = {
   title: "NOUH-WEHRES — Meisterbetrieb für Heizung & Bad | Düsseldorf",
   description:
     "NOUH-WEHRES: Ihr Meisterbetrieb für Heizung, Bad, Sanitär und Wärmepumpen in Düsseldorf & Umgebung. Festpreisgarantie und Förder-Service.",
-  icons: { icon: "/logo.png" },
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png", sizes: "256x256" }],
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({

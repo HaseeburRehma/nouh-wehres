@@ -12,7 +12,7 @@ const links = [
 ];
 
 const socials = [
-  { label: "Instagram", href: "https://instagram.com/nouhgmbh", icon: <Instagram /> },
+  { label: "Instagram", href: "https://www.instagram.com/nouhwehres/", icon: <Instagram /> },
   { label: "Facebook", href: "https://facebook.com/nouhwehres", icon: <Facebook /> },
   { label: "WhatsApp", href: "https://wa.me/49215487670", icon: <WhatsApp /> },
 ];
@@ -79,12 +79,12 @@ export default function Header() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a href="/" aria-label="NOUH-WEHRES Startseite" className="shrink-0">
             <Image
-              src="/logo.png"
-              alt="NOUH-WEHRES"
-              width={200}
-              height={29}
+              src="/logo-color.png"
+              alt="NOUH-WEHRES – Heizung, Sanitär, Wärmepumpen, Sanierung"
+              width={1913}
+              height={370}
               priority
-              className="h-7 w-auto"
+              className="h-8 w-auto sm:h-9"
             />
           </a>
 
