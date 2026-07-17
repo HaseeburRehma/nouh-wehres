@@ -79,12 +79,12 @@ export default function Header() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
           <a href="/" aria-label="NOUH-WEHRES Startseite" className="shrink-0">
             <Image
-              src="/logo-color.png"
-              alt="NOUH-WEHRES – Heizung, Sanitär, Wärmepumpen, Sanierung"
-              width={1913}
-              height={370}
+              src="/logo-wordmark.jpg"
+              alt="NOUH-WEHRES – Heizung, Sanitär, Solar, Wärmepumpen, Sanierung"
+              width={1560}
+              height={720}
               priority
-              className="h-8 w-auto sm:h-9"
+              className="h-11 w-auto sm:h-12"
             />
           </a>
 

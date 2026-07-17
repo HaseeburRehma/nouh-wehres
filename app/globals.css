@@ -58,6 +58,29 @@ body {
   visibility: hidden;
 }
 
+/* Blinking caret for the TYLOTECH typing credit */
+@keyframes tylo-blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+.tylo-caret {
+  animation: tylo-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tylo-caret {
+    display: none;
+  }
+}
+
 /* CTA-Buttons — periodischer Licht-Sweep + Text-Roll beim Hover
    (nachgebaut von go.ruempelwelt.de: .button-gradient + t-cta Roll) */
 .btn-cta {

@@ -1,3 +1,5 @@
+import TylotechCredit from "./TylotechCredit";
+
 const cols = [
   {
     title: "Leistungen",
@@ -25,14 +27,23 @@ export default function Footer() {
     <footer className="bg-ink text-white/70">
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_0.9fr_1fr_0.9fr_2.2fr]">
         <div className="lg:pr-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo-white.png"
-            alt="NOUH-WEHRES"
-            width={466}
-            height={90}
-            className="h-9 w-auto"
-          />
+          {/* Weiße Logo-Variante aus Bildmarke + Wortmarke (korrekte Claim-Zeile) */}
+          <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/icon.png"
+              alt="NOUH-WEHRES"
+              width={256}
+              height={256}
+              className="h-11 w-11 shrink-0"
+            />
+            <span className="whitespace-nowrap text-xl font-extrabold uppercase leading-none tracking-tight text-white">
+              Nouh-Wehres
+            </span>
+          </div>
+          <p className="mt-1.5 text-[11px] font-medium text-white/55">
+            Heizung · Sanitär · Solar · Wärmepumpen · Sanierung
+          </p>
           <p className="mt-5 max-w-xs text-sm leading-relaxed">
             Ihr Meisterbetrieb für Heizung, Bad und Gebäudetechnik in Düsseldorf
             und Umgebung.
@@ -157,12 +168,14 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-6 text-sm sm:flex-row sm:px-8">
-          <span>
-            © {new Date().getFullYear()} Nouh-Wehres GmbH. Alle Rechte
-            vorbehalten.
-          </span>
-          <div className="flex gap-6">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-5 px-5 py-6 sm:px-8">
+          <TylotechCredit />
+          <div className="flex w-full flex-col items-center justify-between gap-3 text-sm sm:flex-row">
+            <span>
+              © {new Date().getFullYear()} Nouh-Wehres GmbH. Alle Rechte
+              vorbehalten.
+            </span>
+            <div className="flex gap-6">
             <a href="#" className="hover:text-brand">
               Impressum
             </a>
@@ -172,6 +185,7 @@ export default function Footer() {
             <a href="#" className="hover:text-brand">
               AGB
             </a>
+            </div>
           </div>
         </div>
       </div>
