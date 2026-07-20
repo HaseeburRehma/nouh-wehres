@@ -29,7 +29,7 @@ export default function Header() {
   }, []);
 
   return (
-    <>
+    <div className="sticky top-0 z-50">
       {/* Top utility bar */}
       <div className="w-full bg-brand text-white">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-3 px-5 text-[13px] sm:px-8">
@@ -72,7 +72,7 @@ export default function Header() {
       </div>
 
       <header
-        className={`sticky top-0 z-50 w-full bg-white/95 backdrop-blur transition-shadow ${
+        className={`w-full bg-white/95 backdrop-blur transition-shadow ${
           scrolled ? "shadow-sm" : ""
         }`}
       >
@@ -176,7 +176,7 @@ export default function Header() {
           </nav>
         </div>
       </header>
-    </>
+    </div>
   );
 }
 
