@@ -53,6 +53,38 @@ export function StatsRow({ stats }: { stats: { value: string; label: string }[] 
   );
 }
 
+/* ── PARTNER LOGOS ── */
+const PARTNER_LOGOS = [
+  { src: "/partner/bosch.png", alt: "Bosch" },
+  { src: "/partner/buderus.png", alt: "Buderus" },
+  { src: "/partner/mtf-samsung.png", alt: "MTF Samsung" },
+  { src: "/partner/stiebel-eltron.png", alt: "Stiebel Eltron" },
+];
+
+export function PartnerLogos() {
+  return (
+    <section className="border-b border-line bg-white py-12 lg:py-14">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <p className="text-center text-xs font-bold uppercase tracking-[0.16em] text-muted">
+          Unsere Partner
+        </p>
+        <div className="mt-8 grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-10 sm:grid-cols-4">
+          {PARTNER_LOGOS.map((l) => (
+            <Image
+              key={l.alt}
+              src={l.src}
+              alt={l.alt}
+              width={400}
+              height={160}
+              className="h-10 w-auto object-contain sm:h-12"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── FEATURE SPLIT (image + text + bullets) ── */
 export function FeatureSplit({
   eyebrow,

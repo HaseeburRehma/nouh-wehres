@@ -5,6 +5,7 @@ import GsapReveal from "../components/GsapReveal";
 import LandingHero from "../components/landing/LandingHero";
 import {
   StatsRow,
+  PartnerLogos,
   FeatureSplit,
   BenefitCards,
   StepsRow,
@@ -78,6 +79,8 @@ export default function WaermepumpeBeratung() {
             { value: "24/7", label: "Notdienst nach Einbau" },
           ]}
         />
+
+        <PartnerLogos />
 
         <FeatureSplit
           eyebrow="Ihre neue Heizung"

@@ -5,6 +5,7 @@ import GsapReveal from "../components/GsapReveal";
 import LandingHero from "../components/landing/LandingHero";
 import {
   StatsRow,
+  PartnerLogos,
   ProductPrice,
   TwoImage,
   BenefitCards,
@@ -87,6 +88,8 @@ export default function WaermepumpeKaufen() {
             { value: "0 €", label: "Anzahlung" },
           ]}
         />
+
+        <PartnerLogos />
 
         <ProductPrice
           eyebrow="Ihr Komplettpaket"
