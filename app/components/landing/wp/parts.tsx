@@ -76,7 +76,7 @@ export function PartnerLogos() {
               alt={l.alt}
               width={400}
               height={160}
-              className="h-10 w-auto object-contain sm:h-12"
+              className="h-14 w-auto object-contain sm:h-16"
             />
           ))}
         </div>

@@ -72,6 +72,8 @@ export default function WaermepumpeKaufen() {
           intro="Bosch Compress Wärmepumpe, Planung, Speicher, Elektrik, Montage und Inbetriebnahme zum Komplettpreis. Ohne Anzahlung und mit 10 Jahren Garantie. Seit 29 Jahren Meisterbetrieb aus der Region."
           checks={["Bis zu 70 % Förderung", "Ohne Anzahlung", "10 Jahre Garantie"]}
           badge={{ small: "ab", big: "89 €/Monat" }}
+          bgImage="/lp/referenz-haus.webp"
+          bgImageAlt="Einfamilienhaus mit moderner Wärmepumpe"
           wizard={{
             name: "Ihr kostenloses Festpreis-Angebot",
             topic: "Wärmepumpe · Kaufen",

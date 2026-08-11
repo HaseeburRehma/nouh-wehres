@@ -63,6 +63,8 @@ export default function WaermepumpeBeratung() {
           intro="Bis zu 70 % Förderung, ohne Anzahlung und als Komplettpreis mit eigener Montage. Wir prüfen ehrlich, ob sich eine Wärmepumpe für Ihr Zuhause lohnt – und welche Förderung Ihnen zusteht. Seit 29 Jahren Meisterbetrieb aus der Region."
           checks={["Bis zu 70 % Förderung", "Ohne Anzahlung", "Komplettpreis inkl. Montage"]}
           badge={{ small: "bis zu", big: "70 % Förderung" }}
+          bgImage="/lp/referenz-haus.webp"
+          bgImageAlt="Einfamilienhaus mit moderner Wärmepumpe"
           wizard={{
             name: "Ihr kostenloser Wärmepumpen-Check",
             topic: "Wärmepumpe · Beratung",

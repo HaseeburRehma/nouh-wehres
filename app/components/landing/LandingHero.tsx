@@ -8,6 +8,8 @@ export interface LandingHeroProps {
   intro: string;
   checks: string[];
   badge: { small: string; big: string };
+  bgImage?: string;
+  bgImageAlt?: string;
   wizard: {
     name: string;
     topic: string;
@@ -24,6 +26,8 @@ export default function LandingHero({
   intro,
   checks,
   badge,
+  bgImage,
+  bgImageAlt = "",
   wizard,
 }: LandingHeroProps) {
   return (
@@ -31,10 +35,25 @@ export default function LandingHero({
       id="top"
       className="relative overflow-hidden bg-gradient-to-br from-brand to-brand-dark text-white"
     >
+      {/* Background photo + blue tint overlay (Figma hero look) */}
+      {bgImage && (
+        <>
+          <Image
+            src={bgImage}
+            alt={bgImageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand/95 via-brand/85 to-brand-dark/65" />
+        </>
+      )}
+
       <div className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-40 -left-32 h-80 w-80 rounded-full bg-black/10 blur-3xl" />
 
-      <div className="relative mx-auto grid max-w-7xl items-start gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-16">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-start gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-16">
         {/* Left — copy */}
         <div className="pt-2 lg:pt-6">
           <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-white/75">

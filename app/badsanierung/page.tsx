@@ -71,6 +71,8 @@ export default function BadsanierungPage() {
           intro="Beantworten Sie 6 kurze Fragen und erhalten Sie Ihre kostenlose Festpreis-Einschätzung – direkt von uns, nicht von einem Vermittlerportal."
           checks={["Festpreisgarantie", "Alle Gewerke aus einer Hand", "Kein Vermittlerportal"]}
           badge={{ small: "gratis", big: "30 Sek" }}
+          bgImage="/bad.webp"
+          bgImageAlt="Modernes saniertes Badezimmer"
           wizard={{
             name: "Was kostet Ihr neues Bad?",
             topic: "Badsanierung · Festpreis-Einschätzung",
