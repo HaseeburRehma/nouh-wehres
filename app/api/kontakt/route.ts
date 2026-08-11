@@ -120,9 +120,38 @@ export async function POST(req: Request) {
       );
     }
 
+    // Also log the lead to Google Sheets (best-effort — never blocks the form).
+    await appendToSheet({ name, email, tel, topic, message });
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("Contact form send failed:", err);
     return NextResponse.json({ error: "Serverfehler." }, { status: 500 });
+  }
+}
+
+// Append the lead to a Google Sheet via a Google Apps Script Web App.
+// Set GOOGLE_SHEET_WEBHOOK_URL in the environment (the /exec URL of the
+// deployed script). No-ops if unset; never throws into the request flow.
+async function appendToSheet(lead: {
+  name: string;
+  email: string;
+  tel: string;
+  topic: string;
+  message: string;
+}) {
+  const url = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+  if (!url) return;
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        timestamp: new Date().toISOString(),
+        ...lead,
+      }),
+    });
+  } catch (err) {
+    console.error("Google Sheet webhook failed:", err);
   }
 }
