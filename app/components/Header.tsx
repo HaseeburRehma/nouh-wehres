@@ -17,7 +17,7 @@ const socials = [
   { label: "WhatsApp", href: "https://wa.me/49215487670", icon: <WhatsApp /> },
 ];
 
-export default function Header() {
+export default function Header({ minimal = false }: { minimal?: boolean }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -88,17 +88,19 @@ export default function Header() {
             />
           </a>
 
-          <nav className="hidden items-center gap-8 lg:flex">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-[15px] font-medium text-ink/80 transition-colors hover:text-brand"
-              >
-                {l.label}
-              </a>
-            ))}
-          </nav>
+          {!minimal && (
+            <nav className="hidden items-center gap-8 lg:flex">
+              {links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  className="text-[15px] font-medium text-ink/80 transition-colors hover:text-brand"
+                >
+                  {l.label}
+                </a>
+              ))}
+            </nav>
+          )}
 
           <div className="hidden items-center gap-5 lg:flex">
             <a href="tel:+49215487670" className="flex items-center gap-2.5">
@@ -122,59 +124,72 @@ export default function Header() {
             </a>
           </div>
 
-          <button
-            type="button"
-            aria-label="Menü öffnen"
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="grid h-11 w-11 place-items-center rounded-lg border border-line lg:hidden"
-          >
-            <span className="relative block h-4 w-5">
-              <span
-                className={`absolute left-0 block h-0.5 w-5 bg-ink transition-all ${
-                  open ? "top-1.5 rotate-45" : "top-0"
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-1.5 block h-0.5 w-5 bg-ink transition-all ${
-                  open ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute left-0 block h-0.5 w-5 bg-ink transition-all ${
-                  open ? "top-1.5 -rotate-45" : "top-3"
-                }`}
-              />
-            </span>
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        <div
-          className={`overflow-hidden border-t border-line bg-white lg:hidden ${
-            open ? "max-h-[26rem]" : "max-h-0"
-          } transition-[max-height] duration-300`}
-        >
-          <nav className="flex flex-col px-5 py-3">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="border-b border-line/70 py-3 font-medium text-ink/85"
-              >
-                {l.label}
-              </a>
-            ))}
+          {minimal ? (
             <a
               href="/kontakt#anfrage"
-              onClick={() => setOpen(false)}
-              className="btn-cta mt-4 rounded-full bg-brand px-5 py-3 text-center font-semibold text-white"
+              className="btn-cta rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark lg:hidden"
             >
-              Beratung anfragen
+              <span className="btn-label" data-text="Beratung">
+                Beratung
+              </span>
             </a>
-          </nav>
+          ) : (
+            <button
+              type="button"
+              aria-label="Menü öffnen"
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="grid h-11 w-11 place-items-center rounded-lg border border-line lg:hidden"
+            >
+              <span className="relative block h-4 w-5">
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 bg-ink transition-all ${
+                    open ? "top-1.5 rotate-45" : "top-0"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-1.5 block h-0.5 w-5 bg-ink transition-all ${
+                    open ? "opacity-0" : "opacity-100"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 bg-ink transition-all ${
+                    open ? "top-1.5 -rotate-45" : "top-3"
+                  }`}
+                />
+              </span>
+            </button>
+          )}
         </div>
+
+        {/* Mobile menu (full header only) */}
+        {!minimal && (
+          <div
+            className={`overflow-hidden border-t border-line bg-white lg:hidden ${
+              open ? "max-h-[26rem]" : "max-h-0"
+            } transition-[max-height] duration-300`}
+          >
+            <nav className="flex flex-col px-5 py-3">
+              {links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-line/70 py-3 font-medium text-ink/85"
+                >
+                  {l.label}
+                </a>
+              ))}
+              <a
+                href="/kontakt#anfrage"
+                onClick={() => setOpen(false)}
+                className="btn-cta mt-4 rounded-full bg-brand px-5 py-3 text-center font-semibold text-white"
+              >
+                Beratung anfragen
+              </a>
+            </nav>
+          </div>
+        )}
       </header>
     </div>
   );

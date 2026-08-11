@@ -1,0 +1,733 @@
+import Image from "next/image";
+import type { ReactNode } from "react";
+import { VorteilIcon } from "../icons";
+import type { IconKey, FaqItem } from "../../../lib/landing";
+import LandingFaq from "../LandingFaq";
+import QualifyForm from "./QualifyForm";
+
+/* ── shared bits ── */
+export function Eyebrow({ children }: { children: ReactNode }) {
+  return (
+    <p className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-brand">
+      <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+      {children}
+    </p>
+  );
+}
+
+function Check({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+export function Stars({ size = 17 }: { size?: number }) {
+  return (
+    <div className="flex gap-0.5 text-amber-400">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+          <path d="M12 2l2.9 6.26 6.9.5-5.23 4.52 1.64 6.72L12 16.9 5.79 20.5l1.64-6.72L2.2 8.76l6.9-.5L12 2z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+/* ── STATS ROW ── */
+export function StatsRow({ stats }: { stats: { value: string; label: string }[] }) {
+  return (
+    <section className="border-b border-line bg-white">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-8 px-5 py-10 sm:px-8 lg:grid-cols-4 lg:divide-x lg:divide-line">
+        {stats.map((s) => (
+          <div key={s.label} className="px-2 text-center lg:px-6">
+            <div className="text-3xl font-extrabold tracking-[-0.02em] text-brand sm:text-[34px]">
+              {s.value}
+            </div>
+            <div className="mt-1 text-[13px] font-medium text-muted sm:text-sm">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── FEATURE SPLIT (image + text + bullets) ── */
+export function FeatureSplit({
+  eyebrow,
+  title,
+  body,
+  bullets,
+  image,
+  imageAlt,
+  imageLeft = true,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  bullets: string[];
+  image: string;
+  imageAlt: string;
+  imageLeft?: boolean;
+}) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+        <div className={`reveal overflow-hidden rounded-2xl ring-1 ring-line ${imageLeft ? "" : "lg:order-2"}`}>
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={1600}
+            height={1200}
+            className="h-full max-h-[460px] w-full object-cover"
+          />
+        </div>
+        <div className={`reveal ${imageLeft ? "" : "lg:order-1"}`}>
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="lead mt-5 text-muted">{body}</p>
+          <ul className="mt-6 space-y-3">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-start gap-3 text-[15px] text-ink">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-white">
+                  <Check />
+                </span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── BENEFIT CARDS (icon grid) ── */
+export function BenefitCards({
+  eyebrow,
+  title,
+  intro,
+  items,
+  bg = "surface",
+}: {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  items: { icon: IconKey; title: string; text: string }[];
+  bg?: "surface" | "white";
+}) {
+  return (
+    <section className={`${bg === "surface" ? "bg-surface" : "bg-white"} py-20 lg:py-28`}>
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-3xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
+            {title}
+          </h2>
+          {intro && <p className="lead mx-auto mt-4 max-w-2xl text-muted">{intro}</p>}
+        </div>
+        <div className="reveal mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((v) => (
+            <article key={v.title} className="rounded-2xl border border-line bg-white p-7 transition-all hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-md">
+              <span className="grid h-12 w-12 place-items-center rounded-xl bg-accent text-ink">
+                <VorteilIcon name={v.icon} />
+              </span>
+              <h3 className="mt-5 text-lg font-bold text-ink">{v.title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">{v.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── STEPS ROW ── */
+export function StepsRow({
+  eyebrow,
+  title,
+  items,
+  bg = "white",
+}: {
+  eyebrow: string;
+  title: string;
+  items: { title: string; text: string }[];
+  bg?: "surface" | "white";
+}) {
+  return (
+    <section className={`${bg === "surface" ? "bg-surface" : "bg-white"} py-20 lg:py-28`}>
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
+            {title}
+          </h2>
+        </div>
+        <ol className="reveal mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((s, i) => (
+            <li key={s.title} className="relative rounded-2xl border border-line bg-white p-7">
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-brand text-lg font-extrabold text-white">
+                {i + 1}
+              </span>
+              <h3 className="mt-5 text-lg font-bold text-ink">{s.title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ── TESTIMONIAL FEATURE (image + big quote + bullets) ── */
+export function TestimonialFeature({
+  eyebrow,
+  title,
+  image,
+  imageAlt,
+  quote,
+  author,
+  bullets,
+}: {
+  eyebrow: string;
+  title: string;
+  image: string;
+  imageAlt: string;
+  quote: string;
+  author: string;
+  bullets: string[];
+}) {
+  return (
+    <section className="bg-surface py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+        </div>
+        <div className="reveal mt-14 grid items-stretch gap-8 lg:grid-cols-2">
+          <div className="overflow-hidden rounded-2xl ring-1 ring-line">
+            <Image src={image} alt={imageAlt} width={1400} height={1200} className="h-full max-h-[440px] w-full object-cover" />
+          </div>
+          <div className="flex flex-col justify-center rounded-2xl border border-line bg-white p-8 shadow-sm">
+            <Stars />
+            <blockquote className="mt-4 text-lg leading-relaxed text-ink">
+              {`„${quote}“`}
+            </blockquote>
+            <p className="mt-4 text-sm font-bold text-brand">{author}</p>
+            <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+              {bullets.map((b) => (
+                <li key={b} className="flex items-start gap-2 text-[14px] text-muted">
+                  <span className="mt-0.5 text-brand"><Check /></span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── COMPARE TABLE (generic 2-col) ── */
+export function CompareTable({
+  eyebrow,
+  title,
+  rows,
+  otherLabel,
+}: {
+  eyebrow: string;
+  title: string;
+  otherLabel: string;
+  rows: { label: string; other: "no" | "partial"; otherNote?: string }[];
+}) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-5xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+        </div>
+        <div className="reveal no-scrollbar mt-12 overflow-x-auto">
+          <table className="w-full min-w-[620px] border-separate border-spacing-0">
+            <thead>
+              <tr>
+                <th className="w-[46%] p-4" />
+                <th className="w-[27%] p-2 align-bottom">
+                  <div className="rounded-t-xl bg-brand px-4 py-3 text-center leading-tight text-white">
+                    <div className="text-[15px] font-extrabold">Nouh-Wehres</div>
+                    <div className="text-[11px] font-medium text-white/80">Meisterbetrieb aus der Region</div>
+                  </div>
+                </th>
+                <th className="w-[27%] p-4 text-center align-bottom text-[15px] font-semibold text-muted">
+                  {otherLabel}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => {
+                const last = i === rows.length - 1;
+                return (
+                  <tr key={r.label}>
+                    <td className={`py-4 pr-4 text-[15px] font-medium text-ink ${last ? "" : "border-b border-line"}`}>
+                      {r.label}
+                    </td>
+                    <td className={`bg-brand-50/50 px-4 py-4 text-center ${last ? "rounded-b-xl" : "border-b border-white"}`}>
+                      <span className="inline-grid h-7 w-7 place-items-center rounded-full bg-brand text-white">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </span>
+                    </td>
+                    <td className={`px-4 py-4 text-center ${last ? "" : "border-b border-line"}`}>
+                      {r.other === "no" ? (
+                        <span className="inline-flex items-center gap-1.5 text-[14px] text-muted">
+                          <span className="inline-grid h-7 w-7 place-items-center rounded-full bg-red-100 text-red-600">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <line x1="18" y1="6" x2="6" y2="18" />
+                              <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                          </span>
+                          {r.otherNote && <span>{r.otherNote}</span>}
+                        </span>
+                      ) : (
+                        <span className="text-[14px] text-muted">{r.otherNote}</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── TESTIMONIALS (3 cards) ── */
+export function Testimonials({
+  eyebrow,
+  title,
+  items,
+}: {
+  eyebrow: string;
+  title: string;
+  items: { text: string; author: string; tag?: string }[];
+}) {
+  return (
+    <section className="bg-surface py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
+            {title}
+          </h2>
+        </div>
+        <div className="reveal mt-14 grid gap-6 md:grid-cols-3">
+          {items.map((t) => (
+            <article key={t.author} className="flex flex-col rounded-2xl border border-line bg-white p-7 shadow-sm">
+              <div className="flex items-center justify-between">
+                <Stars />
+                {t.tag && (
+                  <span className="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-brand">
+                    {t.tag}
+                  </span>
+                )}
+              </div>
+              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-muted">{`„${t.text}“`}</p>
+              <div className="mt-6 flex items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-50 text-sm font-bold text-brand">
+                  {initials(t.author)}
+                </span>
+                <strong className="text-[15px] font-bold text-ink">{t.author}</strong>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── TEAM ── */
+export function Team({
+  eyebrow,
+  title,
+  intro,
+  members,
+}: {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  members: { photo: string; role: string; sub: string; focus?: string }[];
+}) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="lead mt-4 text-muted">{intro}</p>
+        </div>
+        <div className="reveal mx-auto mt-14 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {members.map((m, i) => (
+            <article key={i} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
+              <div
+                className="aspect-[4/5] w-full bg-[#e3e9ee]"
+                style={{
+                  backgroundImage: `url(${m.photo})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: m.focus ?? "center top",
+                }}
+              />
+              <div className="p-5">
+                <h3 className="font-bold text-ink">{m.role}</h3>
+                <p className="mt-0.5 text-sm text-muted">{m.sub}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="reveal mx-auto mt-8 max-w-xl text-center text-[13px] text-muted">
+          Namen &amp; Fotos folgen – Ihr fester Ansprechpartner aus der Region begleitet Sie
+          von der Beratung bis zur Wartung.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ── TRUST BADGES ── */
+export function TrustBadges({
+  eyebrow,
+  title,
+  intro,
+  items,
+}: {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  items: { value: string; label: string; sub: string; kind: "google" | "proven" | "recommend" }[];
+}) {
+  return (
+    <section className="bg-surface py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
+            {title}
+          </h2>
+          <p className="lead mt-4 text-muted">{intro}</p>
+        </div>
+        <div className="reveal mt-14 grid gap-6 md:grid-cols-3">
+          {items.map((t) => (
+            <article key={t.label} className="flex flex-col items-center rounded-2xl border border-line bg-white p-8 text-center shadow-sm">
+              <span className="grid h-12 w-12 place-items-center">
+                {t.kind === "google" ? <GoogleG /> : t.kind === "proven" ? <ProvenExpertMark /> : <RecommendMark />}
+              </span>
+              <div className="mt-4 text-4xl font-extrabold tracking-[-0.02em] text-ink">{t.value}</div>
+              {t.kind !== "recommend" && <div className="mt-2"><Stars size={16} /></div>}
+              <div className="mt-3 text-[15px] font-bold text-ink">{t.label}</div>
+              <div className="mt-1 text-sm text-muted">{t.sub}</div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── PRODUCT + PRICE (Kaufen) ── */
+export function ProductPrice({
+  eyebrow,
+  title,
+  body,
+  image,
+  imageAlt,
+  price,
+  priceNote,
+  priceSub,
+  bullets,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+  price: string;
+  priceNote: string;
+  priceSub: string;
+  bullets: string[];
+}) {
+  return (
+    <section className="bg-surface py-20 lg:py-28">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+        <div className="reveal">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="lead mt-5 text-muted">{body}</p>
+
+          <div className="mt-6 rounded-2xl border border-brand/30 bg-brand-50/50 p-5">
+            <div className="flex items-baseline gap-2">
+              <span className="text-4xl font-extrabold tracking-[-0.02em] text-brand">{price}</span>
+              <span className="text-[15px] font-semibold text-ink">{priceNote}</span>
+            </div>
+            <p className="mt-1 text-sm text-muted">{priceSub}</p>
+          </div>
+
+          <ul className="mt-6 space-y-3">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-start gap-3 text-[15px] text-ink">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-white"><Check /></span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="reveal overflow-hidden rounded-2xl bg-white ring-1 ring-line">
+          <Image src={image} alt={imageAlt} width={1400} height={1200} className="h-full max-h-[460px] w-full object-cover" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── TWO IMAGE PROCESS ── */
+export function TwoImage({
+  eyebrow,
+  title,
+  body,
+  items,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  items: { image: string; imageAlt: string; title: string; text: string }[];
+}) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="lead mt-4 text-muted">{body}</p>
+        </div>
+        <div className="reveal mt-14 grid gap-8 md:grid-cols-2">
+          {items.map((it) => (
+            <article key={it.title} className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
+              <div className="overflow-hidden">
+                <Image src={it.image} alt={it.imageAlt} width={1400} height={900} className="h-64 w-full object-cover" />
+              </div>
+              <div className="p-7">
+                <h3 className="text-lg font-bold text-ink">{it.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-muted">{it.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── DARK SAVINGS BAND ── */
+export function DarkSavings({
+  eyebrow,
+  title,
+  body,
+  stats,
+  image,
+  imageAlt,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  stats: { value: string; label: string }[];
+  image: string;
+  imageAlt: string;
+}) {
+  return (
+    <section className="bg-ink py-20 text-white lg:py-24">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+        <div className="reveal">
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-accent">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            {eyebrow}
+          </p>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="mt-5 text-lg text-white/75">{body}</p>
+          <div className="mt-8 grid grid-cols-3 gap-4">
+            {stats.map((s) => (
+              <div key={s.label} className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div className="text-2xl font-extrabold text-accent sm:text-3xl">{s.value}</div>
+                <div className="mt-1 text-[12px] text-white/70 sm:text-[13px]">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="reveal overflow-hidden rounded-2xl ring-1 ring-white/10">
+          <Image src={image} alt={imageAlt} width={1400} height={1100} className="h-full max-h-[420px] w-full object-cover" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── FAQ ── */
+export function FaqSection({ eyebrow, title, items }: { eyebrow: string; title: string; items: FaqItem[] }) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+        </div>
+        <div className="reveal">
+          <LandingFaq items={items} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── QUALIFY CTA (feature + form) ── */
+export function QualifyCta({
+  eyebrow,
+  title,
+  body,
+  bullets,
+  image,
+  imageAlt,
+  topic,
+  submitLabel,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  bullets: string[];
+  image: string;
+  imageAlt: string;
+  topic: string;
+  submitLabel: string;
+}) {
+  return (
+    <section className="bg-surface py-20 lg:py-28">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+        <div className="reveal">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="lead mt-5 text-muted">{body}</p>
+          <ul className="mt-6 space-y-3">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-start gap-3 text-[15px] text-ink">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-white"><Check /></span>
+                {b}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 overflow-hidden rounded-2xl ring-1 ring-line">
+            <Image src={image} alt={imageAlt} width={1400} height={800} className="h-56 w-full object-cover" />
+          </div>
+        </div>
+        <div className="reveal">
+          <QualifyForm topic={topic} submitLabel={submitLabel} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── FINAL CTA BANNER ── */
+export function CtaBanner({
+  title,
+  text,
+  button,
+  href,
+  checks,
+}: {
+  title: string;
+  text: string;
+  button: string;
+  href: string;
+  checks: string[];
+}) {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-brand to-brand-dark py-16 text-white lg:py-24">
+      <div className="pointer-events-none absolute -right-32 -top-24 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+      <div className="relative mx-auto max-w-3xl px-5 text-center sm:px-8">
+        <h2 className="text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl lg:text-[42px] lg:leading-[1.12]">
+          {title}
+        </h2>
+        <p className="mx-auto mt-5 max-w-2xl text-lg text-white/85">{text}</p>
+        <div className="mt-8">
+          <a href={href} className="btn-cta btn-cta--light inline-flex items-center rounded-full bg-accent px-8 py-4 font-bold text-ink shadow-lg transition-transform hover:-translate-y-0.5">
+            <span className="btn-label" data-text={`${button} →`}>{button} →</span>
+          </a>
+        </div>
+        <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/85">
+          {checks.map((ch) => (
+            <li key={ch} className="flex items-center gap-1.5">
+              <span className="text-accent"><Check /></span>
+              {ch}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ── logos/marks ── */
+function GoogleG() {
+  return (
+    <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden>
+      <path fill="#4285F4" d="M23.5 12.27c0-.79-.07-1.54-.2-2.27H12v4.51h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.87c2.27-2.09 3.56-5.17 3.56-8.87z" />
+      <path fill="#34A853" d="M12 24c3.24 0 5.96-1.08 7.94-2.91l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.28v3.09A12 12 0 0 0 12 24z" />
+      <path fill="#FBBC05" d="M5.27 14.28a7.2 7.2 0 0 1 0-4.56V6.63H1.28a12 12 0 0 0 0 10.74l3.99-3.09z" />
+      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.28 6.63l3.99 3.09C6.22 6.86 8.87 4.75 12 4.75z" />
+    </svg>
+  );
+}
+
+function ProvenExpertMark() {
+  return (
+    <span className="grid h-11 w-11 place-items-center rounded-full bg-brand text-white">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2l2.9 6.26 6.9.5-5.23 4.52 1.64 6.72L12 16.9 5.79 20.5l1.64-6.72L2.2 8.76l6.9-.5L12 2z" /></svg>
+    </span>
+  );
+}
+
+function RecommendMark() {
+  return (
+    <span className="grid h-11 w-11 place-items-center rounded-full bg-brand text-white">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 10v11" /><path d="M7 10l4-7a2 2 0 0 1 3 1.8V9h4.5a2 2 0 0 1 2 2.3l-1.2 7A2 2 0 0 1 19.3 20H7" />
+      </svg>
+    </span>
+  );
+}
+
+function initials(name: string) {
+  const m = name.match(/\b([A-ZÄÖÜ])\./);
+  if (m) return m[1];
+  return name.trim().charAt(0).toUpperCase();
+}
