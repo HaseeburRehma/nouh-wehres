@@ -4,6 +4,7 @@ import { VorteilIcon } from "../icons";
 import type { IconKey, FaqItem } from "../../../lib/landing";
 import LandingFaq from "../LandingFaq";
 import QualifyForm from "./QualifyForm";
+import BeforeAfter from "./BeforeAfter";
 
 /* ── shared bits ── */
 export function Eyebrow({ children }: { children: ReactNode }) {
@@ -721,6 +722,57 @@ export function CtaBanner({
             </li>
           ))}
         </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ── BEFORE / AFTER RESULTS (draggable Vorher · Nachher) ── */
+export function BeforeAfterResults({
+  eyebrow,
+  title,
+  intro,
+  items,
+}: {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  items: { before: string; after: string; caption: string; alt?: string }[];
+}) {
+  const cols =
+    items.length >= 3
+      ? "md:grid-cols-3"
+      : items.length === 2
+        ? "mx-auto max-w-4xl md:grid-cols-2"
+        : "mx-auto max-w-xl";
+  return (
+    <section className="bg-surface py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
+            {title}
+          </h2>
+          <p className="lead mt-4 text-muted">{intro}</p>
+        </div>
+        <div className={`reveal mt-14 grid gap-6 ${cols}`}>
+          {items.map((it) => (
+            <figure
+              key={it.caption}
+              className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line"
+            >
+              <BeforeAfter
+                before={it.before}
+                after={it.after}
+                beforeAlt={it.alt}
+                afterAlt={it.alt}
+              />
+              <figcaption className="px-5 py-4 text-[14px] font-medium text-ink">
+                {it.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   );

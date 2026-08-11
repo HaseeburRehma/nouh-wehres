@@ -71,7 +71,7 @@ export default function WaermepumpeKaufen() {
           h1="Wärmepumpe inkl. Montage ab 11.900 € nach Förderung."
           intro="Bosch Compress Wärmepumpe, Planung, Speicher, Elektrik, Montage und Inbetriebnahme zum Komplettpreis. Ohne Anzahlung und mit 10 Jahren Garantie. Seit 29 Jahren Meisterbetrieb aus der Region."
           checks={["Bis zu 70 % Förderung", "Ohne Anzahlung", "10 Jahre Garantie"]}
-          badge={{ small: "ab", big: "89 €/Monat" }}
+          badge={{ small: "Angebot in", big: "24 Std." }}
           bgImage="/lp/referenz-haus.webp"
           bgImageAlt="Einfamilienhaus mit moderner Wärmepumpe"
           wizard={{

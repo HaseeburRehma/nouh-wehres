@@ -6,7 +6,7 @@ import LandingHero from "../components/landing/LandingHero";
 import {
   StatsRow,
   PartnerLogos,
-  ResultsGrid,
+  BeforeAfterResults,
   VersusCompare,
   StepsRow,
   Team,
@@ -94,25 +94,16 @@ export default function BadsanierungPage() {
 
         <PartnerLogos />
 
-        <ResultsGrid
+        <BeforeAfterResults
           eyebrow="Vorher · Nachher"
           title="Echte Bäder. Echte Projekte. Aus Ihrer Region."
-          intro="Jedes Bad hier haben wir selbst geplant und gebaut – mit eigenem Team, festem Ansprechpartner und Festpreis."
+          intro="Selbst geplant und gebaut – mit eigenem Team, festem Ansprechpartner und Festpreis. Ziehen Sie den Regler und sehen Sie den Unterschied."
           items={[
             {
-              image: "/projekte/3/1.webp",
-              imageAlt: "Komplettsanierung eines Badezimmers in Krefeld",
+              before: "/projekte/3/1.webp",
+              after: "/projekte/3/2.webp",
               caption: "Komplettsanierung in Krefeld – in 3 Wochen fertig.",
-            },
-            {
-              image: "/projekte/3/2.webp",
-              imageAlt: "Dusche statt Wanne, barrierearm umgebaut in Viersen",
-              caption: "Dusche statt Wanne in Viersen – in 5 Tagen umgebaut.",
-            },
-            {
-              image: "/bad.webp",
-              imageAlt: "Modernes barrierefreies Bad in Willich",
-              caption: "Barrierefreies Bad in Willich – in 3 Wochen umgebaut.",
+              alt: "Badsanierung in Krefeld – vorher und nachher",
             },
           ]}
         />
