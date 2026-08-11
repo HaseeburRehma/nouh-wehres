@@ -66,6 +66,7 @@ export default function WaermepumpeBeratung() {
             name: "Ihr kostenloser Wärmepumpen-Check",
             topic: "Wärmepumpe · Beratung",
             steps: wizardSteps,
+            note: "dauert nur 30 Sekunden",
           }}
         />
 

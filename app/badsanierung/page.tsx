@@ -69,12 +69,12 @@ export default function BadsanierungPage() {
           h1="Ihr Traumbad vom Meisterbetrieb – zum Festpreis."
           intro="Beantworten Sie 6 kurze Fragen und erhalten Sie Ihre kostenlose Festpreis-Einschätzung – direkt von uns, nicht von einem Vermittlerportal."
           checks={["Festpreisgarantie", "Alle Gewerke aus einer Hand", "Kein Vermittlerportal"]}
-          badge={{ small: "gratis", big: "2 Min" }}
+          badge={{ small: "gratis", big: "30 Sek" }}
           wizard={{
             name: "Was kostet Ihr neues Bad?",
             topic: "Badsanierung · Festpreis-Einschätzung",
             steps: wizardSteps,
-            note: "In 2 Minuten zur Festpreis-Einschätzung",
+            note: "In 30 Sekunden zur Festpreis-Einschätzung",
             submitLabel: "Kostenlose Festpreis-Einschätzung erhalten",
             countContact: false,
           }}

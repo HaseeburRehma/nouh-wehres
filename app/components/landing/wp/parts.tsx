@@ -556,22 +556,24 @@ export function DarkSavings({
   imageAlt: string;
 }) {
   return (
-    <section className="bg-ink py-20 text-white lg:py-24">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+    <section className="relative overflow-hidden bg-gradient-to-br from-brand to-brand-dark py-20 text-white lg:py-24">
+      <div className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 -left-32 h-80 w-80 rounded-full bg-black/10 blur-3xl" />
+      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
         <div className="reveal">
-          <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-accent">
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-accent">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             {eyebrow}
           </p>
           <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
             {title}
           </h2>
-          <p className="mt-5 text-lg text-white/75">{body}</p>
+          <p className="mt-5 text-lg text-white/85">{body}</p>
           <div className="mt-8 grid grid-cols-3 gap-4">
             {stats.map((s) => (
-              <div key={s.label} className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+              <div key={s.label} className="rounded-xl bg-white/10 p-4 ring-1 ring-white/15">
                 <div className="text-2xl font-extrabold text-accent sm:text-3xl">{s.value}</div>
-                <div className="mt-1 text-[12px] text-white/70 sm:text-[13px]">{s.label}</div>
+                <div className="mt-1 text-[12px] text-white/85 sm:text-[13px]">{s.label}</div>
               </div>
             ))}
           </div>

@@ -75,6 +75,7 @@ export default function WaermepumpeKaufen() {
             name: "Ihr kostenloses Festpreis-Angebot",
             topic: "Wärmepumpe · Kaufen",
             steps: wizardSteps,
+            note: "dauert nur 30 Sekunden",
           }}
         />
 
