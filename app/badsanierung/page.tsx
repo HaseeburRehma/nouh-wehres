@@ -5,7 +5,6 @@ import GsapReveal from "../components/GsapReveal";
 import LandingHero from "../components/landing/LandingHero";
 import {
   StatsRow,
-  PartnerLogos,
   BeforeAfterResults,
   VersusCompare,
   StepsRow,
@@ -91,8 +90,6 @@ export default function BadsanierungPage() {
             { value: "sauber", label: "& termintreu gearbeitet" },
           ]}
         />
-
-        <PartnerLogos />
 
         <BeforeAfterResults
           eyebrow="Vorher · Nachher"
