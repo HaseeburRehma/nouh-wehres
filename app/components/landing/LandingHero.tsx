@@ -75,20 +75,6 @@ export default function LandingHero({
             ))}
           </ul>
 
-          <div className="mt-8">
-            <span className="inline-flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 shadow-sm">
-              <Image
-                src="/bosch-premium-partner.webp"
-                alt="Bosch Premium Partner"
-                width={1178}
-                height={878}
-                className="h-7 w-auto"
-              />
-              <span className="text-[13px] font-bold text-ink">
-                Bosch Premium Partner
-              </span>
-            </span>
-          </div>
         </div>
 
         {/* Right — wizard card */}
