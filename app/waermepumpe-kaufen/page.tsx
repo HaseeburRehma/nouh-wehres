@@ -91,8 +91,8 @@ export default function WaermepumpeKaufen() {
           eyebrow="Ihr Komplettpaket"
           title="Bosch Compress Wärmepumpe – installiert zum Festpreis."
           body="Wir liefern und installieren die Luft-Wasser-Wärmepumpe Bosch Compress 5800 AW – effizient, leise und mit natürlichem Kältemittel. Ausgelegt auf Ihr Gebäude, nicht auf einen Katalogpreis."
-          image="/hero.webp"
-          imageAlt="Bosch Compress Luft-Wasser-Wärmepumpe, installiert von NOUH-WEHRES"
+          image="/lp/bosch-compress.webp"
+          imageAlt="Bosch Compress Luft-Wasser-Wärmepumpe – Außeneinheit"
           price="ab 11.900 €"
           priceNote="nach bis zu 70 % Förderung"
           priceSub="Gilt im Alt- und Neubau. Endpreis nach kostenlosem Vor-Ort-Check."
@@ -109,14 +109,14 @@ export default function WaermepumpeKaufen() {
           body="Außen die Wärmepumpe, innen Speicher, Hydraulik und Regelung: sauber installiert, angeschlossen und dokumentiert."
           items={[
             {
-              image: "/hero-2.webp",
-              imageAlt: "Innenaufstellung, Hydraulik und Speicher durch NOUH-WEHRES",
+              image: "/lp/technikraum.webp",
+              imageAlt: "Innenaufstellung mit Speicher, Hydraulik und Regelung im Technikraum",
               title: "Innenaufstellung & Hydraulik",
               text: "Puffer- und Warmwasserspeicher, hydraulischer Abgleich und Regelung – fachgerecht installiert und dokumentiert.",
             },
             {
-              image: "/bad.webp",
-              imageAlt: "Montage durch die eigenen Monteure von NOUH-WEHRES",
+              image: "/lp/montage.webp",
+              imageAlt: "Montage der Wärmepumpe durch die eigenen Monteure von NOUH-WEHRES",
               title: "Montage durch eigene Monteure",
               text: "Keine Subunternehmer. Unser Team baut ein, nimmt in Betrieb und weist Sie persönlich ein.",
             },
@@ -183,8 +183,8 @@ export default function WaermepumpeKaufen() {
             { value: "bis 70 %", label: "staatliche Förderung" },
             { value: "20.000 €", label: "Ersparnis über die Lebensdauer" },
           ]}
-          image="/hero.webp"
-          imageAlt="Effiziente Wärmepumpe für dauerhaft niedrige Heizkosten"
+          image="/lp/ersparnis-winter.webp"
+          imageAlt="Familie genießt im Winter ein warmes Zuhause dank effizienter Wärmepumpe"
         />
 
         <Team
@@ -192,9 +192,10 @@ export default function WaermepumpeKaufen() {
           title="Das Team hinter Ihrem Festpreis."
           intro="Kein Callcenter, keine Subunternehmer. Ihr Ansprechpartner sitzt in der Region – von der Planung über die Montage bis zur Wartung."
           members={[
-            { photo: "/nouh-wehres.webp", role: "Geschäftsführung & Meister", sub: "Nouh-Wehres · Willich", focus: "center" },
-            { photo: "/team-2.webp", role: "Heizungsbau & Montage", sub: "Ihr Team vor Ort", focus: "center top" },
-            { photo: "/team-3.webp", role: "Kundendienst & Wartung", sub: "Ihr Team vor Ort", focus: "center top" },
+            { photo: "/lp/team-nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister" },
+            { photo: "/lp/team-kevin-bauer.webp", name: "Kevin Bauer", role: "Heizungsbaumeister" },
+            { photo: "/lp/team-sarah-klein.webp", name: "Sarah Klein", role: "Planung & Fördermittel" },
+            { photo: "/lp/team-thomas-richter.webp", name: "Thomas Richter", role: "Kundendienst & Wartung" },
           ]}
         />
 
@@ -261,8 +262,8 @@ export default function WaermepumpeKaufen() {
             "Ohne Anzahlung, 10 Jahre Garantie",
             "Komplette Förderabwicklung inklusive",
           ]}
-          image="/hero.webp"
-          imageAlt="NOUH-WEHRES Monteur bei der Wärmepumpen-Installation"
+          image="/lp/team-van.webp"
+          imageAlt="Das NOUH-WEHRES Montageteam vor dem Firmenfahrzeug"
           topic="Wärmepumpe · Kaufen (Qualifizierung)"
           submitLabel="Festpreis-Angebot anfordern"
         />

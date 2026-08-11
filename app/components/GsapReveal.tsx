@@ -62,6 +62,22 @@ export default function GsapReveal() {
       );
 
       els.forEach((el) => io!.observe(el));
+
+      // Failsafe: if anything is on-screen yet still hidden shortly after load
+      // (e.g. the observer missed a node that browser-translation re-wrapped),
+      // reveal it so the page can never get stuck blank.
+      window.setTimeout(() => {
+        if (cancelled) return;
+        document
+          .querySelectorAll<HTMLElement>(".reveal")
+          .forEach((el) => {
+            const r = el.getBoundingClientRect();
+            const onScreen = r.top < window.innerHeight && r.bottom > 0;
+            if (onScreen && getComputedStyle(el).visibility === "hidden") {
+              gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.4 });
+            }
+          });
+      }, 2500);
     })();
 
     return () => {

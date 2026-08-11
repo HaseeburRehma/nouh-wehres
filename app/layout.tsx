@@ -30,6 +30,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Guard against the Google-Translate ↔ React "removeChild/insertBefore
+            NotFoundError" crash: browser translation rewrites text nodes, then
+            React tries to remove/insert around a node whose parent changed and
+            throws, blanking the page. These no-op the invalid DOM ops. Runs
+            before hydration. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if(typeof Node!=="function"||!Node.prototype)return;var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){return c;}return r.apply(this,arguments);};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,e){if(e&&e.parentNode!==this){return n;}return i.apply(this,arguments);};})();`,
+          }}
+        />
         <noscript>
           {/* Without JS, GSAP can't reveal — show everything. */}
           <style>{`.reveal{visibility:visible!important}`}</style>

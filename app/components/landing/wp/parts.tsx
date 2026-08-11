@@ -367,7 +367,7 @@ export function Team({
   eyebrow: string;
   title: string;
   intro: string;
-  members: { photo: string; role: string; sub: string; focus?: string }[];
+  members: { photo: string; name: string; role: string; focus?: string }[];
 }) {
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -379,7 +379,7 @@ export function Team({
           </h2>
           <p className="lead mt-4 text-muted">{intro}</p>
         </div>
-        <div className="reveal mx-auto mt-14 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="reveal mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {members.map((m, i) => (
             <article key={i} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
               <div
@@ -391,16 +391,12 @@ export function Team({
                 }}
               />
               <div className="p-5">
-                <h3 className="font-bold text-ink">{m.role}</h3>
-                <p className="mt-0.5 text-sm text-muted">{m.sub}</p>
+                <h3 className="font-bold text-ink">{m.name}</h3>
+                <p className="mt-0.5 text-sm font-semibold text-brand">{m.role}</p>
               </div>
             </article>
           ))}
         </div>
-        <p className="reveal mx-auto mt-8 max-w-xl text-center text-[13px] text-muted">
-          Namen &amp; Fotos folgen – Ihr fester Ansprechpartner aus der Region begleitet Sie
-          von der Beratung bis zur Wartung.
-        </p>
       </div>
     </section>
   );

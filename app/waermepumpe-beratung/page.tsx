@@ -89,8 +89,8 @@ export default function WaermepumpeBeratung() {
             "Natürliches Kältemittel Propan (R290)",
             "Auch für Bestandsgebäude und bestehende Heizkörper",
           ]}
-          image="/hero.webp"
-          imageAlt="NOUH-WEHRES Monteur installiert eine Bosch Luft-Wasser-Wärmepumpe im Garten"
+          image="/lp/wp-aussen.webp"
+          imageAlt="Moderne Luft-Wasser-Wärmepumpe von Bosch, installiert an einem Einfamilienhaus"
         />
 
         <BenefitCards
@@ -147,8 +147,8 @@ export default function WaermepumpeBeratung() {
         <TestimonialFeature
           eyebrow="Kundenbeispiel"
           title="Vom Ölkessel zur Wärmepumpe – in nur drei Tagen."
-          image="/hero-2.webp"
-          imageAlt="NOUH-WEHRES Monteur bei der Installation im Haus"
+          image="/lp/referenz-haus.webp"
+          imageAlt="Einfamilienhaus in der Region mit neu installierter Wärmepumpe"
           quote="Bemerkenswert war die kurze Zeitspanne von der Beratung bis zur Ausführung. Drei Tage waren für den Austausch eingeplant – am dritten Abend lief die Wärmepumpe. Wir sind froh, uns dafür entschieden zu haben."
           author="Familie S. aus Willich"
           bullets={[
@@ -190,9 +190,10 @@ export default function WaermepumpeBeratung() {
           title="Die Meister, die Ihre Wärmepumpe planen und einbauen."
           intro="Kein Callcenter, keine Subunternehmer. Ihr Ansprechpartner sitzt in der Region – von der Planung über die Montage bis zur Wartung."
           members={[
-            { photo: "/nouh-wehres.webp", role: "Geschäftsführung & Meister", sub: "Nouh-Wehres · Willich", focus: "center" },
-            { photo: "/team-2.webp", role: "Heizungsbau & Montage", sub: "Ihr Team vor Ort", focus: "center top" },
-            { photo: "/team-3.webp", role: "Kundendienst & Wartung", sub: "Ihr Team vor Ort", focus: "center top" },
+            { photo: "/lp/team-nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister" },
+            { photo: "/lp/team-kevin-bauer.webp", name: "Kevin Bauer", role: "Heizungsbaumeister" },
+            { photo: "/lp/team-sarah-klein.webp", name: "Sarah Klein", role: "Planung & Fördermittel" },
+            { photo: "/lp/team-thomas-richter.webp", name: "Thomas Richter", role: "Kundendienst & Wartung" },
           ]}
         />
 
@@ -243,8 +244,8 @@ export default function WaermepumpeBeratung() {
             "Ehrliche Einschätzung vom Meisterbetrieb",
             "Komplette Förderabwicklung inklusive",
           ]}
-          image="/team.webp"
-          imageAlt="NOUH-WEHRES Team vor dem Firmenfahrzeug"
+          image="/lp/beratung-wohnzimmer.webp"
+          imageAlt="Persönliche Beratung zur Wärmepumpe im Wohnzimmer"
           topic="Wärmepumpe · Beratung (Qualifizierung)"
           submitLabel="Beratungsgespräch anfordern"
         />
