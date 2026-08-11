@@ -97,10 +97,22 @@ export default function BadsanierungPage() {
           intro="Selbst geplant und gebaut – mit eigenem Team, festem Ansprechpartner und Festpreis. Ziehen Sie den Regler und sehen Sie den Unterschied."
           items={[
             {
-              before: "/projekte/3/1.webp",
-              after: "/projekte/3/2.webp",
+              before: "/bad/krefeld-vorher.jpg",
+              after: "/bad/krefeld-nachher.jpg",
               caption: "Komplettsanierung in Krefeld – in 3 Wochen fertig.",
               alt: "Badsanierung in Krefeld – vorher und nachher",
+            },
+            {
+              before: "/bad/viersen-vorher.jpg",
+              after: "/bad/viersen-nachher.jpg",
+              caption: "Dusche statt Wanne in Viersen – in 5 Tagen umgebaut.",
+              alt: "Dusche statt Wanne in Viersen – vorher und nachher",
+            },
+            {
+              before: "/bad/willich-vorher.jpg",
+              after: "/bad/willich-nachher.jpg",
+              caption: "Barrierefreies Bad in Willich – in 2 Wochen umgebaut.",
+              alt: "Barrierefreies Bad in Willich – vorher und nachher",
             },
           ]}
         />
