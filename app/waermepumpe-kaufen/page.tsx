@@ -194,8 +194,8 @@ export default function WaermepumpeKaufen() {
           intro="Kein Callcenter, keine Subunternehmer. Ihr Ansprechpartner sitzt in der Region – von der Planung über die Montage bis zur Wartung."
           members={[
             { photo: "/nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister", focus: "center" },
-            { photo: "/team-3.webp", name: "Heizung & Wärmepumpe", role: "Monteur · Willich", focus: "center top" },
-            { photo: "/team-2.webp", name: "Sanitär & Kundendienst", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/team-blau-monteur.jpg", name: "Heizung & Wärmepumpe", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/team-blau-meister.jpg", name: "Sanitär & Kundendienst", role: "Monteur · Willich", focus: "center top" },
           ]}
         />
 

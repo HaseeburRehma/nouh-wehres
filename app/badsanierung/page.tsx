@@ -168,8 +168,8 @@ export default function BadsanierungPage() {
           intro="Kein Callcenter, keine Subunternehmer: Bei uns kommen die Menschen zu Ihnen, die Ihr Bad wirklich bauen – seit 29 Jahren als Meisterbetrieb in der Region."
           members={[
             { photo: "/nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister", focus: "center" },
-            { photo: "/team-3.webp", name: "Fliesen & Sanitär", role: "Monteur · Willich", focus: "center top" },
-            { photo: "/team-2.webp", name: "Elektro & Trockenbau", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/team-blau-monteur.jpg", name: "Fliesen & Sanitär", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/team-blau-meister.jpg", name: "Elektro & Trockenbau", role: "Monteur · Willich", focus: "center top" },
           ]}
         />
 
