@@ -8,7 +8,14 @@ export interface LandingHeroProps {
   intro: string;
   checks: string[];
   badge: { small: string; big: string };
-  wizard: { name: string; topic: string; steps: WizardStep[] };
+  wizard: {
+    name: string;
+    topic: string;
+    steps: WizardStep[];
+    note?: string;
+    submitLabel?: string;
+    countContact?: boolean;
+  };
 }
 
 export default function LandingHero({
@@ -83,6 +90,9 @@ export default function LandingHero({
               name={wizard.name}
               topic={wizard.topic}
               steps={wizard.steps}
+              note={wizard.note}
+              submitLabel={wizard.submitLabel}
+              countContact={wizard.countContact}
             />
           </div>
         </div>

@@ -190,10 +190,9 @@ export default function WaermepumpeBeratung() {
           title="Die Meister, die Ihre Wärmepumpe planen und einbauen."
           intro="Kein Callcenter, keine Subunternehmer. Ihr Ansprechpartner sitzt in der Region – von der Planung über die Montage bis zur Wartung."
           members={[
-            { photo: "/lp/team-nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister" },
-            { photo: "/lp/team-kevin-bauer.webp", name: "Kevin Bauer", role: "Heizungsbaumeister" },
-            { photo: "/lp/team-sarah-klein.webp", name: "Sarah Klein", role: "Planung & Fördermittel" },
-            { photo: "/lp/team-thomas-richter.webp", name: "Thomas Richter", role: "Kundendienst & Wartung" },
+            { photo: "/nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister", focus: "center" },
+            { photo: "/team-3.webp", name: "Heizung & Wärmepumpe", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/team-2.webp", name: "Sanitär & Kundendienst", role: "Monteur · Willich", focus: "center top" },
           ]}
         />
 

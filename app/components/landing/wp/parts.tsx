@@ -379,11 +379,11 @@ export function Team({
           </h2>
           <p className="lead mt-4 text-muted">{intro}</p>
         </div>
-        <div className="reveal mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="reveal mx-auto mt-14 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((m, i) => (
             <article key={i} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
               <div
-                className="aspect-[4/5] w-full bg-[#e3e9ee]"
+                className="aspect-[4/5] w-full bg-brand-50"
                 style={{
                   backgroundImage: `url(${m.photo})`,
                   backgroundSize: "cover",
@@ -687,6 +687,112 @@ export function CtaBanner({
             </li>
           ))}
         </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ── VERSUS COMPARE (kein Vermittlerportal) ── */
+export function VersusCompare({
+  eyebrow,
+  title,
+  intro,
+  left,
+  right,
+}: {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  left: { title: string; sub: string; items: string[] };
+  right: { title: string; sub: string; items: string[] };
+}) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-5xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="lead mt-4 text-muted">{intro}</p>
+        </div>
+        <div className="reveal mt-12 grid gap-6 md:grid-cols-2">
+          {/* Vermittlerportale */}
+          <div className="rounded-2xl border border-line bg-surface/60 p-7">
+            <h3 className="text-lg font-bold text-ink">{left.title}</h3>
+            <p className="mt-0.5 text-sm text-muted">{left.sub}</p>
+            <ul className="mt-5 space-y-3">
+              {left.items.map((i) => (
+                <li key={i} className="flex items-start gap-3 text-[15px] text-muted">
+                  <span className="mt-0.5 inline-grid h-5 w-5 shrink-0 place-items-center rounded-full bg-red-100 text-red-600">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </span>
+                  {i}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Nouh-Wehres */}
+          <div className="rounded-2xl border-2 border-brand/40 bg-brand-50/40 p-7 shadow-sm">
+            <h3 className="text-lg font-extrabold text-brand">{right.title}</h3>
+            <p className="mt-0.5 text-sm text-muted">{right.sub}</p>
+            <ul className="mt-5 space-y-3">
+              {right.items.map((i) => (
+                <li key={i} className="flex items-start gap-3 text-[15px] font-medium text-ink">
+                  <span className="mt-0.5 inline-grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-white">
+                    <Check />
+                  </span>
+                  {i}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── RESULTS GRID (Vorher · Nachher) ── */
+export function ResultsGrid({
+  eyebrow,
+  title,
+  intro,
+  items,
+}: {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  items: { image: string; imageAlt: string; caption: string }[];
+}) {
+  return (
+    <section className="bg-surface py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.12]">
+            {title}
+          </h2>
+          <p className="lead mt-4 text-muted">{intro}</p>
+        </div>
+        <div className="reveal mt-14 grid gap-6 md:grid-cols-3">
+          {items.map((it) => (
+            <figure key={it.caption} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
+              <div className="relative">
+                <Image src={it.image} alt={it.imageAlt} width={1200} height={900} className="h-60 w-full object-cover" />
+                <span className="absolute left-3 top-3 rounded-full bg-ink/80 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white backdrop-blur">
+                  Vorher · Nachher
+                </span>
+              </div>
+              <figcaption className="px-5 py-4 text-[14px] font-medium text-ink">
+                {it.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   );

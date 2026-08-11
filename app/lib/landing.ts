@@ -21,6 +21,7 @@ export type IconKey =
 
 export type WizardStep =
   | { kind: "choice"; question: string; options: string[] }
+  | { kind: "text"; question: string; placeholder?: string; help?: string; optional?: boolean }
   | { kind: "contact"; question: string };
 
 export interface Stat {

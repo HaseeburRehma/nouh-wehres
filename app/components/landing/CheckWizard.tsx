@@ -7,6 +7,9 @@ type Props = {
   name: string; // e.g. "Ihr Festpreis-Rechner"
   topic: string;
   steps: WizardStep[];
+  note?: string; // subtitle after the step counter (default: "dauert nur 2 Minuten" on step 1)
+  submitLabel?: string; // final button label
+  countContact?: boolean; // include the contact step in the "Schritt X von N" count (default true)
 };
 
 type Contact = { name: string; email: string; tel: string; plz: string };
@@ -14,8 +17,17 @@ type Contact = { name: string; email: string; tel: string; plz: string };
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const telRe = /^[+(]?[\d][\d\s()/-]{5,19}$/;
 
-export default function CheckWizard({ name, topic, steps }: Props) {
+export default function CheckWizard({
+  name,
+  topic,
+  steps,
+  note,
+  submitLabel = "Ergebnis anfordern",
+  countContact = true,
+}: Props) {
   const total = steps.length;
+  const questionCount = steps.filter((s) => s.kind !== "contact").length;
+  const displayTotal = countContact ? total : questionCount;
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [contact, setContact] = useState<Contact>({
@@ -56,7 +68,9 @@ export default function CheckWizard({ name, topic, steps }: Props) {
   const message = useMemo(() => {
     const lines = steps
       .map((s, i) =>
-        s.kind === "choice" ? `${s.question} → ${answers[i] ?? "—"}` : null
+        s.kind === "choice" || s.kind === "text"
+          ? `${s.question} → ${answers[i] ?? "—"}`
+          : null
       )
       .filter(Boolean) as string[];
     if (contact.plz.trim()) lines.push(`PLZ / Ort: ${contact.plz.trim()}`);
@@ -135,10 +149,19 @@ export default function CheckWizard({ name, topic, steps }: Props) {
         </p>
         <div className="mt-3 flex items-center justify-between text-[13px] text-muted">
           <span>
-            Schritt <strong className="text-ink">{step + 1}</strong> von {total}
-            {current.kind === "choice" && step === 0
-              ? " · dauert nur 2 Minuten"
-              : ""}
+            {current.kind === "contact" && !countContact ? (
+              "Fast geschafft – nur noch Ihre Kontaktdaten"
+            ) : (
+              <>
+                Schritt <strong className="text-ink">{step + 1}</strong> von{" "}
+                {displayTotal}
+                {note
+                  ? ` · ${note}`
+                  : current.kind !== "contact" && step === 0
+                    ? " · dauert nur 2 Minuten"
+                    : ""}
+              </>
+            )}
           </span>
           <span className="font-semibold text-ink">
             {Math.round(progress)} %
@@ -190,6 +213,22 @@ export default function CheckWizard({ name, topic, steps }: Props) {
                 );
               })}
             </div>
+          </>
+        ) : current.kind === "text" ? (
+          <>
+            <h3 className="text-lg font-bold text-ink">{current.question}</h3>
+            {current.help && (
+              <p className="mt-1 text-[13px] text-muted">{current.help}</p>
+            )}
+            <input
+              type="text"
+              value={answers[step] ?? ""}
+              placeholder={current.placeholder}
+              onChange={(e) =>
+                setAnswers((a) => ({ ...a, [step]: e.target.value }))
+              }
+              className="mt-4 w-full rounded-lg border border-line bg-white px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-muted/60 focus:border-brand focus:ring-2 focus:ring-brand/20"
+            />
           </>
         ) : (
           <>
@@ -276,13 +315,22 @@ export default function CheckWizard({ name, topic, steps }: Props) {
             </button>
           )}
 
-          {current.kind === "choice" ? (
+          {current.kind !== "contact" ? (
             <button
               type="button"
-              onClick={() =>
-                answers[step] && setStep((s) => Math.min(s + 1, total - 1))
+              onClick={() => {
+                const v = answers[step];
+                const ok =
+                  current.kind === "text"
+                    ? current.optional || (!!v && v.trim().length > 0)
+                    : !!v;
+                if (ok) setStep((s) => Math.min(s + 1, total - 1));
+              }}
+              disabled={
+                current.kind === "choice"
+                  ? !answers[step]
+                  : !(current.optional || (answers[step] && answers[step].trim()))
               }
-              disabled={!answers[step]}
               className="btn-cta inline-flex flex-1 items-center justify-center rounded-full bg-brand px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50"
             >
               <span className="btn-label" data-text="Weiter →">
@@ -304,7 +352,7 @@ export default function CheckWizard({ name, topic, steps }: Props) {
                   Wird gesendet …
                 </>
               ) : (
-                "Ergebnis anfordern →"
+                `${submitLabel} →`
               )}
             </button>
           )}
