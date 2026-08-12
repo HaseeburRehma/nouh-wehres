@@ -81,6 +81,18 @@ export default function CheckWizard({
     setServerError(null);
     if (!validateContact()) return;
     setStatus("sending");
+
+    // Structured answers → one column per question in the Google Sheet.
+    const answerList = steps
+      .map((s, i) =>
+        s.kind === "choice" || s.kind === "text"
+          ? { q: s.question, a: (answers[i] ?? "").toString() }
+          : null
+      )
+      .filter(Boolean) as { q: string; a: string }[];
+    if (contact.plz.trim())
+      answerList.push({ q: "PLZ / Ort", a: contact.plz.trim() });
+
     try {
       const res = await fetch("/api/kontakt", {
         method: "POST",
@@ -91,6 +103,7 @@ export default function CheckWizard({
           tel: contact.tel.trim(),
           topic,
           message,
+          answers: answerList,
         }),
       });
       const json = await res.json().catch(() => ({}));

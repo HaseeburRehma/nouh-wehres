@@ -200,7 +200,7 @@ export default function WaermepumpeKaufen() {
           members={[
             { photo: "/nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister", focus: "center" },
             { photo: "/team-blau-monteur.jpg", name: "Heizung & Wärmepumpe", role: "Monteur · Willich", focus: "center top" },
-            { photo: "/team-blau-meister.jpg", name: "Sanitär & Kundendienst", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/team-blau-meister.jpg", name: "Jürgen Wehres", role: "SHK Meister", focus: "center top" },
           ]}
         />
 

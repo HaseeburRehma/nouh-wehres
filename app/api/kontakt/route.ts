@@ -30,6 +30,19 @@ export async function POST(req: Request) {
   const tel = String(data.tel ?? "").trim().slice(0, 40);
   const topic = String(data.topic ?? "").trim().slice(0, 80);
   const message = String(data.message ?? "").trim().slice(0, 4000);
+  // Structured wizard answers — one column per question in the Google Sheet.
+  const answers = Array.isArray(data.answers)
+    ? (data.answers as unknown[])
+        .map((x) => {
+          const o = (x ?? {}) as { q?: unknown; a?: unknown };
+          return {
+            q: String(o.q ?? "").trim().slice(0, 200),
+            a: String(o.a ?? "").trim().slice(0, 500),
+          };
+        })
+        .filter((o) => o.q)
+        .slice(0, 40)
+    : [];
   const honeypot = String(data.company ?? "").trim(); // spam trap
 
   // Bot filled the hidden field — silently accept and drop.
@@ -121,7 +134,7 @@ export async function POST(req: Request) {
     }
 
     // Also log the lead to Google Sheets (best-effort — never blocks the form).
-    await appendToSheet({ name, email, tel, topic, message });
+    await appendToSheet({ name, email, tel, topic, message, answers });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
@@ -139,6 +152,7 @@ async function appendToSheet(lead: {
   tel: string;
   topic: string;
   message: string;
+  answers: { q: string; a: string }[];
 }) {
   const url = process.env.GOOGLE_SHEET_WEBHOOK_URL;
   if (!url) return;

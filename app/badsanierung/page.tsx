@@ -174,7 +174,7 @@ export default function BadsanierungPage() {
           members={[
             { photo: "/nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister", focus: "center" },
             { photo: "/team-blau-monteur.jpg", name: "Fliesen & Sanitär", role: "Monteur · Willich", focus: "center top" },
-            { photo: "/team-blau-meister.jpg", name: "Elektro & Trockenbau", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/team-blau-meister.jpg", name: "Jürgen Wehres", role: "SHK Meister", focus: "center top" },
           ]}
         />
 

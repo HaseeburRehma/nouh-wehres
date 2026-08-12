@@ -50,6 +50,7 @@ export default function QualifyForm({
           tel: c.tel.trim(),
           topic,
           message: `${question} → ${owner === "ja" ? "Ja" : "Nein"}\nAnfrage über: ${topic}`,
+          answers: [{ q: question, a: owner === "ja" ? "Ja" : "Nein" }],
         }),
       });
       const json = await res.json().catch(() => ({}));
