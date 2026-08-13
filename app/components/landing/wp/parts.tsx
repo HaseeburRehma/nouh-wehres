@@ -289,18 +289,20 @@ export function CompareTable({
             {title}
           </h2>
         </div>
-        <div className="reveal no-scrollbar mt-12 overflow-x-auto">
-          <table className="w-full min-w-[620px] border-separate border-spacing-0">
+        <div className="reveal mt-12">
+          <table className="w-full table-fixed border-separate border-spacing-0">
             <thead>
               <tr>
-                <th className="w-[46%] p-4" />
-                <th className="w-[27%] p-2 align-bottom">
-                  <div className="rounded-t-xl bg-brand px-4 py-3 text-center leading-tight text-white">
-                    <div className="text-[15px] font-extrabold">Nouh-Wehres</div>
-                    <div className="text-[11px] font-medium text-white/80">Meisterbetrieb aus der Region</div>
+                <th className="w-[44%] p-1 sm:p-4" />
+                <th className="w-[28%] p-1 align-bottom sm:p-2">
+                  <div className="rounded-t-xl bg-brand px-2 py-2 text-center leading-tight text-white sm:px-4 sm:py-3">
+                    <div className="text-[13px] font-extrabold sm:text-[15px]">Nouh-Wehres</div>
+                    <div className="text-[10px] font-medium text-white/80 sm:text-[11px]">
+                      Meisterbetrieb aus der Region
+                    </div>
                   </div>
                 </th>
-                <th className="w-[27%] p-4 text-center align-bottom text-[15px] font-semibold text-muted">
+                <th className="w-[28%] p-2 text-center align-bottom text-[12px] font-semibold leading-tight text-muted sm:p-4 sm:text-[15px]">
                   {otherLabel}
                 </th>
               </tr>
@@ -310,29 +312,31 @@ export function CompareTable({
                 const last = i === rows.length - 1;
                 return (
                   <tr key={r.label}>
-                    <td className={`py-4 pr-4 text-[15px] font-medium text-ink ${last ? "" : "border-b border-line"}`}>
+                    <td className={`py-3 pr-2 text-[13px] font-medium leading-snug text-ink sm:py-4 sm:pr-4 sm:text-[15px] ${last ? "" : "border-b border-line"}`}>
                       {r.label}
                     </td>
-                    <td className={`bg-brand-50/50 px-4 py-4 text-center ${last ? "rounded-b-xl" : "border-b border-white"}`}>
-                      <span className="inline-grid h-7 w-7 place-items-center rounded-full bg-brand text-white">
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                    <td className={`bg-brand-50/50 px-2 py-3 text-center sm:px-4 sm:py-4 ${last ? "rounded-b-xl" : "border-b border-white"}`}>
+                      <span className="inline-grid h-6 w-6 place-items-center rounded-full bg-brand text-white sm:h-7 sm:w-7">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="20 6 9 17 4 12" />
                         </svg>
                       </span>
                     </td>
-                    <td className={`px-4 py-4 text-center ${last ? "" : "border-b border-line"}`}>
+                    <td className={`px-2 py-3 text-center sm:px-4 sm:py-4 ${last ? "" : "border-b border-line"}`}>
                       {r.other === "no" ? (
-                        <span className="inline-flex items-center gap-1.5 text-[14px] text-muted">
-                          <span className="inline-grid h-7 w-7 place-items-center rounded-full bg-red-100 text-red-600">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <span className="inline-flex flex-col items-center gap-1 text-[12px] text-muted sm:flex-row sm:gap-1.5 sm:text-[14px]">
+                          <span className="inline-grid h-6 w-6 place-items-center rounded-full bg-red-100 text-red-600 sm:h-7 sm:w-7">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                               <line x1="18" y1="6" x2="6" y2="18" />
                               <line x1="6" y1="6" x2="18" y2="18" />
                             </svg>
                           </span>
-                          {r.otherNote && <span>{r.otherNote}</span>}
+                          {r.otherNote && <span className="leading-tight">{r.otherNote}</span>}
                         </span>
                       ) : (
-                        <span className="text-[14px] text-muted">{r.otherNote}</span>
+                        <span className="text-[12px] leading-tight text-muted sm:text-[14px]">
+                          {r.otherNote}
+                        </span>
                       )}
                     </td>
                   </tr>
