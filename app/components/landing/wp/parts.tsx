@@ -724,12 +724,17 @@ export function CtaBanner({
           {title}
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-lg text-white/85">{text}</p>
-        <div className="mt-8">
-          <a href={href} className="btn-cta btn-cta--light inline-flex items-center rounded-full bg-accent px-8 py-4 font-bold text-ink shadow-lg transition-transform hover:-translate-y-0.5">
-            <span className="btn-label" data-text={`${button} →`}>{button} →</span>
+        <div className="mt-8 flex justify-center">
+          <a
+            href={href}
+            className="btn-cta btn-cta--light inline-flex max-w-full items-center justify-center rounded-full bg-accent px-6 py-3.5 text-center text-[14px] font-bold text-ink shadow-lg transition-transform hover:-translate-y-0.5 sm:px-8 sm:py-4 sm:text-base"
+          >
+            <span className="btn-label" data-text={`${button} →`}>
+              {button} →
+            </span>
           </a>
         </div>
-        <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/85">
+        <ul className="mx-auto mt-8 flex max-w-md flex-col items-center gap-2 text-sm text-white/85 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6">
           {checks.map((ch) => (
             <li key={ch} className="flex items-center gap-1.5">
               <span className="text-accent"><Check /></span>
