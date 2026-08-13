@@ -22,10 +22,14 @@ const cols = [
   },
 ];
 
-export default function Footer() {
+export default function Footer({ minimal = false }: { minimal?: boolean }) {
+  // Landing pages: no off-page exits. Hide the two link columns and collapse the grid.
+  const gridCls = minimal
+    ? "mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_1fr_2.2fr]"
+    : "mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_0.9fr_1fr_0.9fr_2.2fr]";
   return (
     <footer className="bg-ink text-white/70">
-      <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_0.9fr_1fr_0.9fr_2.2fr]">
+      <div className={gridCls}>
         <div className="lg:pr-4">
           {/* Weiße Logo-Variante aus Bildmarke + Wortmarke (korrekte Claim-Zeile) */}
           <div className="flex items-center gap-3">
@@ -72,7 +76,7 @@ export default function Footer() {
           </a>
         </div>
 
-        {cols.map((c) => (
+        {!minimal && cols.map((c) => (
           <div key={c.title}>
             <h4 className="text-sm font-bold uppercase tracking-wide text-white">
               {c.title}

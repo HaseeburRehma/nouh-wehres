@@ -20,6 +20,8 @@ const socials = [
 export default function Header({ minimal = false }: { minimal?: boolean }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // Landing pages have their own hero form — keep the CTA on-page.
+  const ctaHref = minimal ? "#top" : "/kontakt#anfrage";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -77,7 +79,11 @@ export default function Header({ minimal = false }: { minimal?: boolean }) {
         }`}
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
-          <a href="/" aria-label="NOUH-WEHRES Startseite" className="shrink-0">
+          <a
+            href={minimal ? "#top" : "/"}
+            aria-label="NOUH-WEHRES Startseite"
+            className="shrink-0"
+          >
             <Image
               src="/logo-wordmark.jpg"
               alt="NOUH-WEHRES – Heizung, Sanitär, Solar, Wärmepumpen, Sanierung"
@@ -115,7 +121,7 @@ export default function Header({ minimal = false }: { minimal?: boolean }) {
               </span>
             </a>
             <a
-              href="/kontakt#anfrage"
+              href={ctaHref}
               className="btn-cta rounded-full bg-brand px-6 py-3 text-[15px] font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
             >
               <span className="btn-label" data-text="Beratung anfragen">
@@ -126,7 +132,7 @@ export default function Header({ minimal = false }: { minimal?: boolean }) {
 
           {minimal ? (
             <a
-              href="/kontakt#anfrage"
+              href={ctaHref}
               className="btn-cta rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark lg:hidden"
             >
               <span className="btn-label" data-text="Beratung">
@@ -181,7 +187,7 @@ export default function Header({ minimal = false }: { minimal?: boolean }) {
                 </a>
               ))}
               <a
-                href="/kontakt#anfrage"
+                href={ctaHref}
                 onClick={() => setOpen(false)}
                 className="btn-cta mt-4 rounded-full bg-brand px-5 py-3 text-center font-semibold text-white"
               >

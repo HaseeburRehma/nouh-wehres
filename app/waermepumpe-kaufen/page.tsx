@@ -281,7 +281,7 @@ export default function WaermepumpeKaufen() {
           checks={["Antwort innerhalb von 24 Stunden", "Ohne Anzahlung", "10 Jahre Garantie"]}
         />
       </main>
-      <Footer />
+      <Footer minimal />
     </>
   );
 }

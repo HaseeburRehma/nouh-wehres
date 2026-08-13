@@ -263,7 +263,7 @@ export default function WaermepumpeBeratung() {
           checks={["Antwort innerhalb von 24 Stunden", "Bis zu 70 % Förderung", "Keine Subunternehmer"]}
         />
       </main>
-      <Footer />
+      <Footer minimal />
     </>
   );
 }

@@ -232,7 +232,7 @@ export default function BadsanierungPage() {
           checks={["Antwort innerhalb von 24 Stunden", "Festpreisgarantie", "Kein Vermittlerportal"]}
         />
       </main>
-      <Footer />
+      <Footer minimal />
     </>
   );
 }
