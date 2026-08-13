@@ -249,8 +249,8 @@ export default function WaermepumpeBeratung() {
             "Ehrliche Einschätzung vom Meisterbetrieb",
             "Komplette Förderabwicklung inklusive",
           ]}
-          image="/lp/beratung-wohnzimmer.webp"
-          imageAlt="Persönliche Beratung zur Wärmepumpe im Wohnzimmer"
+          image="/team-bosch.jpg"
+          imageAlt="Das NOUH-WEHRES Team – Guido Krüger, Maximilian Eid und Jürgen Wehres – bei einer Bosch Wärmepumpen-Installation"
           topic="Wärmepumpe · Beratung (Qualifizierung)"
           submitLabel="Beratungsgespräch anfordern"
         />
