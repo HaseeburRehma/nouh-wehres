@@ -172,8 +172,8 @@ export default function BadsanierungPage() {
           title="Das Team, das Ihr Bad baut."
           intro="Kein Callcenter, keine Subunternehmer: Bei uns kommen die Menschen zu Ihnen, die Ihr Bad wirklich bauen – seit 29 Jahren als Meisterbetrieb in der Region."
           members={[
-            { photo: "/nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister", focus: "center" },
-            { photo: "/team-blau-monteur.jpg", name: "Fliesen & Sanitär", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/nouh-wehres.webp", name: "Guido Krüger", role: "Kundendienst Monteur", focus: "center" },
+            { photo: "/team-blau-monteur.jpg", name: "Maximilian Eid", role: "Geselle", focus: "center top" },
             { photo: "/team-blau-meister.jpg", name: "Jürgen Wehres", role: "SHK Meister", focus: "center top" },
           ]}
         />

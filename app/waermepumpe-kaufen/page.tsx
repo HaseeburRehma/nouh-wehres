@@ -198,8 +198,8 @@ export default function WaermepumpeKaufen() {
           title="Das Team hinter Ihrem Festpreis."
           intro="Kein Callcenter, keine Subunternehmer. Ihr Ansprechpartner sitzt in der Region – von der Planung über die Montage bis zur Wartung."
           members={[
-            { photo: "/nouh-wehres.webp", name: "Nouh Wehres", role: "Geschäftsführer & Meister", focus: "center" },
-            { photo: "/team-blau-monteur.jpg", name: "Heizung & Wärmepumpe", role: "Monteur · Willich", focus: "center top" },
+            { photo: "/nouh-wehres.webp", name: "Guido Krüger", role: "Kundendienst Monteur", focus: "center" },
+            { photo: "/team-blau-monteur.jpg", name: "Maximilian Eid", role: "Geselle", focus: "center top" },
             { photo: "/team-blau-meister.jpg", name: "Jürgen Wehres", role: "SHK Meister", focus: "center top" },
           ]}
         />
