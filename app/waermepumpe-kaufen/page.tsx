@@ -268,8 +268,8 @@ export default function WaermepumpeKaufen() {
             "Ohne Anzahlung, 10 Jahre Garantie",
             "Komplette Förderabwicklung inklusive",
           ]}
-          image="/lp/team-van.webp"
-          imageAlt="Das NOUH-WEHRES Montageteam vor dem Firmenfahrzeug"
+          image="/team-bosch.jpg"
+          imageAlt="Das NOUH-WEHRES Team – Guido Krüger, Maximilian Eid und Jürgen Wehres – bei einer Bosch Wärmepumpen-Installation"
           topic="Wärmepumpe · Kaufen (Qualifizierung)"
           submitLabel="Festpreis-Angebot anfordern"
         />
