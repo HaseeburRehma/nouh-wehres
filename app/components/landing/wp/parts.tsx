@@ -555,7 +555,7 @@ export function TwoImage({
           </h2>
           <p className="lead mt-4 text-muted">{body}</p>
         </div>
-        <div className="reveal mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="reveal mt-14 grid gap-8 md:grid-cols-2">
           {items.map((it) => (
             <article key={it.title} className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
               <div className="overflow-hidden">

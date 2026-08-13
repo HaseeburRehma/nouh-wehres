@@ -121,21 +121,16 @@ export default function WaermepumpeKaufen() {
               text: "Puffer- und Warmwasserspeicher, hydraulischer Abgleich und Regelung – fachgerecht installiert und dokumentiert.",
             },
             {
-              image: "/lp/team-technikraum.jpg",
-              imageAlt: "Das NOUH-WEHRES Montageteam im Technikraum vor der eingebauten Anlage",
-              title: "Montage durch eigene Monteure",
-              text: "Keine Subunternehmer. Unser Team baut ein, nimmt in Betrieb und weist Sie persönlich ein.",
-            },
-            {
               images: [
+                "/lp/team-technikraum.jpg",
                 "/lp/waermepumpe-aussen-1.jpg",
                 "/lp/waermepumpe-aussen-2.jpg",
                 "/lp/waermepumpe-aussen-3.jpg",
                 "/lp/waermepumpe-aussen-4.jpg",
               ],
-              imageAlt: "Bosch Compress Außeneinheit fachgerecht installiert bei Kunden vor Ort",
-              title: "Außenaufstellung in der Praxis",
-              text: "Vier reale Installationen unserer Kunden – sauber platziert, gedämmt und ans Gebäude angepasst.",
+              imageAlt: "Das NOUH-WEHRES Montageteam und reale Außeneinheit-Installationen bei Kunden vor Ort",
+              title: "Montage durch eigene Monteure",
+              text: "Keine Subunternehmer. Unser Team baut ein, nimmt in Betrieb und weist Sie persönlich ein.",
             },
           ]}
         />
