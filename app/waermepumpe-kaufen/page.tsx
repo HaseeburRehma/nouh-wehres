@@ -115,20 +115,19 @@ export default function WaermepumpeKaufen() {
           body="Außen die Wärmepumpe, innen Speicher, Hydraulik und Regelung: sauber installiert, angeschlossen und dokumentiert."
           items={[
             {
-              image: "/lp/technikraum.webp",
-              imageAlt: "Innenaufstellung mit Speicher, Hydraulik und Regelung im Technikraum",
+              image: "/lp/team-technikraum.jpg",
+              imageAlt: "Das NOUH-WEHRES Montageteam im Technikraum vor der eingebauten Anlage",
               title: "Innenaufstellung & Hydraulik",
               text: "Puffer- und Warmwasserspeicher, hydraulischer Abgleich und Regelung – fachgerecht installiert und dokumentiert.",
             },
             {
               images: [
-                "/lp/team-technikraum.jpg",
                 "/lp/waermepumpe-aussen-1.jpg",
                 "/lp/waermepumpe-aussen-2.jpg",
                 "/lp/waermepumpe-aussen-3.jpg",
                 "/lp/waermepumpe-aussen-4.jpg",
               ],
-              imageAlt: "Das NOUH-WEHRES Montageteam und reale Außeneinheit-Installationen bei Kunden vor Ort",
+              imageAlt: "Bosch Compress Außeneinheit fachgerecht installiert bei Kunden vor Ort",
               title: "Montage durch eigene Monteure",
               text: "Keine Subunternehmer. Unser Team baut ein, nimmt in Betrieb und weist Sie persönlich ein.",
             },
