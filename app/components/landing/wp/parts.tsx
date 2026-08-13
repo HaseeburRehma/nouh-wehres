@@ -5,6 +5,7 @@ import type { IconKey, FaqItem } from "../../../lib/landing";
 import LandingFaq from "../LandingFaq";
 import QualifyForm from "./QualifyForm";
 import BeforeAfter from "./BeforeAfter";
+import ImageSlider from "./ImageSlider";
 
 /* ── shared bits ── */
 export function Eyebrow({ children }: { children: ReactNode }) {
@@ -542,7 +543,7 @@ export function TwoImage({
   eyebrow: string;
   title: string;
   body: string;
-  items: { image: string; imageAlt: string; title: string; text: string }[];
+  items: { image?: string; images?: string[]; imageAlt: string; title: string; text: string }[];
 }) {
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -554,11 +555,21 @@ export function TwoImage({
           </h2>
           <p className="lead mt-4 text-muted">{body}</p>
         </div>
-        <div className="reveal mt-14 grid gap-8 md:grid-cols-2">
+        <div className="reveal mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((it) => (
             <article key={it.title} className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
               <div className="overflow-hidden">
-                <Image src={it.image} alt={it.imageAlt} width={1400} height={900} className="h-64 w-full object-cover" />
+                {it.images && it.images.length > 1 ? (
+                  <ImageSlider images={it.images} alt={it.imageAlt} />
+                ) : (
+                  <Image
+                    src={it.image ?? it.images?.[0] ?? ""}
+                    alt={it.imageAlt}
+                    width={1400}
+                    height={900}
+                    className="h-64 w-full object-cover"
+                  />
+                )}
               </div>
               <div className="p-7">
                 <h3 className="text-lg font-bold text-ink">{it.title}</h3>
