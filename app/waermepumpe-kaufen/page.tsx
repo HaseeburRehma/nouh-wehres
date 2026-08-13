@@ -246,10 +246,6 @@ export default function WaermepumpeKaufen() {
               a: "Die Bosch Compress 5800 AW gibt es bei uns als Komplettpaket ab 11.900 € nach Abzug der Förderung – inklusive Speicher, Hydraulik, Elektrik, Montage und Inbetriebnahme. Den Endpreis nennen wir Ihnen nach dem kostenlosen Vor-Ort-Check.",
             },
             {
-              q: "Kann ich die Wärmepumpe finanzieren?",
-              a: "Ja. Auf Wunsch bieten wir eine faire Finanzierung ohne Anzahlung an – Raten ab ca. 89 € im Monat, abhängig von Anlage und Laufzeit.",
-            },
-            {
               q: "Wie viel Förderung bekomme ich – und wie stelle ich den Antrag?",
               a: "Je nach Ausgangslage sind bis zu 70 % Zuschuss möglich. Wir prüfen Ihre Förderfähigkeit, stellen die Anträge bei KfW und BAFA und ziehen die Förderung direkt vom Festpreis ab.",
             },
