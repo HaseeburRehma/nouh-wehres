@@ -180,15 +180,15 @@ export default function Footer({ minimal = false }: { minimal?: boolean }) {
               vorbehalten.
             </span>
             <div className="flex gap-6">
-            <a href="#" className="hover:text-brand">
-              Impressum
-            </a>
-            <a href="#" className="hover:text-brand">
-              Datenschutz
-            </a>
-            <a href="#" className="hover:text-brand">
-              AGB
-            </a>
+              <a href="/impressum" className="hover:text-brand">
+                Impressum
+              </a>
+              <a href="/datenschutz" className="hover:text-brand">
+                Datenschutz
+              </a>
+              <a href="/agb" className="hover:text-brand">
+                AGB
+              </a>
             </div>
           </div>
         </div>
