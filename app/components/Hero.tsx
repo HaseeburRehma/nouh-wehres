@@ -4,9 +4,9 @@ import HeroSlider from "./HeroSlider";
 const checks = ["Meisterqualität", "Festpreisgarantie", "Förder-Service"];
 
 const slides = [
-  { src: "/hero.webp", alt: "Bosch Wärmepumpen-Installation durch NOUH-WEHRES" },
-  { src: "/hero-2.webp", alt: "NOUH-WEHRES Monteur bei der Badsanierung" },
-  { src: "/hero-3.webp", alt: "NOUH-WEHRES Monteur vor dem Firmenfahrzeug" },
+  { src: "/hero-3.webp", alt: "Maximilian Eid – NOUH-WEHRES Geselle vor dem Firmenfahrzeug" },
+  { src: "/team-bosch.jpg", alt: "Das NOUH-WEHRES Team – Guido Krüger, Maximilian Eid und Jürgen Wehres im Bosch Technikraum" },
+  { src: "/projekte/5/1.webp", alt: "Heizungsmodernisierung durch NOUH-WEHRES" },
 ];
 
 export default function Hero() {

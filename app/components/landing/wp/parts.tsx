@@ -405,7 +405,9 @@ export function Team({
   eyebrow: string;
   title: string;
   intro: string;
-  members: { photo: string; name: string; role: string; focus?: string }[];
+  // `photo` is kept in the type for backwards-compat with old call sites,
+  // but is intentionally ignored: only the real group photo is shown.
+  members: { photo?: string; name: string; role: string; focus?: string }[];
 }) {
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -417,23 +419,39 @@ export function Team({
           </h2>
           <p className="lead mt-4 text-muted">{intro}</p>
         </div>
-        <div className="reveal mx-auto mt-14 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {members.map((m, i) => (
-            <article key={i} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
-              <div
-                className="aspect-[4/5] w-full bg-brand-50"
-                style={{
-                  backgroundImage: `url(${m.photo})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: m.focus ?? "center top",
-                }}
-              />
-              <div className="p-5">
-                <h3 className="font-bold text-ink">{m.name}</h3>
-                <p className="mt-0.5 text-sm font-semibold text-brand">{m.role}</p>
-              </div>
-            </article>
-          ))}
+
+        <div className="reveal mx-auto mt-14 grid max-w-6xl items-center gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
+          <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
+            <Image
+              src="/team-bosch.jpg"
+              alt={`Das NOUH-WEHRES Team: ${members.map((m) => m.name).join(", ")} im Bosch Technikraum`}
+              width={1600}
+              height={1289}
+              className="h-auto w-full object-cover"
+            />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-ink">Ihre Ansprechpartner</h3>
+            <p className="mt-2 text-[15px] text-muted">
+              Von der Beratung über die Montage bis zur Wartung – bei uns hat
+              alles ein Gesicht. Kein Callcenter, keine Subunternehmer.
+            </p>
+            <ul className="mt-6 divide-y divide-line rounded-2xl border border-line bg-white">
+              {members.map((m) => (
+                <li key={m.name} className="flex items-start gap-3 px-5 py-4">
+                  <span className="mt-1 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-50 text-sm font-bold text-brand">
+                    {m.name.charAt(0)}
+                  </span>
+                  <div>
+                    <div className="font-bold text-ink">{m.name}</div>
+                    <div className="text-sm font-semibold text-brand">
+                      {m.role}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

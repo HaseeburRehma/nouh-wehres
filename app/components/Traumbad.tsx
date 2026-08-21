@@ -59,8 +59,8 @@ export default function Traumbad() {
         <div className="reveal relative">
           <div className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-gradient-to-br from-brand-100 to-surface shadow-xl ring-1 ring-line">
             <Image
-              src="/bad.webp"
-              alt="Moderne Badsanierung durch NOUH-WEHRES"
+              src="/bad/krefeld-nachher.jpg"
+              alt="Komplettsanierung eines Bads in Krefeld durch NOUH-WEHRES"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"

@@ -72,8 +72,8 @@ export default function WaermepumpeKaufen() {
           intro="Bosch Compress Wärmepumpe, Planung, Speicher, Elektrik, Montage und Inbetriebnahme zum Komplettpreis. Ohne Anzahlung und mit 10 Jahren Garantie. Seit 29 Jahren Meisterbetrieb aus der Region."
           checks={["Bis zu 70 % Förderung", "Ohne Anzahlung", "10 Jahre Garantie"]}
           badge={{ small: "Angebot in", big: "24 Std." }}
-          bgImage="/lp/referenz-haus.webp"
-          bgImageAlt="Einfamilienhaus mit moderner Wärmepumpe"
+          bgImage="/lp/waermepumpe-aussen-1.jpg"
+          bgImageAlt="Bosch Wärmepumpe – Außenaufstellung durch NOUH-WEHRES"
           wizard={{
             name: "Ihr kostenloses Festpreis-Angebot",
             topic: "Wärmepumpe · Kaufen",
@@ -97,8 +97,8 @@ export default function WaermepumpeKaufen() {
           eyebrow="Ihr Komplettpaket"
           title="Bosch Compress Wärmepumpe – installiert zum Festpreis."
           body="Wir liefern und installieren die Luft-Wasser-Wärmepumpe Bosch Compress 5800 AW – effizient, leise und mit natürlichem Kältemittel. Ausgelegt auf Ihr Gebäude, nicht auf einen Katalogpreis."
-          image="/lp/bosch-compress.webp"
-          imageAlt="Bosch Compress Luft-Wasser-Wärmepumpe – Außeneinheit"
+          image="/lp/waermepumpe-aussen-2.jpg"
+          imageAlt="Bosch Compress Luft-Wasser-Wärmepumpe – installiert von NOUH-WEHRES"
           price="ab 11.900 €"
           priceNote="nach bis zu 70 % Förderung"
           priceSub="Gilt im Alt- und Neubau. Endpreis nach kostenlosem Vor-Ort-Check."
@@ -194,8 +194,8 @@ export default function WaermepumpeKaufen() {
             { value: "bis 70 %", label: "staatliche Förderung" },
             { value: "20.000 €", label: "Ersparnis über die Lebensdauer" },
           ]}
-          image="/lp/ersparnis-winter.webp"
-          imageAlt="Familie genießt im Winter ein warmes Zuhause dank effizienter Wärmepumpe"
+          image="/lp/waermepumpe-aussen-4.jpg"
+          imageAlt="Real installierte Wärmepumpe von NOUH-WEHRES – dauerhaft niedrige Heizkosten"
         />
 
         <Team
@@ -203,9 +203,9 @@ export default function WaermepumpeKaufen() {
           title="Das Team hinter Ihrem Festpreis."
           intro="Kein Callcenter, keine Subunternehmer. Ihr Ansprechpartner sitzt in der Region – von der Planung über die Montage bis zur Wartung."
           members={[
-            { photo: "/nouh-wehres.webp", name: "Guido Krüger", role: "Kundendienst Monteur", focus: "center" },
-            { photo: "/team-blau-monteur.jpg", name: "Maximilian Eid", role: "Geselle", focus: "center top" },
-            { photo: "/team-blau-meister.jpg", name: "Jürgen Wehres", role: "SHK Meister", focus: "center top" },
+            { name: "Guido Krüger", role: "Kundendienst Monteur" },
+            { name: "Maximilian Eid", role: "Geselle" },
+            { name: "Jürgen Wehres", role: "SHK Meister" },
           ]}
         />
 

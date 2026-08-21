@@ -1,54 +1,55 @@
-import Image from "next/image";
 import Carousel from "./Carousel";
-
-const avatars = [
-  "/rev-1.png",
-  "/rev-2.png",
-  "/rev-3.png",
-  "/rev-4.png",
-  "/rev-5.png",
-  "/rev-6.png",
-];
 
 // Echte Google-Rezensionen. Orte = Einsatzgebiet (bei Bedarf anpassen).
 const reviews = [
   {
     name: "Mohamed Cheffadi",
     city: "Willich",
-    avatar: avatars[0],
     text: "Ich bin absolut begeistert! Meine alte Heizung wurde professionell ausgebaut und durch eine moderne, hocheffiziente Anlage ersetzt. Von der Beratung bis zur Installation lief alles reibungslos – pünktlich, sauber und präzise. Absolute Weiterempfehlung!",
   },
   {
     name: "Khalil Nibou",
     city: "Krefeld",
-    avatar: avatars[1],
     text: "Von der Planung bis zur Ausführung – alles top! Die Beratung war klasse, man hat sich sicher gefühlt und alles aus einer Hand bekommen. Vielen Dank an das Team, das Ergebnis kann sich sehen lassen!",
   },
   {
     name: "Beate Leister",
     city: "Viersen",
-    avatar: avatars[2],
     text: "Nach dem Defekt unserer 27 Jahre alten Gasheizung war das Team innerhalb weniger Stunden da. Die Monteure arbeiteten gewissenhaft, sauber und schnell, dazu eine super Einweisung. Mega top – 100 % Weiterempfehlung!",
   },
   {
     name: "Marco Jerkovic",
     city: "Mönchengladbach",
-    avatar: avatars[3],
     text: "Sämtliche Arbeiten wurden sauber, pünktlich und zu meiner vollsten Zufriedenheit ausgeführt. Obwohl der Plan mehrmals geändert wurde, blieben die veranschlagten Kosten stabil. Ein eingespieltes Team – wärmstens zu empfehlen!",
   },
   {
     name: "Frank Tovornik",
     city: "Nettetal",
-    avatar: avatars[4],
     text: "Wir haben Neu-Installationen erfolgreich mit dem Team realisiert, die Wartung erfolgt termingerecht. Freundliche und zuverlässige Menschen – die Zusammenarbeit macht einfach Freude.",
   },
   {
     name: "C. K.",
     city: "Kempen",
-    avatar: avatars[5],
     text: "Sehr guter Service. Zeitnaher Termin, freundlicher Monteur und ein angemessener Preis. Jederzeit gerne wieder!",
   },
 ];
+
+// Fixed palette so the same name always gets the same background color.
+const AVATAR_COLORS = [
+  "bg-brand text-white",
+  "bg-amber-500 text-white",
+  "bg-emerald-600 text-white",
+  "bg-rose-500 text-white",
+  "bg-indigo-500 text-white",
+  "bg-slate-700 text-white",
+];
+
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  const first = parts[0]?.charAt(0) ?? "";
+  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : "";
+  return (first + last).toUpperCase().replace(/\./g, "");
+}
 
 export default function Testimonials() {
   return (
@@ -67,21 +68,15 @@ export default function Testimonials() {
             überzeugen Sie sich von unserer Handwerksqualität.
           </p>
 
-          {/* Avatar-Reihe */}
-          <div className="mt-7 flex items-center justify-center -space-x-3">
-            {avatars.map((a) => (
+          {/* Initial-Reihe (aus echten Rezensent:innen-Namen, keine Fotos) */}
+          <div className="mt-7 flex items-center justify-center -space-x-2">
+            {reviews.map((r, i) => (
               <span
-                key={a}
-                className="inline-block h-11 w-11 overflow-hidden rounded-full ring-2 ring-white"
+                key={r.name}
+                className={`inline-grid h-11 w-11 place-items-center rounded-full text-sm font-bold ring-2 ring-white ${AVATAR_COLORS[i % AVATAR_COLORS.length]}`}
+                aria-label={r.name}
               >
-                <Image
-                  src={a}
-                  alt=""
-                  width={44}
-                  height={44}
-                  unoptimized
-                  className="h-full w-full object-cover"
-                />
+                {initials(r.name)}
               </span>
             ))}
           </div>
@@ -96,14 +91,12 @@ export default function Testimonials() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <Image
-                      src={r.avatar}
-                      alt={r.name}
-                      width={44}
-                      height={44}
-                      unoptimized
-                      className="h-11 w-11 rounded-full object-cover"
-                    />
+                    <span
+                      className={`inline-grid h-11 w-11 place-items-center rounded-full text-sm font-bold ${AVATAR_COLORS[idx % AVATAR_COLORS.length]}`}
+                      aria-hidden
+                    >
+                      {initials(r.name)}
+                    </span>
                     <div className="leading-tight">
                       <strong className="block font-bold text-ink">
                         {r.name}

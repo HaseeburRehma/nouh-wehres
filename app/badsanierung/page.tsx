@@ -70,8 +70,8 @@ export default function BadsanierungPage() {
           intro="Beantworten Sie 6 kurze Fragen und erhalten Sie Ihre kostenlose Festpreis-Einschätzung – direkt von uns, nicht von einem Vermittlerportal."
           checks={["Festpreisgarantie", "Alle Gewerke aus einer Hand", "Kein Vermittlerportal"]}
           badge={{ small: "gratis", big: "30 Sek" }}
-          bgImage="/bad.webp"
-          bgImageAlt="Modernes saniertes Badezimmer"
+          bgImage="/bad/krefeld-nachher.jpg"
+          bgImageAlt="Real saniertes Badezimmer in Krefeld von NOUH-WEHRES"
           wizard={{
             name: "Was kostet Ihr neues Bad?",
             topic: "Badsanierung · Festpreis-Einschätzung",
@@ -172,9 +172,9 @@ export default function BadsanierungPage() {
           title="Das Team, das Ihr Bad baut."
           intro="Kein Callcenter, keine Subunternehmer: Bei uns kommen die Menschen zu Ihnen, die Ihr Bad wirklich bauen – seit 29 Jahren als Meisterbetrieb in der Region."
           members={[
-            { photo: "/nouh-wehres.webp", name: "Guido Krüger", role: "Kundendienst Monteur", focus: "center" },
-            { photo: "/team-blau-monteur.jpg", name: "Maximilian Eid", role: "Geselle", focus: "center top" },
-            { photo: "/team-blau-meister.jpg", name: "Jürgen Wehres", role: "SHK Meister", focus: "center top" },
+            { name: "Guido Krüger", role: "Kundendienst Monteur" },
+            { name: "Maximilian Eid", role: "Geselle" },
+            { name: "Jürgen Wehres", role: "SHK Meister" },
           ]}
         />
 

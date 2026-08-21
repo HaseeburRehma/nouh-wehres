@@ -52,8 +52,8 @@ export default function Why() {
         <div className="reveal relative order-2 lg:order-1">
           <div className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-gradient-to-br from-brand-100 to-surface shadow-xl ring-1 ring-line">
             <Image
-              src="/team.webp"
-              alt="NOUH-WEHRES Team vor dem Firmenfahrzeug"
+              src="/team-bosch.jpg"
+              alt="Das NOUH-WEHRES Team – Guido Krüger, Maximilian Eid und Jürgen Wehres im Bosch Technikraum"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"

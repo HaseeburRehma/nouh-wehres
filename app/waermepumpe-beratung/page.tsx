@@ -63,8 +63,8 @@ export default function WaermepumpeBeratung() {
           intro="Bis zu 70 % Förderung, ohne Anzahlung und als Komplettpreis mit eigener Montage. Wir prüfen ehrlich, ob sich eine Wärmepumpe für Ihr Zuhause lohnt – und welche Förderung Ihnen zusteht. Seit 29 Jahren Meisterbetrieb aus der Region."
           checks={["Bis zu 70 % Förderung", "Ohne Anzahlung", "Komplettpreis inkl. Montage"]}
           badge={{ small: "bis zu", big: "70 % Förderung" }}
-          bgImage="/lp/referenz-haus.webp"
-          bgImageAlt="Einfamilienhaus mit moderner Wärmepumpe"
+          bgImage="/lp/waermepumpe-aussen-1.jpg"
+          bgImageAlt="Bosch Wärmepumpe – Außenaufstellung durch NOUH-WEHRES"
           wizard={{
             name: "Ihr kostenloser Wärmepumpen-Check",
             topic: "Wärmepumpe · Beratung",
@@ -95,8 +95,8 @@ export default function WaermepumpeBeratung() {
             "Natürliches Kältemittel Propan (R290)",
             "Auch für Bestandsgebäude und bestehende Heizkörper",
           ]}
-          image="/lp/wp-aussen.webp"
-          imageAlt="Moderne Luft-Wasser-Wärmepumpe von Bosch, installiert an einem Einfamilienhaus"
+          image="/lp/waermepumpe-aussen-2.jpg"
+          imageAlt="Bosch Luft-Wasser-Wärmepumpe, installiert von NOUH-WEHRES"
         />
 
         <BenefitCards
@@ -153,8 +153,8 @@ export default function WaermepumpeBeratung() {
         <TestimonialFeature
           eyebrow="Kundenbeispiel"
           title="Vom Ölkessel zur Wärmepumpe – in nur drei Tagen."
-          image="/lp/referenz-haus.webp"
-          imageAlt="Einfamilienhaus in der Region mit neu installierter Wärmepumpe"
+          image="/lp/waermepumpe-aussen-3.jpg"
+          imageAlt="Real installierte Bosch Wärmepumpe von NOUH-WEHRES bei einem Kunden in der Region"
           quote="Bemerkenswert war die kurze Zeitspanne von der Beratung bis zur Ausführung. Drei Tage waren für den Austausch eingeplant – am dritten Abend lief die Wärmepumpe. Wir sind froh, uns dafür entschieden zu haben."
           author="Familie S. aus Willich"
           bullets={[
@@ -196,9 +196,9 @@ export default function WaermepumpeBeratung() {
           title="Die Meister, die Ihre Wärmepumpe planen und einbauen."
           intro="Kein Callcenter, keine Subunternehmer. Ihr Ansprechpartner sitzt in der Region – von der Planung über die Montage bis zur Wartung."
           members={[
-            { photo: "/nouh-wehres.webp", name: "Guido Krüger", role: "Kundendienst Monteur", focus: "center" },
-            { photo: "/team-blau-monteur.jpg", name: "Maximilian Eid", role: "Geselle", focus: "center top" },
-            { photo: "/team-blau-meister.jpg", name: "Jürgen Wehres", role: "SHK Meister", focus: "center top" },
+            { name: "Guido Krüger", role: "Kundendienst Monteur" },
+            { name: "Maximilian Eid", role: "Geselle" },
+            { name: "Jürgen Wehres", role: "SHK Meister" },
           ]}
         />
 
