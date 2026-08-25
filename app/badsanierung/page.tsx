@@ -171,6 +171,8 @@ export default function BadsanierungPage() {
           eyebrow="Unser Team"
           title="Das Team, das Ihr Bad baut."
           intro="Kein Callcenter, keine Subunternehmer: Bei uns kommen die Menschen zu Ihnen, die Ihr Bad wirklich bauen – seit 29 Jahren als Meisterbetrieb in der Region."
+          groupPhoto="/bad-monteur.webp"
+          groupPhotoAlt="NOUH-WEHRES Monteur bei einer Badsanierung"
           members={[
             { name: "Guido Krüger", role: "Kundendienst Monteur" },
             { name: "Maximilian Eid", role: "Geselle" },

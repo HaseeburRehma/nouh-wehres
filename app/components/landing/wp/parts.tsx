@@ -401,13 +401,17 @@ export function Team({
   title,
   intro,
   members,
+  groupPhoto = "/team-bosch.jpg",
+  groupPhotoAlt,
 }: {
   eyebrow: string;
   title: string;
   intro: string;
   // `photo` is kept in the type for backwards-compat with old call sites,
-  // but is intentionally ignored: only the real group photo is shown.
+  // but is intentionally ignored: only the section-level groupPhoto is shown.
   members: { photo?: string; name: string; role: string; focus?: string }[];
+  groupPhoto?: string;
+  groupPhotoAlt?: string;
 }) {
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -423,8 +427,11 @@ export function Team({
         <div className="reveal mx-auto mt-14 grid max-w-6xl items-center gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
           <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
             <Image
-              src="/team-bosch.jpg"
-              alt={`Das NOUH-WEHRES Team: ${members.map((m) => m.name).join(", ")} im Bosch Technikraum`}
+              src={groupPhoto}
+              alt={
+                groupPhotoAlt ??
+                `Das NOUH-WEHRES Team: ${members.map((m) => m.name).join(", ")}`
+              }
               width={1600}
               height={1289}
               className="h-auto w-full object-cover"
