@@ -27,10 +27,10 @@ export default function Team() {
         <div className="reveal mx-auto mt-14 grid max-w-6xl items-center gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
           <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-line">
             <Image
-              src="/team-bosch.jpg"
-              alt="Das NOUH-WEHRES Team: Guido Krüger, Maximilian Eid und Jürgen Wehres im Bosch Technikraum"
-              width={1600}
-              height={1289}
+              src="/bad-monteur.webp"
+              alt="NOUH-WEHRES Monteur bei einer Badsanierung"
+              width={4800}
+              height={3584}
               className="h-auto w-full object-cover"
             />
           </div>
