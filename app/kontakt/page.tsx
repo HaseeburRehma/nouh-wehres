@@ -36,7 +36,7 @@ const cards = [
   {
     label: "Standort",
     value: "Unterbruch 48b",
-    sub: "47877 Willich",
+    sub: "47877 Willich & Umgebung",
     icon: (
       <>
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
@@ -70,7 +70,37 @@ export default function Kontakt() {
               </p>
             </div>
 
-            <div className="reveal mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Big promise banner: offer within 24 h */}
+            <div className="reveal mx-auto mt-10 flex max-w-3xl items-center justify-center gap-4 rounded-2xl bg-accent px-6 py-6 text-ink shadow-lg sm:gap-5 sm:px-8 sm:py-7">
+              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-ink/10 sm:h-16 sm:w-16">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="28"
+                  height="28"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <polyline points="12 7 12 12 15 14" />
+                </svg>
+              </span>
+              <div className="min-w-0 text-left">
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-ink/70">
+                  Unser Versprechen
+                </p>
+                <p className="text-2xl font-extrabold tracking-[-0.01em] sm:text-3xl lg:text-[34px] lg:leading-tight">
+                  Angebot in 24 Stunden
+                </p>
+                <p className="mt-0.5 text-sm text-ink/75">
+                  Kostenlos, unverbindlich – direkt vom Meisterbetrieb.
+                </p>
+              </div>
+            </div>
+
+            <div className="reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {cards.map((c) => {
                 const inner = (
                   <>
