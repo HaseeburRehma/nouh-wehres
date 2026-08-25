@@ -70,8 +70,8 @@ export default function BadsanierungPage() {
           intro="Beantworten Sie 6 kurze Fragen und erhalten Sie Ihre kostenlose Festpreis-Einschätzung – direkt von uns, nicht von einem Vermittlerportal."
           checks={["Festpreisgarantie", "Alle Gewerke aus einer Hand", "Kein Vermittlerportal"]}
           badge={{ small: "gratis", big: "30 Sek" }}
-          bgImage="/bad/krefeld-nachher.jpg"
-          bgImageAlt="Real saniertes Badezimmer in Krefeld von NOUH-WEHRES"
+          bgImage="/bad-monteur.webp"
+          bgImageAlt="NOUH-WEHRES Monteur bei einer Badsanierung"
           wizard={{
             name: "Was kostet Ihr neues Bad?",
             topic: "Badsanierung · Festpreis-Einschätzung",
