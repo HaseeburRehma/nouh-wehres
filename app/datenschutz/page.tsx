@@ -187,13 +187,44 @@ export default function Datenschutz() {
         (§ 25 Abs. 2 Nr. 2 TTDSG).
       </p>
 
-      <h2>9. Analyse- und Werbe-Tools</h2>
+      <h2>9. Meta-Pixel und Conversions API (nur mit Einwilligung)</h2>
       <p>
-        Wir setzen derzeit keine externen Analyse- oder Werbe-Tools ein (kein
-        Google Analytics, kein Meta-Pixel, kein Retargeting). Sofern sich dies
-        künftig ändern sollte, werden wir Sie zuvor über die eingesetzten
-        Dienste informieren und – wo erforderlich – Ihre Einwilligung
-        einholen.
+        Auf unserer Website setzen wir – ausschließlich mit Ihrer vorher
+        erteilten Einwilligung – den „Meta-Pixel“ der Meta Platforms Ireland
+        Limited, Merrion Road, Dublin 4, D04 X2K5, Irland („Meta“) ein.
+        Zusätzlich übermitteln wir bei erfolgreicher Formularsendung ein
+        Ereignis über die serverseitige Conversions API (CAPI) von Meta. Beide
+        Wege werden über eine gemeinsame Ereignis-ID entdupliziert.
+      </p>
+      <p>
+        Verarbeitete Daten: Cookies (u. a. <em>_fbp</em>, <em>_fbc</em>),
+        IP-Adresse, User-Agent, aufgerufene URL, sowie – bei
+        Formularübermittlung – gehashte (SHA-256) Kontaktdaten (E-Mail,
+        Telefon, Vor-/Nachname, PLZ, Land). Zweck ist die Reichweiten- und
+        Werbeerfolgsmessung sowie das Ausspielen personalisierter Werbung.
+      </p>
+      <p>
+        Rechtsgrundlage ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO
+        i. V. m. § 25 Abs. 1 TTDSG. Sie können Ihre Einwilligung jederzeit mit
+        Wirkung für die Zukunft widerrufen, indem Sie in Ihrem Browser die für
+        diese Domain gespeicherten Daten löschen (Cookies + lokaler Speicher).
+      </p>
+      <p>
+        Meta verarbeitet die Daten auch in den USA. Die Übermittlung erfolgt
+        auf Basis der EU-Standardvertragsklauseln und – soweit anwendbar – des
+        EU-US Data Privacy Framework. Weitere Informationen:{" "}
+        <a
+          href="https://www.facebook.com/privacy/policy"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Datenschutzrichtlinie von Meta
+        </a>
+        .
+      </p>
+      <p>
+        Solange Sie keine Einwilligung erteilen, lädt und aktiviert sich der
+        Meta-Pixel nicht und es werden keine Ereignisse an Meta übertragen.
       </p>
 
       <h2>10. SSL-/TLS-Verschlüsselung</h2>

@@ -106,9 +106,14 @@ export default function AnfrageForm() {
             | null)?.value,
         }),
       });
-      const json = await res.json().catch(() => ({}));
+      const json = await res.json().catch(() => ({} as { error?: string; eventId?: string }));
       if (!res.ok)
         throw new Error(json?.error || "Die Anfrage konnte nicht gesendet werden.");
+      // Fire Meta Pixel Lead (dedup via eventId returned from the server).
+      if (json?.eventId) {
+        const { firePixelLead } = await import("../lib/meta-pixel-client");
+        firePixelLead(json.eventId, { content_name: topic || "Kontaktanfrage" });
+      }
       setStatus("sent");
     } catch (err) {
       setStatus("error");

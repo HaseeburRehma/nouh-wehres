@@ -53,9 +53,15 @@ export default function QualifyForm({
           answers: [{ q: question, a: owner === "ja" ? "Ja" : "Nein" }],
         }),
       });
-      const json = await res.json().catch(() => ({}));
+      const json = await res.json().catch(
+        () => ({} as { error?: string; eventId?: string })
+      );
       if (!res.ok)
         throw new Error(json?.error || "Die Anfrage konnte nicht gesendet werden.");
+      if (json?.eventId) {
+        const { firePixelLead } = await import("../../../lib/meta-pixel-client");
+        firePixelLead(json.eventId, { content_name: topic });
+      }
       setStatus("sent");
     } catch (err) {
       setStatus("error");

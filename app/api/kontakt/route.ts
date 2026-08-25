@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import crypto from "node:crypto";
+import { sendCapiEvent } from "../../lib/meta-capi";
 
 // Where form submissions are delivered, and the verified sender address.
 // Set these in .env.local (dev) and in Vercel project env vars (production).
@@ -136,7 +138,42 @@ export async function POST(req: Request) {
     // Also log the lead to Google Sheets (best-effort — never blocks the form).
     await appendToSheet({ name, email, tel, topic, message, answers });
 
-    return NextResponse.json({ ok: true });
+    // Fire a Meta CAPI Lead event, deduplicated with the client-side pixel via
+    // event_id. Read Meta cookies + IP + UA from the request for match quality.
+    const eventId = crypto.randomUUID();
+    const cookie = req.headers.get("cookie") ?? "";
+    const readCookie = (n: string) =>
+      cookie
+        .split(";")
+        .map((c) => c.trim())
+        .find((c) => c.startsWith(n + "="))
+        ?.slice(n.length + 1);
+    const [firstName, ...restName] = name.split(/\s+/);
+    await sendCapiEvent({
+      eventName: "Lead",
+      eventId,
+      eventSourceUrl: req.headers.get("referer") ?? undefined,
+      userData: {
+        email,
+        phone: tel || undefined,
+        firstName: firstName || undefined,
+        lastName: restName.join(" ") || undefined,
+        country: "de",
+        ipAddress:
+          req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+          undefined,
+        userAgent: req.headers.get("user-agent") ?? undefined,
+        fbc: readCookie("_fbc"),
+        fbp: readCookie("_fbp"),
+      },
+      customData: {
+        content_name: topic || "Kontaktanfrage",
+        content_category: "form",
+      },
+    });
+
+    // Return eventId so the client-side pixel can fire the matching Lead event.
+    return NextResponse.json({ ok: true, eventId });
   } catch (err) {
     console.error("Contact form send failed:", err);
     return NextResponse.json({ error: "Serverfehler." }, { status: 500 });
