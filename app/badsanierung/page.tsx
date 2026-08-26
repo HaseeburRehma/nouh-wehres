@@ -5,7 +5,9 @@ import GsapReveal from "../components/GsapReveal";
 import LandingHero from "../components/landing/LandingHero";
 import {
   StatsRow,
+  MeisterFeature,
   BeforeAfterResults,
+  LiveViz,
   VersusCompare,
   StepsRow,
   Team,
@@ -91,6 +93,23 @@ export default function BadsanierungPage() {
           ]}
         />
 
+        {/* Section A — "Jürgen the Meister" (per Dev-Handoff PDF) */}
+        <MeisterFeature
+          eyebrow="Der Meister hinter Ihrem Bad"
+          title="Kein Callcenter. Kein Vermittler. Ein Meister."
+          body="Bei uns bekommen Sie keine anonyme Vermittlung, die Ihre Anfrage an drei fremde Firmen verkauft. Sie bekommen Jürgen Wehres, SHK Meister – und ein Team, das Ihr Bad wirklich baut. Seit 29 Jahren, aus der Region, mit einem festen Ansprechpartner von der ersten Skizze bis zur Übergabe."
+          quote="Ich baue seit 29 Jahren Bäder in der Region – und stehe mit meinem Namen für jedes einzelne."
+          quoteAuthor="Jürgen Wehres, SHK Meister · Nouh-Wehres GmbH"
+          photo="/juergen-portrait.jpg"
+          photoLabel="Jürgen Wehres · SHK Meister"
+          stats={[
+            { value: "29 Jahre", label: "Meisterbetrieb" },
+            { value: "Alle", label: "Gewerke aus einer Hand" },
+            { value: "Festpreis", label: "garantiert, keine Nachträge" },
+            { value: "24 Std.", label: "Angebot nach Anfrage" },
+          ]}
+        />
+
         <BeforeAfterResults
           eyebrow="Vorher · Nachher"
           title="Echte Bäder. Echte Projekte. Aus Ihrer Region."
@@ -115,6 +134,23 @@ export default function BadsanierungPage() {
               alt: "Barrierefreies Bad in Willich – vorher und nachher",
             },
           ]}
+        />
+
+        {/* Section B — "Live 3D visualisation" (per Dev-Handoff PDF) */}
+        <LiveViz
+          chip="Kostenlos & vor Ort"
+          eyebrow="Sehen statt vorstellen"
+          title="Sehen Sie Ihr neues Bad – bevor wir bauen."
+          body="Kein Rätselraten, kein böses Erwachen: Unser Geschäftsführer visualisiert Ihr neues Bad live bei Ihnen zu Hause. Sie sehen Fliesen, Dusche, Waschtisch und Anordnung in 3D – und entscheiden gemeinsam, bevor die erste Fliese fällt. Das kann kein Vermittlerportal."
+          bullets={[
+            "Live bei Ihnen zu Hause",
+            "Gemeinsam entscheiden",
+            "Festpreis auf Basis Ihrer echten Planung",
+          ]}
+          cta="Termin für Ihre Live-Visualisierung sichern"
+          ctaHref="#top"
+          image="/bad/willich-nachher.jpg"
+          imageAlt="Live-Visualisierung eines geplanten Bads – Beispiel eines fertig umgesetzten Bads von NOUH-WEHRES"
         />
 
         <VersusCompare

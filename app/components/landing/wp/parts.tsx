@@ -772,6 +772,164 @@ export function CtaBanner({
   );
 }
 
+/* ── MEISTER FEATURE (Section A — Jürgen the SHK Meister) ── */
+export function MeisterFeature({
+  eyebrow,
+  title,
+  body,
+  quote,
+  quoteAuthor,
+  photo,
+  photoLabel,
+  stats,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  quote: string;
+  quoteAuthor: string;
+  photo: string;
+  photoLabel: string;
+  stats: { value: string; label: string }[];
+}) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="reveal grid items-start gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-14">
+          {/* Portrait card */}
+          <div className="relative overflow-hidden rounded-2xl bg-surface shadow-sm ring-1 ring-line">
+            <Image
+              src={photo}
+              alt={photoLabel}
+              width={800}
+              height={1050}
+              className="h-full w-full object-cover"
+            />
+            <span className="absolute inset-x-0 bottom-0 bg-ink/80 px-5 py-3 text-sm font-bold text-white backdrop-blur">
+              {photoLabel}
+            </span>
+          </div>
+          {/* Copy + quote */}
+          <div>
+            <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
+              {eyebrow}
+            </p>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+              {title}
+            </h2>
+            <p className="lead mt-5 text-muted">{body}</p>
+            <blockquote className="mt-6 rounded-2xl border border-brand/25 bg-brand-50/40 p-6">
+              <span className="mb-2 block text-2xl leading-none text-brand" aria-hidden>
+                „
+              </span>
+              <p className="text-[17px] font-semibold leading-relaxed text-ink">
+                {quote}
+              </p>
+              <footer className="mt-3 text-sm font-bold text-brand">
+                — {quoteAuthor}
+              </footer>
+            </blockquote>
+          </div>
+        </div>
+        {/* Stat tiles (2×2 mobile → 4-up desktop) */}
+        <div className="reveal mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="rounded-2xl border border-line bg-white p-5 text-center shadow-sm"
+            >
+              <div className="text-2xl font-extrabold tracking-[-0.02em] text-brand sm:text-[28px]">
+                {s.value}
+              </div>
+              <div className="mt-1 text-[13px] font-medium text-muted">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── LIVE 3D VISUALISATION (Section B) ── */
+export function LiveViz({
+  chip,
+  eyebrow,
+  title,
+  body,
+  bullets,
+  cta,
+  ctaHref,
+  image,
+  imageAlt,
+  imageCaption,
+}: {
+  chip: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  bullets: string[];
+  cta: string;
+  ctaHref: string;
+  image: string;
+  imageAlt: string;
+  imageCaption?: string;
+}) {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-14">
+        {/* Image + chip */}
+        <div className="relative order-1 overflow-hidden rounded-2xl bg-surface shadow-sm ring-1 ring-line lg:order-none">
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={1400}
+            height={1000}
+            className="h-full w-full object-cover"
+          />
+          <span className="absolute left-4 top-4 rounded-full bg-accent px-4 py-1.5 text-[12px] font-bold uppercase tracking-wide text-ink shadow">
+            {chip}
+          </span>
+          {imageCaption && (
+            <span className="absolute inset-x-0 bottom-0 bg-ink/70 px-4 py-2 text-[12px] font-medium text-white backdrop-blur">
+              {imageCaption}
+            </span>
+          )}
+        </div>
+        {/* Copy + checks + CTA */}
+        <div className="order-2 lg:order-none">
+          <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
+            {eyebrow}
+          </p>
+          <h2 className="mt-3 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl lg:text-[40px] lg:leading-[1.14]">
+            {title}
+          </h2>
+          <p className="lead mt-5 text-muted">{body}</p>
+          <ul className="mt-6 space-y-3">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-start gap-3 text-[15px] font-medium text-ink">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-white">
+                  <Check />
+                </span>
+                {b}
+              </li>
+            ))}
+          </ul>
+          <a
+            href={ctaHref}
+            className="btn-cta mt-8 inline-flex items-center rounded-full bg-brand px-6 py-3.5 font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
+          >
+            <span className="btn-label" data-text={`${cta} →`}>
+              {cta} →
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── BEFORE / AFTER RESULTS (draggable Vorher · Nachher) ── */
 export function BeforeAfterResults({
   eyebrow,
