@@ -781,7 +781,7 @@ export function MeisterFeature({
   quoteAuthor,
   photo,
   photoLabel,
-  stats,
+  logos,
 }: {
   eyebrow: string;
   title: string;
@@ -790,7 +790,7 @@ export function MeisterFeature({
   quoteAuthor: string;
   photo: string;
   photoLabel: string;
-  stats: { value: string; label: string }[];
+  logos?: { src: string; alt: string }[];
 }) {
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -831,22 +831,26 @@ export function MeisterFeature({
             </blockquote>
           </div>
         </div>
-        {/* Stat tiles (2×2 mobile → 4-up desktop) */}
-        <div className="reveal mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              className="rounded-2xl border border-line bg-white p-5 text-center shadow-sm"
-            >
-              <div className="text-2xl font-extrabold tracking-[-0.02em] text-brand sm:text-[28px]">
-                {s.value}
-              </div>
-              <div className="mt-1 text-[13px] font-medium text-muted">
-                {s.label}
-              </div>
+        {/* Trust logos (Handwerkskammer + Das Handwerk) */}
+        {logos && logos.length > 0 && (
+          <div className="reveal mt-10 rounded-2xl border border-line bg-white p-6 shadow-sm sm:p-8">
+            <p className="text-center text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+              Meisterbetrieb · Eingetragen bei
+            </p>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 sm:gap-x-16">
+              {logos.map((l) => (
+                <Image
+                  key={l.src}
+                  src={l.src}
+                  alt={l.alt}
+                  width={480}
+                  height={160}
+                  className="h-12 w-auto object-contain sm:h-14"
+                />
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

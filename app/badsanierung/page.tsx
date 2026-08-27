@@ -89,7 +89,7 @@ export default function BadsanierungPage() {
             { value: "29", label: "Jahre Meisterbetrieb" },
             { value: "Festpreis", label: "garantiert, keine Nachträge" },
             { value: "Alle", label: "Gewerke aus einer Hand" },
-            { value: "sauber", label: "& termintreu gearbeitet" },
+            { value: "24 Std.", label: "Angebot nach Anfrage" },
           ]}
         />
 
@@ -100,13 +100,17 @@ export default function BadsanierungPage() {
           body="Bei uns bekommen Sie keine anonyme Vermittlung, die Ihre Anfrage an drei fremde Firmen verkauft. Sie bekommen Jürgen Wehres, SHK Meister – und ein Team, das Ihr Bad wirklich baut. Seit 29 Jahren, aus der Region, mit einem festen Ansprechpartner von der ersten Skizze bis zur Übergabe."
           quote="Ich baue seit 29 Jahren Bäder in der Region – und stehe mit meinem Namen für jedes einzelne."
           quoteAuthor="Jürgen Wehres, SHK Meister · Nouh-Wehres GmbH"
-          photo="/juergen-portrait.jpg"
+          photo="/Sanitärfirma düsseldorf.webp"
           photoLabel="Jürgen Wehres · SHK Meister"
-          stats={[
-            { value: "29 Jahre", label: "Meisterbetrieb" },
-            { value: "Alle", label: "Gewerke aus einer Hand" },
-            { value: "Festpreis", label: "garantiert, keine Nachträge" },
-            { value: "24 Std.", label: "Angebot nach Anfrage" },
+          logos={[
+            {
+              src: "/partner/hwk-duesseldorf.png",
+              alt: "Handwerkskammer Düsseldorf",
+            },
+            {
+              src: "/partner/das-handwerk.jpg",
+              alt: "Das Handwerk · Die Wirtschaftsmacht. Von nebenan.",
+            },
           ]}
         />
 
