@@ -782,6 +782,7 @@ export function MeisterFeature({
   photo,
   photoLabel,
   logos,
+  checks,
 }: {
   eyebrow: string;
   title: string;
@@ -791,6 +792,7 @@ export function MeisterFeature({
   photo: string;
   photoLabel: string;
   logos?: { src: string; alt: string }[];
+  checks?: string[];
 }) {
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -849,6 +851,16 @@ export function MeisterFeature({
                 />
               ))}
             </div>
+            {checks && checks.length > 0 && (
+              <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-t border-line pt-5 text-[14px] font-semibold text-ink sm:gap-x-10 sm:text-[15px]">
+                {checks.map((ch) => (
+                  <li key={ch} className="flex items-center gap-2">
+                    <span className="text-brand"><Check /></span>
+                    {ch}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         )}
       </div>

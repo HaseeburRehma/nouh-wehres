@@ -6,7 +6,7 @@ export interface LandingHeroProps {
   eyebrow: string;
   h1: string;
   intro: string;
-  checks: string[];
+  checks?: string[];
   badge: { small: string; big: string };
   bgImage?: string;
   bgImageAlt?: string;
@@ -62,18 +62,20 @@ export default function LandingHero({
           <h1 className="h-display mt-4 max-w-[16ch] text-white">{h1}</h1>
           <p className="lead mt-5 max-w-xl text-white/85">{intro}</p>
 
-          <ul className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2.5">
-            {checks.map((h) => (
-              <li key={h} className="flex items-center gap-2 font-medium text-white">
-                <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent text-ink">
-                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
-                {h}
-              </li>
-            ))}
-          </ul>
+          {checks && checks.length > 0 && (
+            <ul className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2.5">
+              {checks.map((h) => (
+                <li key={h} className="flex items-center gap-2 font-medium text-white">
+                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent text-ink">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  {h}
+                </li>
+              ))}
+            </ul>
+          )}
 
         </div>
 

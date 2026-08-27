@@ -70,7 +70,6 @@ export default function BadsanierungPage() {
           eyebrow="Meisterbetrieb für Bäder in Willich · Viersen · Mönchengladbach · Düsseldorf"
           h1="Ihr Traumbad vom Meisterbetrieb – zum Festpreis."
           intro="Beantworten Sie 6 kurze Fragen und erhalten Sie Ihre kostenlose Festpreis-Einschätzung – direkt von uns, nicht von einem Vermittlerportal."
-          checks={["Festpreisgarantie", "Alle Gewerke aus einer Hand", "Kein Vermittlerportal"]}
           badge={{ small: "gratis", big: "30 Sek" }}
           bgImage="/bad-monteur.webp"
           bgImageAlt="NOUH-WEHRES Monteur bei einer Badsanierung"
@@ -100,7 +99,7 @@ export default function BadsanierungPage() {
           body="Bei uns bekommen Sie keine anonyme Vermittlung, die Ihre Anfrage an drei fremde Firmen verkauft. Sie bekommen Jürgen Wehres, SHK Meister – und ein Team, das Ihr Bad wirklich baut. Seit 29 Jahren, aus der Region, mit einem festen Ansprechpartner von der ersten Skizze bis zur Übergabe."
           quote="Ich baue seit 29 Jahren Bäder in der Region – und stehe mit meinem Namen für jedes einzelne."
           quoteAuthor="Jürgen Wehres, SHK Meister · Nouh-Wehres GmbH"
-          photo="/Sanitärfirma düsseldorf.webp"
+          photo="/Sanitärfirma-düsseldorf.webp"
           photoLabel="Jürgen Wehres · SHK Meister"
           logos={[
             {
@@ -111,6 +110,11 @@ export default function BadsanierungPage() {
               src: "/partner/das-handwerk.jpg",
               alt: "Das Handwerk · Die Wirtschaftsmacht. Von nebenan.",
             },
+          ]}
+          checks={[
+            "Festpreisgarantie",
+            "Alle Gewerke aus einer Hand",
+            "Kein Vermittlerportal",
           ]}
         />
 
@@ -153,8 +157,8 @@ export default function BadsanierungPage() {
           ]}
           cta="Termin für Ihre Live-Visualisierung sichern"
           ctaHref="#top"
-          image="/bad/willich-nachher.jpg"
-          imageAlt="Live-Visualisierung eines geplanten Bads – Beispiel eines fertig umgesetzten Bads von NOUH-WEHRES"
+          image="/tablet-badvisualisierung.webp"
+          imageAlt="Live-Visualisierung Ihres neuen Bads auf dem Tablet – vor Ort bei Ihnen zu Hause"
         />
 
         <VersusCompare
