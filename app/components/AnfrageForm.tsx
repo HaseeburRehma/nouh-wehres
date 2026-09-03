@@ -109,10 +109,11 @@ export default function AnfrageForm() {
       const json = await res.json().catch(() => ({} as { error?: string; eventId?: string }));
       if (!res.ok)
         throw new Error(json?.error || "Die Anfrage konnte nicht gesendet werden.");
-      // Fire Meta Pixel Lead (dedup via eventId returned from the server).
+      // Fire Meta Pixel Lead + GA4 generate_lead + dataLayer (GTM-ready).
+      // eventId dedups the Meta Pixel event with the server CAPI Lead.
       if (json?.eventId) {
-        const { firePixelLead } = await import("../lib/meta-pixel-client");
-        firePixelLead(json.eventId, { content_name: topic || "Kontaktanfrage" });
+        const { fireLeadEvent } = await import("../lib/analytics-client");
+        fireLeadEvent({ eventId: json.eventId, topic: topic || "Kontaktanfrage" });
       }
       setStatus("sent");
     } catch (err) {

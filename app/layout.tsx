@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MetaPixel from "./components/MetaPixel";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import GoogleTagManager from "./components/GoogleTagManager";
+import PhoneClickTracker from "./components/PhoneClickTracker";
 import CookieConsent from "./components/CookieConsent";
 
 const inter = Inter({
@@ -54,6 +56,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-white text-ink">
         <MetaPixel />
         <GoogleAnalytics />
+        <GoogleTagManager />
+        <PhoneClickTracker />
         {children}
         <CookieConsent />
       </body>

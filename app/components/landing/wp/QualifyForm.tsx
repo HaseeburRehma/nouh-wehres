@@ -59,8 +59,8 @@ export default function QualifyForm({
       if (!res.ok)
         throw new Error(json?.error || "Die Anfrage konnte nicht gesendet werden.");
       if (json?.eventId) {
-        const { firePixelLead } = await import("../../../lib/meta-pixel-client");
-        firePixelLead(json.eventId, { content_name: topic });
+        const { fireLeadEvent } = await import("../../../lib/analytics-client");
+        fireLeadEvent({ eventId: json.eventId, topic });
       }
       setStatus("sent");
     } catch (err) {
