@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MetaPixel from "./components/MetaPixel";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import CookieConsent from "./components/CookieConsent";
 
 const inter = Inter({
@@ -52,6 +53,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-white text-ink">
         <MetaPixel />
+        <GoogleAnalytics />
         {children}
         <CookieConsent />
       </body>
