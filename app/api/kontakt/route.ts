@@ -4,7 +4,7 @@ import { sendCapiEvent } from "../../lib/meta-capi";
 
 // Where form submissions are delivered, and the verified sender address.
 // Set these in .env.local (dev) and in Vercel project env vars (production).
-const TO = process.env.CONTACT_TO || "info@nouh-wehres.de";
+const TO = process.env.CONTACT_TO || "anfragen@nouh-wehres.de";
 const FROM =
   process.env.CONTACT_FROM || "NOUH-WEHRES Website <formular@nouh-wehres.de>";
 
