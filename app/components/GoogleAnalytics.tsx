@@ -12,6 +12,10 @@ declare global {
 }
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+// When GTM is configured, GA4 is loaded inside GTM (via a GA4 Configuration
+// tag) so this component becomes a no-op — loading gtag.js here as well
+// would double every page_view in GA4. Kept for GTM-less dev / preview.
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 // Google Analytics 4 (GA4) loader.
 //
@@ -38,7 +42,7 @@ export default function GoogleAnalytics() {
     });
   }, [pathname]);
 
-  if (!GA_ID) return null;
+  if (!GA_ID || GTM_ID) return null;
 
   return (
     <>

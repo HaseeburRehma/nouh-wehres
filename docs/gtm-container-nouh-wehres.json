@@ -1,0 +1,248 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-09-04 00:00:00",
+  "containerVersion": {
+    "path": "accounts/6375075868/containers/263203916/versions/0",
+    "accountId": "6375075868",
+    "containerId": "263203916",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6375075868/containers/263203916",
+      "accountId": "6375075868",
+      "containerId": "263203916",
+      "name": "nouh-wehres.de",
+      "publicId": "GTM-NCMF5RCZ",
+      "usageContext": ["WEB"],
+      "fingerprint": "0",
+      "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6375075868/containers/263203916/workspaces?apiLink=container",
+      "features": {
+        "supportUserPermissions": true,
+        "supportEnvironments": true,
+        "supportWorkspaces": true,
+        "supportGtagConfigs": true,
+        "supportBuiltInVariables": true,
+        "supportClients": true,
+        "supportFolders": true,
+        "supportTags": true,
+        "supportTemplates": true,
+        "supportTriggers": true,
+        "supportVariables": true,
+        "supportVersions": true,
+        "supportZones": true,
+        "supportTransformations": true
+      },
+      "tagIds": ["GTM-NCMF5RCZ"]
+    },
+    "tag": [
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "tagId": "1",
+        "name": "GA4 · Configuration (All Pages)",
+        "type": "gaawc",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{const.GA4 Measurement ID}}" },
+          { "type": "BOOLEAN", "key": "sendPageView", "value": "true" }
+        ],
+        "fingerprint": "1",
+        "firingTriggerId": ["2147479553"],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": { "type": "MAP" },
+        "consentSettings": { "consentStatus": "NOT_SET" }
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "tagId": "2",
+        "name": "GA4 · Event · generate_lead",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{const.GA4 Measurement ID}}" },
+          { "type": "TEMPLATE", "key": "eventName", "value": "generate_lead" },
+          {
+            "type": "LIST", "key": "eventParameters",
+            "list": [
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "name",  "value": "form_name" },
+                { "type": "TEMPLATE", "key": "value", "value": "{{dlv.form_name}}" }
+              ]},
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "name",  "value": "value" },
+                { "type": "TEMPLATE", "key": "value", "value": "{{dlv.value}}" }
+              ]},
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "name",  "value": "currency" },
+                { "type": "TEMPLATE", "key": "value", "value": "{{dlv.currency}}" }
+              ]},
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "name",  "value": "event_id" },
+                { "type": "TEMPLATE", "key": "value", "value": "{{dlv.event_id}}" }
+              ]}
+            ]
+          }
+        ],
+        "fingerprint": "2",
+        "firingTriggerId": ["3"],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": { "type": "MAP" },
+        "consentSettings": { "consentStatus": "NOT_SET" }
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "tagId": "3",
+        "name": "GA4 · Event · phone_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{const.GA4 Measurement ID}}" },
+          { "type": "TEMPLATE", "key": "eventName", "value": "phone_click" },
+          {
+            "type": "LIST", "key": "eventParameters",
+            "list": [
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "name",  "value": "link_location" },
+                { "type": "TEMPLATE", "key": "value", "value": "{{dlv.link_location}}" }
+              ]}
+            ]
+          }
+        ],
+        "fingerprint": "3",
+        "firingTriggerId": ["4"],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": { "type": "MAP" },
+        "consentSettings": { "consentStatus": "NOT_SET" }
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "triggerId": "3",
+        "name": "CE · generate_lead",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "generate_lead" }
+            ]
+          }
+        ],
+        "fingerprint": "3"
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "triggerId": "4",
+        "name": "CE · phone_click",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "phone_click" }
+            ]
+          }
+        ],
+        "fingerprint": "4"
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "variableId": "1",
+        "name": "const.GA4 Measurement ID",
+        "type": "c",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "value", "value": "G-0R8R82V6XF" }
+        ],
+        "fingerprint": "1"
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "variableId": "2",
+        "name": "dlv.form_name",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER",  "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN",  "key": "setDefaultValue",  "value": "false" },
+          { "type": "TEMPLATE", "key": "name",             "value": "form_name" }
+        ],
+        "fingerprint": "2"
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "variableId": "3",
+        "name": "dlv.value",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER",  "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN",  "key": "setDefaultValue",  "value": "true" },
+          { "type": "TEMPLATE", "key": "defaultValue",     "value": "0" },
+          { "type": "TEMPLATE", "key": "name",             "value": "value" }
+        ],
+        "fingerprint": "3"
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "variableId": "4",
+        "name": "dlv.currency",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER",  "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN",  "key": "setDefaultValue",  "value": "true" },
+          { "type": "TEMPLATE", "key": "defaultValue",     "value": "EUR" },
+          { "type": "TEMPLATE", "key": "name",             "value": "currency" }
+        ],
+        "fingerprint": "4"
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "variableId": "5",
+        "name": "dlv.event_id",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER",  "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN",  "key": "setDefaultValue",  "value": "false" },
+          { "type": "TEMPLATE", "key": "name",             "value": "event_id" }
+        ],
+        "fingerprint": "5"
+      },
+      {
+        "accountId": "6375075868",
+        "containerId": "263203916",
+        "variableId": "6",
+        "name": "dlv.link_location",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER",  "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN",  "key": "setDefaultValue",  "value": "true" },
+          { "type": "TEMPLATE", "key": "defaultValue",     "value": "unknown" },
+          { "type": "TEMPLATE", "key": "name",             "value": "link_location" }
+        ],
+        "fingerprint": "6"
+      }
+    ],
+    "builtInVariable": [
+      { "accountId": "6375075868", "containerId": "263203916", "type": "PAGE_URL",       "name": "Page URL" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "PAGE_HOSTNAME",  "name": "Page Hostname" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "PAGE_PATH",      "name": "Page Path" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "REFERRER",       "name": "Referrer" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "EVENT",          "name": "Event" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "CLICK_ELEMENT",  "name": "Click Element" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "CLICK_CLASSES",  "name": "Click Classes" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "CLICK_ID",       "name": "Click ID" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "CLICK_TEXT",     "name": "Click Text" },
+      { "accountId": "6375075868", "containerId": "263203916", "type": "CLICK_URL",      "name": "Click URL" }
+    ],
+    "fingerprint": "0",
+    "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6375075868/containers/263203916/versions/0?apiLink=version"
+  }
+}
