@@ -33,7 +33,10 @@ function doPost(e) {
     "Quelle":      String(d.topic || ""),   // e.g. "Badsanierung · Festpreis"
     "Name":        String(d.name || ""),
     "E-Mail":      String(d.email || ""),
-    "Telefon":     d.tel ? String(d.tel) : "",
+    // Prepend "'" so Sheets treats "+49…" as literal text — otherwise
+    // appendRow parses it as a formula and the cell renders as #ERROR!.
+    // The apostrophe is invisible in the cell (only shows in the formula bar).
+    "Telefon":     d.tel ? ("'" + String(d.tel)) : "",
     "Nachricht":   String(d.message || "")
   };
   // Wizard answers → one column per question, added if new.
@@ -57,13 +60,8 @@ function doPost(e) {
     .setFontWeight("bold");
   sheet.setFrozenRows(1);
 
-  // Force the Telefon column to Text format so "+49…" stays as text.
-  const phoneCol = headers.indexOf("Telefon") + 1;
-  if (phoneCol > 0) {
-    sheet.getRange(1, phoneCol, sheet.getMaxRows(), 1).setNumberFormat("@");
-  }
-
-  // Append the row aligned to current header order.
+  // Append the row aligned to current header order. (Phone is already
+  // apostrophe-prefixed above so no post-write formatting needed.)
   sheet.appendRow(headers.map(function (h) {
     return row[h] !== undefined ? row[h] : "";
   }));
