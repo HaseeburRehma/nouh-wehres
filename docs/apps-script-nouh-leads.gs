@@ -155,3 +155,54 @@ function _out(o) {
     .createTextOutput(JSON.stringify(o))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
+// ─── One-time helpers ──────────────────────────────────────────────
+//
+// Run each of these ONCE from the Apps Script editor (Run ▶ button).
+// They are not part of the doPost flow — pure manual maintenance.
+
+/**
+ * Fix headers on the tab where Meta's "Send Leads to Google Sheets"
+ * integration writes (usually "Sheet1"). Meta writes its own fixed
+ * schema — this labels row 1 accurately so the data is readable.
+ *
+ * Does NOT rename the tab (renaming can break Meta's integration).
+ * Does NOT touch existing data rows — only row 1 header labels.
+ */
+function setupMetaInstantFormsTab() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  // Meta's integration binds to the first sheet by default — usually "Sheet1".
+  // Adjust the name here if yours is different.
+  const sheet = ss.getSheetByName("Sheet1");
+  if (!sheet) throw new Error('Sheet "Sheet1" not found — Meta Instant Forms tab expected here.');
+
+  // Meta's fixed schema (columns A→J). Any form questions land in K+ and
+  // are named after the question text — Meta manages those columns itself.
+  const metaHeaders = [
+    "Lead-ID",
+    "Erstellt am",
+    "Ad-ID",
+    "Ad-Name",
+    "Adset-ID",
+    "Adset-Name",
+    "Kampagnen-ID",
+    "Kampagnen-Name",
+    "Formular-ID",
+    "Formular-Name",
+  ];
+
+  // Only overwrite the fixed columns — leave any question-answer headers
+  // beyond column J alone (Meta owns those).
+  sheet.getRange(1, 1, 1, metaHeaders.length)
+    .setValues([metaHeaders])
+    .setFontWeight("bold")
+    .setBackground("#f1f3f4");
+  sheet.setFrozenRows(1);
+
+  // Add a tab colour so it's visually distinct from website-lead tabs.
+  sheet.setTabColor("#1877f2"); // Meta blue
+
+  SpreadsheetApp.getUi()
+    .alert("✅ Meta Instant Forms headers updated (10 columns A→J). Tab left as Sheet1 to preserve Meta's integration binding.");
+}
+
