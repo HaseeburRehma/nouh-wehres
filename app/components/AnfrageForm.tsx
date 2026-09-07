@@ -104,6 +104,7 @@ export default function AnfrageForm() {
           company: (formRef.current?.elements.namedItem("company") as
             | HTMLInputElement
             | null)?.value,
+          landingPage: typeof window !== "undefined" ? window.location.pathname : "",
         }),
       });
       const json = await res.json().catch(() => ({} as { error?: string; eventId?: string }));

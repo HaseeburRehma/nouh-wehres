@@ -32,6 +32,17 @@ export async function POST(req: Request) {
   const tel = String(data.tel ?? "").trim().slice(0, 40);
   const topic = String(data.topic ?? "").trim().slice(0, 80);
   const message = String(data.message ?? "").trim().slice(0, 4000);
+  // Which landing page the form lives on — used by the Apps Script to
+  // route the row into a dedicated tab per page (Badsanierung / WP
+  // Beratung / WP Kaufen / Kontakt / …). Falls back to Referer if the
+  // client didn't send it explicitly.
+  const landingPageRaw =
+    String(data.landingPage ?? "").trim() ||
+    (() => {
+      try { return new URL(req.headers.get("referer") ?? "").pathname; }
+      catch { return ""; }
+    })();
+  const landingPage = landingPageRaw.slice(0, 120) || "/";
   // Structured wizard answers — one column per question in the Google Sheet.
   const answers = Array.isArray(data.answers)
     ? (data.answers as unknown[])
@@ -135,11 +146,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // Also log the lead to Google Sheets (best-effort — never blocks the form).
-    await appendToSheet({ name, email, tel, topic, message, answers });
-
-    // Fire a Meta CAPI Lead event, deduplicated with the client-side pixel via
-    // event_id. Read Meta cookies + IP + UA from the request for match quality.
+    // Meta attribution + request context. Same values feed both the
+    // Google Sheet row (for manual attribution / auditing) and the Meta
+    // CAPI Lead event (for match quality + ad-side attribution).
     const eventId = crypto.randomUUID();
     const cookie = req.headers.get("cookie") ?? "";
     const readCookie = (n: string) =>
@@ -148,23 +157,43 @@ export async function POST(req: Request) {
         .map((c) => c.trim())
         .find((c) => c.startsWith(n + "="))
         ?.slice(n.length + 1);
+    const fbc = readCookie("_fbc");
+    const fbp = readCookie("_fbp");
+    const userAgent = req.headers.get("user-agent") ?? undefined;
+    const referer = req.headers.get("referer") ?? undefined;
+    const ipAddress =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined;
+
+    // Log the lead to Google Sheets (best-effort — never blocks the form).
+    // Apps Script routes the row into a dedicated tab per landingPage.
+    await appendToSheet({
+      name, email, tel, topic, message, answers,
+      eventId,
+      landingPage,
+      fbc,
+      fbp,
+      userAgent,
+      referer,
+      ipAddress,
+    });
+
+    // Fire a Meta CAPI Lead event, deduplicated with the client-side pixel
+    // via event_id.
     const [firstName, ...restName] = name.split(/\s+/);
     await sendCapiEvent({
       eventName: "Lead",
       eventId,
-      eventSourceUrl: req.headers.get("referer") ?? undefined,
+      eventSourceUrl: referer,
       userData: {
         email,
         phone: tel || undefined,
         firstName: firstName || undefined,
         lastName: restName.join(" ") || undefined,
         country: "de",
-        ipAddress:
-          req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-          undefined,
-        userAgent: req.headers.get("user-agent") ?? undefined,
-        fbc: readCookie("_fbc"),
-        fbp: readCookie("_fbp"),
+        ipAddress,
+        userAgent,
+        fbc,
+        fbp,
       },
       customData: {
         content_name: topic || "Kontaktanfrage",
@@ -190,6 +219,13 @@ async function appendToSheet(lead: {
   topic: string;
   message: string;
   answers: { q: string; a: string }[];
+  eventId: string;
+  landingPage: string;
+  fbc?: string;
+  fbp?: string;
+  userAgent?: string;
+  referer?: string;
+  ipAddress?: string;
 }) {
   const url = process.env.GOOGLE_SHEET_WEBHOOK_URL;
   if (!url) return;

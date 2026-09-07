@@ -51,6 +51,7 @@ export default function QualifyForm({
           topic,
           message: `${question} → ${owner === "ja" ? "Ja" : "Nein"}\nAnfrage über: ${topic}`,
           answers: [{ q: question, a: owner === "ja" ? "Ja" : "Nein" }],
+          landingPage: typeof window !== "undefined" ? window.location.pathname : "",
         }),
       });
       const json = await res.json().catch(

@@ -104,6 +104,7 @@ export default function CheckWizard({
           topic,
           message,
           answers: answerList,
+          landingPage: typeof window !== "undefined" ? window.location.pathname : "",
         }),
       });
       const json = await res.json().catch(
