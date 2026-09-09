@@ -546,24 +546,27 @@ function _routeMetaLeadToPageTab(headers, values, srcRow) {
   let customerName = "", customerEmail = "", customerPhone = "";
   const answers = [];
 
-  const isMetaMetaHeader = function (hl) {
-    return /^(lead[- ]?id|erstellt|created[_ ]?time|ad[- ]?id|adset[- ]?id|kampagnen[- ]?id|campaign[- ]?id|formular[- ]?id|form[- ]?id|lead[- ]?status|platform|id)$/i.test(hl);
-  };
+  // Meta writes duplicate/misleading headers past column J
+  // (e.g. "created_time" containing a customer name, "ad_id" containing
+  // a phone). Do THREE passes so noisy late duplicates never overwrite
+  // Sheet1's clean col-B / col-D / etc.
 
+  // Pass 1 — Meta metadata: only the FIRST match per field wins.
   for (const { h, v } of kv) {
     const hl = String(h).toLowerCase();
+    if (!leadId       && /lead[- ]?id/.test(hl))                              { leadId = v;        continue; }
+    if (!createdTime  && /^erstellt am$|^created[_ ]?time$/.test(hl))          { createdTime = v;   continue; }
+    if (!formName     && /^(formular[- ]?name|form[_ ]?name)$/.test(hl))       { formName = v;      continue; }
+    if (!campaignName && /^(kampagnen[- ]?name|campaign[_ ]?name)$/.test(hl))  { campaignName = v;  continue; }
+    if (!adsetName    && /^adset[- ]?name$/.test(hl))                          { adsetName = v;     continue; }
+    if (!adName       && /^(ad[- ]?name|ad_name)$/.test(hl))                   { adName = v;        continue; }
+  }
+
+  // Pass 2 — customer info by VALUE pattern (schema-independent). Runs
+  // over every cell, including ones whose header was consumed above, so
+  // Meta's "created_time = Oksana Neelova" still contributes a name.
+  for (const { v } of kv) {
     const clean = v.replace(/^[A-Za-z]{1,3}:/, "").trim();
-
-    // Meta metadata capture
-    if (/lead[- ]?id/.test(hl)) { leadId = v; continue; }
-    if (/erstellt|created[_ ]?time/.test(hl)) { createdTime = v; continue; }
-    if (/formular[- ]?name|form[_ ]?name/.test(hl)) { formName = v; continue; }
-    if (/kampagnen[- ]?name|campaign[_ ]?name/.test(hl)) { campaignName = v; continue; }
-    if (/^ad[- ]?name$|^ad_name$/.test(hl)) { adName = v; continue; }
-    if (/adset[- ]?name/.test(hl)) { adsetName = v; continue; }
-    if (isMetaMetaHeader(hl)) continue; // skip other Meta IDs (noise)
-
-    // Customer info by value pattern
     if (!customerEmail && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(clean)) {
       customerEmail = clean; continue;
     }
@@ -572,9 +575,22 @@ function _routeMetaLeadToPageTab(headers, values, srcRow) {
     }
     if (!customerName &&
         /^[A-ZÄÖÜ][a-zäöüß\-']{1,40}(\s+[A-ZÄÖÜ][a-zäöüß\-']{1,40}){1,3}$/.test(v)) {
-      customerName = v; continue;
+      customerName = v;
     }
-    // Anything left = form question/answer
+  }
+
+  // Pass 3 — everything else = form answer, EXCEPT well-known Meta
+  // metadata noise (ids, platform, lead_status) which we drop.
+  const isMetaMetaHeader = function (hl) {
+    return /^(lead[- ]?id|erstellt am|created[_ ]?time|ad[- ]?id|adset[- ]?id|kampagnen[- ]?id|campaign[- ]?id|formular[- ]?id|form[- ]?id|ad[- ]?name|ad_name|adset[- ]?name|formular[- ]?name|form[_ ]?name|kampagnen[- ]?name|campaign[_ ]?name|lead[- ]?status|platform|id)$/i.test(hl);
+  };
+  for (const { h, v } of kv) {
+    const hl = String(h).toLowerCase();
+    if (isMetaMetaHeader(hl)) continue;
+    // Skip values that already landed in the customer / metadata slots.
+    if (v === customerName || v === customerEmail || v === customerPhone) continue;
+    if (v === leadId || v === createdTime || v === formName ||
+        v === campaignName || v === adName || v === adsetName) continue;
     if (h && v) answers.push({ q: h, a: v });
   }
 
