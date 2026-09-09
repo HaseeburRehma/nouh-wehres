@@ -354,6 +354,60 @@ function resetMetaEmailTracker() {
   SpreadsheetApp.getUi().alert("Tracker cleared. Next trigger will email all rows.");
 }
 
+/**
+ * Route-only backfill — copies every Meta lead into its matching
+ * per-page tab WITHOUT re-sending emails. Idempotent (dedup by lead-id
+ * in the target tab's Event-ID column), so safe to run any number of
+ * times.
+ *
+ * Use this after adding the routing feature to populate the per-page
+ * tabs with existing Meta leads that were only in Sheet1.
+ */
+function backfillRouteMetaLeadsToPageTabs() {
+  _ensureMetaHeaders();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName("Sheet1");
+  if (!sheet) throw new Error('Sheet "Sheet1" not found.');
+
+  const lastRow = sheet.getLastRow();
+  const lastCol = sheet.getLastColumn();
+  const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+
+  let routed = 0, deduped = 0, unmapped = 0, skipped = 0;
+  const errors = [];
+  const perTab = {};
+
+  for (let r = 2; r <= lastRow; r++) {
+    const values = sheet.getRange(r, 1, 1, lastCol).getValues()[0];
+    const first = String(values[0] || "");
+    if (!/^l:/i.test(first)) { skipped++; continue; }
+    try {
+      const result = _routeMetaLeadToPageTab(headers, values, r);
+      if (!result) { unmapped++; continue; }
+      if (result.dedup) { deduped++; continue; }
+      routed++;
+      perTab[result.tab] = (perTab[result.tab] || 0) + 1;
+    } catch (err) {
+      errors.push("Row " + r + ": " + err.message);
+    }
+  }
+
+  const tabsSummary = Object.keys(perTab)
+    .map(function (t) { return "  • " + t + ": " + perTab[t]; })
+    .join("\n") || "  (none)";
+  const summary =
+    "Route-only backfill result\n" +
+    "──────────────────────────\n" +
+    "Routed into per-page tabs: " + routed + "\n" +
+    "Already routed (dedup):    " + deduped + "\n" +
+    "Unmapped (stayed Sheet1):  " + unmapped + "\n" +
+    "Non-Meta rows skipped:     " + skipped + "\n" +
+    "Errors:                    " + errors.length + "\n\n" +
+    "By tab:\n" + tabsSummary +
+    (errors.length ? "\n\nFirst errors:\n" + errors.slice(0, 5).join("\n") : "");
+  SpreadsheetApp.getUi().alert(summary);
+}
+
 function _sendMetaLeadEmail(headers, values, rowNum) {
   // Build a clean list of (header, value) pairs where the value is
   // non-empty. Meta's sheet often has inconsistent header labels, so
