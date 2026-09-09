@@ -254,6 +254,12 @@ function onMetaLeadArrived(e) {
 
     try { _sendMetaLeadEmail(headers, values, r); }
     catch (err) { console.error("Meta lead email failed for row " + r, err); }
+
+    // Also copy the lead into its matching per-page tab (Badsanierung,
+    // Wärmepumpe Beratung, …) so it lives alongside the website leads
+    // for the same offer. Dedup happens inside via lead-id.
+    try { _routeMetaLeadToPageTab(headers, values, r); }
+    catch (err) { console.error("Meta lead route failed for row " + r, err); }
   }
 
   props.setProperty("lastMetaEmailedRow", String(lastRow));
@@ -291,7 +297,12 @@ function backfillEmailAllMetaLeads() {
       _sendMetaLeadEmail(headers, values, r);
       emailed++;
     } catch (err) {
-      errors.push("Row " + r + ": " + err.message);
+      errors.push("Row " + r + " (email): " + err.message);
+    }
+    try {
+      _routeMetaLeadToPageTab(headers, values, r);
+    } catch (err) {
+      errors.push("Row " + r + " (route): " + err.message);
     }
   }
   PropertiesService.getScriptProperties().setProperty("lastMetaEmailedRow", String(lastRow));
@@ -456,5 +467,138 @@ function _esc(s) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+/**
+ * Copy a Meta Instant Form lead from Sheet1 into the matching per-page
+ * tab (Badsanierung / Wärmepumpe Beratung / …), so opening the tab for
+ * an offer shows every lead for that offer regardless of source.
+ *
+ * Rows are dedup'd by lead-id: a Meta lead-id already present in the
+ * target tab's Event-ID column is skipped.
+ */
+function _routeMetaLeadToPageTab(headers, values, srcRow) {
+  // Parse the Meta row into a clean shape (schema-independent).
+  const kv = [];
+  for (let i = 0; i < headers.length; i++) {
+    const h = String(headers[i] || "").trim();
+    const v = String(values[i] || "").trim();
+    if (v) kv.push({ h: h, v: v, i: i });
+  }
+
+  // Meta metadata by header, customer info by value pattern.
+  let leadId = "", createdTime = "", formName = "", campaignName = "",
+      adName = "", adsetName = "";
+  let customerName = "", customerEmail = "", customerPhone = "";
+  const answers = [];
+
+  const isMetaMetaHeader = function (hl) {
+    return /^(lead[- ]?id|erstellt|created[_ ]?time|ad[- ]?id|adset[- ]?id|kampagnen[- ]?id|campaign[- ]?id|formular[- ]?id|form[- ]?id|lead[- ]?status|platform|id)$/i.test(hl);
+  };
+
+  for (const { h, v } of kv) {
+    const hl = String(h).toLowerCase();
+    const clean = v.replace(/^[A-Za-z]{1,3}:/, "").trim();
+
+    // Meta metadata capture
+    if (/lead[- ]?id/.test(hl)) { leadId = v; continue; }
+    if (/erstellt|created[_ ]?time/.test(hl)) { createdTime = v; continue; }
+    if (/formular[- ]?name|form[_ ]?name/.test(hl)) { formName = v; continue; }
+    if (/kampagnen[- ]?name|campaign[_ ]?name/.test(hl)) { campaignName = v; continue; }
+    if (/^ad[- ]?name$|^ad_name$/.test(hl)) { adName = v; continue; }
+    if (/adset[- ]?name/.test(hl)) { adsetName = v; continue; }
+    if (isMetaMetaHeader(hl)) continue; // skip other Meta IDs (noise)
+
+    // Customer info by value pattern
+    if (!customerEmail && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(clean)) {
+      customerEmail = clean; continue;
+    }
+    if (!customerPhone && /^\+?\d[\d\s\-()\/]{7,}$/.test(clean)) {
+      customerPhone = clean; continue;
+    }
+    if (!customerName &&
+        /^[A-ZÄÖÜ][a-zäöüß\-']{1,40}(\s+[A-ZÄÖÜ][a-zäöüß\-']{1,40}){1,3}$/.test(v)) {
+      customerName = v; continue;
+    }
+    // Anything left = form question/answer
+    if (h && v) answers.push({ q: h, a: v });
+  }
+
+  // Which page tab does this Meta form belong to?
+  const combined = (formName + " " + campaignName + " " + adName).toLowerCase();
+  let targetTab = null, landingPage = "";
+  if (/badsanier|badraum|neues\s?bad/.test(combined)) {
+    targetTab = "Badsanierung"; landingPage = "/badsanierung";
+  } else if (/(wärme|waerme|wp).*kauf/.test(combined) || /kauf.*wärme|kauf.*waerme/.test(combined)) {
+    targetTab = "Wärmepumpe Kaufen"; landingPage = "/waermepumpe-kaufen";
+  } else if (/wärmepumpe|waermepumpe|wärme|waerme|heizung/.test(combined)) {
+    targetTab = "Wärmepumpe Beratung"; landingPage = "/waermepumpe-beratung";
+  } else if (/förder|foerder|bafa|kfw/.test(combined)) {
+    targetTab = "Fördermittel"; landingPage = "/foerdermittel-service";
+  } else if (/kontakt/.test(combined)) {
+    targetTab = "Kontakt"; landingPage = "/kontakt";
+  }
+  // Unmapped → stay in Sheet1 only (safety — don't spray into random tabs).
+  if (!targetTab) return null;
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(targetTab);
+  if (!sheet) sheet = ss.insertSheet(targetTab);
+
+  const lastCol = Math.max(1, sheet.getLastColumn());
+  let hdrs = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  if (hdrs[0] !== "Zeitstempel") hdrs = [];
+
+  // Dedup: if a row with this Meta lead-id already exists in the tab
+  // (Event-ID column contains "meta:<leadId>"), skip.
+  const eventColIdx = hdrs.indexOf("Event-ID");
+  const dedupKey = leadId ? ("meta:" + leadId) : "";
+  if (dedupKey && eventColIdx >= 0 && sheet.getLastRow() > 1) {
+    const eventValues = sheet.getRange(2, eventColIdx + 1, sheet.getLastRow() - 1, 1).getValues();
+    for (const [ev] of eventValues) {
+      if (String(ev) === dedupKey) return { tab: targetTab, dedup: true };
+    }
+  }
+
+  // Build the row using the same schema as website leads.
+  const answersSummary = answers.length
+    ? answers.map(function (a) { return a.q + ": " + a.a; }).join(" · ")
+    : "";
+  const row = {
+    "Zeitstempel":  createdTime || new Date().toISOString(),
+    "Landingpage":  landingPage,
+    "Formular":     "Meta · " + (formName || campaignName || "Instant Form"),
+    "Name":         customerName,
+    "E-Mail":       customerEmail,
+    "Telefon":      customerPhone ? ("'" + customerPhone) : "",
+    "Nachricht":    "Meta Instant Form Lead" + (answersSummary ? " · " + answersSummary : ""),
+  };
+  // Each form answer as its own column (Sheet auto-adds if new).
+  answers.forEach(function (a) { row[a.q] = a.a; });
+  // Attribution — same columns as website leads, plus Meta-specific ones.
+  row["Meta Kampagne"]         = campaignName;
+  row["Meta Adset"]            = adsetName;
+  row["Meta Ad"]               = adName;
+  row["Meta Click ID (fbc)"]   = "";
+  row["Meta Browser ID (fbp)"] = "";
+  row["Referer"]               = "meta://instant-form";
+  row["User Agent"]            = "Meta Instant Form";
+  row["IP-Adresse"]            = "";
+  row["Event-ID"]              = dedupKey;
+
+  // Extend headers if new keys — never reorder.
+  Object.keys(row).forEach(function (k) {
+    if (hdrs.indexOf(k) === -1) hdrs.push(k);
+  });
+  sheet.getRange(1, 1, 1, hdrs.length)
+    .setValues([hdrs])
+    .setFontWeight("bold");
+  sheet.setFrozenRows(1);
+
+  sheet.appendRow(hdrs.map(function (h) {
+    return row[h] !== undefined ? row[h] : "";
+  }));
+
+  return { tab: targetTab, row: sheet.getLastRow() };
 }
 
