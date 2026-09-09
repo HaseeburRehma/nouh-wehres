@@ -230,6 +230,7 @@ const META_LEAD_INBOX = "anfragen@nouh-wehres.de";
 
 /** Trigger — fires on any change to the spreadsheet. */
 function onMetaLeadArrived(e) {
+  _ensureMetaHeaders();
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName("Sheet1");
   if (!sheet) return;
@@ -261,13 +262,75 @@ function onMetaLeadArrived(e) {
 /**
  * One-time backfill — emails every Meta lead currently in Sheet1 that
  * has not been emailed yet. Safe to re-run; the row tracker prevents
- * duplicate sends. Run manually from the Apps Script editor.
+ * duplicate sends. Detailed alert on completion so you can see exactly
+ * how many landed, how many were skipped, and any errors per row.
  */
 function backfillEmailAllMetaLeads() {
+  _ensureMetaHeaders(); // fix headers before reading them
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName("Sheet1");
+  if (!sheet) throw new Error('Sheet "Sheet1" not found.');
+
+  const lastRow = sheet.getLastRow();
+  const lastCol = sheet.getLastColumn();
+  const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+
+  // Reset tracker so backfill considers every row.
   PropertiesService.getScriptProperties().deleteProperty("lastMetaEmailedRow");
-  onMetaLeadArrived({});
-  const emailed = PropertiesService.getScriptProperties().getProperty("lastMetaEmailedRow") || "0";
-  SpreadsheetApp.getUi().alert("✅ Backfill complete. Emailed all Meta leads through row " + emailed + ".");
+
+  const remainingBefore = MailApp.getRemainingDailyQuota();
+  let emailed = 0, skipped = 0;
+  const errors = [];
+
+  for (let r = 2; r <= lastRow; r++) {
+    const values = sheet.getRange(r, 1, 1, lastCol).getValues()[0];
+    const first = String(values[0] || "");
+    if (!/^l:/i.test(first)) { skipped++; continue; }
+    try {
+      _sendMetaLeadEmail(headers, values, r);
+      emailed++;
+    } catch (err) {
+      errors.push("Row " + r + ": " + err.message);
+    }
+  }
+  PropertiesService.getScriptProperties().setProperty("lastMetaEmailedRow", String(lastRow));
+
+  const remainingAfter = MailApp.getRemainingDailyQuota();
+  const summary =
+    "Backfill result\n" +
+    "───────────────\n" +
+    "Emailed:      " + emailed + "\n" +
+    "Skipped:      " + skipped + "  (rows where col A is not a Meta lead-id)\n" +
+    "Errors:       " + errors.length + "\n" +
+    "MailApp quota: " + remainingBefore + " → " + remainingAfter + " remaining today\n" +
+    (errors.length ? "\nFirst errors:\n" + errors.slice(0, 5).join("\n") : "");
+  SpreadsheetApp.getUi().alert(summary);
+}
+
+/**
+ * Idempotent — sets the standard Meta schema on Sheet1's row 1 unless
+ * it's already correct. Called automatically by the backfill + trigger
+ * so the user never has to remember a separate setup step.
+ */
+function _ensureMetaHeaders() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+  if (!sheet) return;
+  const currentA1 = String(sheet.getRange(1, 1).getValue() || "");
+  if (currentA1 === "Lead-ID") return; // already migrated
+  const metaHeaders = [
+    "Lead-ID", "Erstellt am",
+    "Ad-ID", "Ad-Name",
+    "Adset-ID", "Adset-Name",
+    "Kampagnen-ID", "Kampagnen-Name",
+    "Formular-ID", "Formular-Name",
+  ];
+  sheet.getRange(1, 1, 1, metaHeaders.length)
+    .setValues([metaHeaders])
+    .setFontWeight("bold")
+    .setBackground("#f1f3f4");
+  sheet.setFrozenRows(1);
+  sheet.setTabColor("#1877f2"); // Meta blue
 }
 
 /**
@@ -281,55 +344,99 @@ function resetMetaEmailTracker() {
 }
 
 function _sendMetaLeadEmail(headers, values, rowNum) {
-  // Try to pull the Name/E-Mail/Telefon from Meta's Q&A columns
-  // (they appear in K+ with question texts as headers).
-  let displayName = "";
-  let displayEmail = "";
-  let displayPhone = "";
-  const meta = {};
+  // Build a clean list of (header, value) pairs where the value is
+  // non-empty. Meta's sheet often has inconsistent header labels, so
+  // downstream extraction uses VALUE patterns instead of header names.
+  const kv = [];
   for (let i = 0; i < headers.length; i++) {
     const h = String(headers[i] || "").trim();
     const v = String(values[i] || "").trim();
-    if (!h) continue;
-    meta[h] = v;
-    const hl = h.toLowerCase();
-    if (!displayName  && /(vollständiger name|full[_ ]?name|full name|name)/i.test(hl)) displayName  = v;
-    if (!displayEmail && /(e[- ]?mail|email)/i.test(hl))                                 displayEmail = v;
-    if (!displayPhone && /(telefonnummer|telefon|phone|handy)/i.test(hl))                displayPhone = v;
+    if (v) kv.push({ h: h || ("Spalte " + (i + 1)), v: v });
   }
 
-  const campaignName = meta["Kampagnen-Name"] || meta["campaign_name"] || "";
-  const formName     = meta["Formular-Name"]  || meta["form_name"]     || "";
-  const subjectBits  = ["Neue Meta Instant Form Anfrage"];
-  if (displayName)  subjectBits.push(displayName);
-  if (formName)     subjectBits.push(formName);
+  // Extract customer fields by value pattern — schema-independent.
+  let customerName = "";
+  let customerEmail = "";
+  let customerPhone = "";
+  for (const { v } of kv) {
+    // Strip Meta's occasional short prefixes: "p:+49…" or "ag:1234".
+    const clean = v.replace(/^[A-Za-z]{1,3}:/, "").trim();
+    if (!customerEmail && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(clean)) {
+      customerEmail = clean; continue;
+    }
+    if (!customerPhone && /^\+?\d[\d\s\-()\/]{7,}$/.test(clean)) {
+      customerPhone = clean; continue;
+    }
+    // Person name: 2+ words, letters only (incl. umlauts / hyphen).
+    // Excludes URLs, IDs, timestamps, single words.
+    if (!customerName && /^[A-ZÄÖÜ][a-zäöüß\-']{1,40}(\s+[A-ZÄÖÜ][a-zäöüß\-']{1,40}){1,3}$/.test(v)) {
+      customerName = v;
+    }
+  }
+
+  // Try to pull campaign / form context by header name (these are
+  // usually labeled correctly after _ensureMetaHeaders runs).
+  let campaignName = "", formName = "", adName = "";
+  for (const { h, v } of kv) {
+    const hl = h.toLowerCase();
+    if (!campaignName && /kampagnen[- ]?name|campaign[_ ]?name/.test(hl)) campaignName = v;
+    if (!formName     && /formular[- ]?name|form[_ ]?name/.test(hl))     formName     = v;
+    if (!adName       && /^(ad-?name|ad_name)$/.test(hl))                 adName       = v;
+  }
+
+  // Subject: put the most useful info up front for inbox scanning.
+  const subjectBits = ["🎯 Meta Lead"];
+  if (customerName)  subjectBits.push(customerName);
+  if (formName)      subjectBits.push(formName);
   const subject = subjectBits.join(" · ");
 
-  let tableRows = "";
-  for (let i = 0; i < headers.length; i++) {
-    const h = String(headers[i] || "").trim();
-    const v = String(values[i] || "").trim();
-    if (!h || !v) continue;
-    tableRows +=
-      '<tr><td style="padding:4px 16px 4px 0;color:#5b6573;vertical-align:top;">' + _esc(h) + '</td>' +
-      '<td><strong>' + _esc(v) + '</strong></td></tr>';
+  // Highlighted customer block at the top.
+  const customerBlock =
+    '<div style="background:#e8f4ff;border:1px solid #b8d9fc;border-radius:10px;padding:16px 20px;margin:0 0 20px;">' +
+      '<h3 style="margin:0 0 10px;font-size:12px;color:#1a56b8;text-transform:uppercase;letter-spacing:.8px;font-weight:700;">Kundendaten</h3>' +
+      '<table style="font-size:15px;line-height:1.6;">' +
+        (customerName  ? '<tr><td style="padding:3px 20px 3px 0;color:#5b6573;width:80px">Name</td><td><strong>' + _esc(customerName) + '</strong></td></tr>' : '') +
+        (customerEmail ? '<tr><td style="padding:3px 20px 3px 0;color:#5b6573">E-Mail</td><td><a href="mailto:' + _esc(customerEmail) + '" style="color:#1a56b8"><strong>' + _esc(customerEmail) + '</strong></a></td></tr>' : '') +
+        (customerPhone ? '<tr><td style="padding:3px 20px 3px 0;color:#5b6573">Telefon</td><td><a href="tel:' + _esc(customerPhone.replace(/\s/g,"")) + '" style="color:#1a56b8"><strong>' + _esc(customerPhone) + '</strong></a></td></tr>' : '') +
+      '</table>' +
+    '</div>';
+
+  // Campaign context strip
+  const ctxBits = [];
+  if (campaignName) ctxBits.push('Kampagne: <strong>' + _esc(campaignName) + '</strong>');
+  if (adName)       ctxBits.push('Anzeige: <strong>' + _esc(adName) + '</strong>');
+  if (formName)     ctxBits.push('Formular: <strong>' + _esc(formName) + '</strong>');
+  const ctxBlock = ctxBits.length
+    ? '<p style="margin:0 0 16px;color:#5b6573;font-size:13px">' + ctxBits.join(' · ') + '</p>'
+    : "";
+
+  // Full raw data table (collapsible).
+  let rawRows = "";
+  for (const { h, v } of kv) {
+    rawRows +=
+      '<tr><td style="padding:3px 16px 3px 0;color:#5b6573;vertical-align:top;font-size:12px;">' + _esc(h) + '</td>' +
+      '<td style="font-size:13px;">' + _esc(v) + '</td></tr>';
   }
 
   const html =
-    '<div style="font-family:Arial,Helvetica,sans-serif;color:#0b0b0b;line-height:1.6">' +
-      '<h2 style="margin:0 0 16px">Neue Anfrage über Meta Instant Form</h2>' +
-      (campaignName ? '<p style="margin:0 0 12px;color:#5b6573">Kampagne: <strong>' + _esc(campaignName) + '</strong></p>' : '') +
-      '<table cellpadding="0" cellspacing="0" style="font-size:15px">' + tableRows + '</table>' +
-      '<p style="margin-top:20px;color:#98a1ad;font-size:12px">Automatisch weitergeleitet vom Meta → Google Sheets Bridge · Zeile ' + rowNum + '</p>' +
+    '<div style="font-family:Arial,Helvetica,sans-serif;color:#0b0b0b;line-height:1.6;max-width:640px;">' +
+      '<h2 style="margin:0 0 8px;font-size:20px">Neue Anfrage über Meta Instant Form</h2>' +
+      ctxBlock +
+      customerBlock +
+      '<p style="margin:16px 0 8px;color:#5b6573;font-size:13px;font-weight:600;">Alle Felder aus dem Formular:</p>' +
+      '<table cellpadding="0" cellspacing="0" style="border-collapse:collapse">' + rawRows + '</table>' +
+      '<p style="margin-top:24px;color:#98a1ad;font-size:11px">Automatisch weitergeleitet von Sheet1 Zeile ' + rowNum + ' · Meta → Sheets → E-Mail Bridge</p>' +
     '</div>';
 
-  const textLines = ["Neue Anfrage über Meta Instant Form", ""];
-  for (let i = 0; i < headers.length; i++) {
-    const h = String(headers[i] || "").trim();
-    const v = String(values[i] || "").trim();
-    if (!h || !v) continue;
-    textLines.push(h + ": " + v);
-  }
+  const textLines = ["Neue Meta Instant Form Anfrage", ""];
+  if (customerName)  textLines.push("Name:    " + customerName);
+  if (customerEmail) textLines.push("E-Mail:  " + customerEmail);
+  if (customerPhone) textLines.push("Telefon: " + customerPhone);
+  if (campaignName)  textLines.push("Kampagne: " + campaignName);
+  if (adName)        textLines.push("Anzeige:  " + adName);
+  if (formName)      textLines.push("Formular: " + formName);
+  textLines.push("", "--- Alle Felder ---");
+  for (const { h, v } of kv) textLines.push(h + ": " + v);
 
   const opts = {
     to: META_LEAD_INBOX,
@@ -338,7 +445,7 @@ function _sendMetaLeadEmail(headers, values, rowNum) {
     body: textLines.join("\n"),
     name: "NOUH-WEHRES Meta Leads",
   };
-  if (displayEmail) opts.replyTo = displayEmail;
+  if (customerEmail) opts.replyTo = customerEmail;
 
   MailApp.sendEmail(opts);
 }
