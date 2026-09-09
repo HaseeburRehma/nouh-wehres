@@ -206,3 +206,148 @@ function setupMetaInstantFormsTab() {
     .alert("✅ Meta Instant Forms headers updated (10 columns A→J). Tab left as Sheet1 to preserve Meta's integration binding.");
 }
 
+// ─── Meta Instant Form → email bridge ──────────────────────────────
+//
+// Meta's Sheets integration writes rows directly to Sheet1 — bypassing
+// the /api/kontakt endpoint that sends the Resend email for website
+// leads. Without this bridge, Instant Form leads only appear in the
+// sheet + Meta Ads Manager, never in anfragen@nouh-wehres.de. This
+// closes that gap.
+//
+// Setup (one time):
+//   1. Paste this file into the Apps Script editor, Save.
+//   2. Run backfillEmailAllMetaLeads once to email the existing 13 leads.
+//   3. Apps Script → Triggers ⏰ → Add Trigger:
+//        Function:  onMetaLeadArrived
+//        Deployment: Head
+//        Event source: From spreadsheet
+//        Event type: On change
+//      Save → approve permissions.
+//   From then on, every new Meta lead auto-emails within seconds of
+//   landing in the sheet.
+
+const META_LEAD_INBOX = "anfragen@nouh-wehres.de";
+
+/** Trigger — fires on any change to the spreadsheet. */
+function onMetaLeadArrived(e) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName("Sheet1");
+  if (!sheet) return;
+
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return;
+
+  const props = PropertiesService.getScriptProperties();
+  const lastEmailed = Number(props.getProperty("lastMetaEmailedRow") || 1);
+  if (lastRow <= lastEmailed) return; // nothing new
+
+  const lastCol = sheet.getLastColumn();
+  const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+
+  for (let r = lastEmailed + 1; r <= lastRow; r++) {
+    const values = sheet.getRange(r, 1, 1, lastCol).getValues()[0];
+    // Meta lead rows have a Lead-ID starting with "l:" in column A.
+    // Skip anything else (old test rows, manual entries).
+    const first = String(values[0] || "");
+    if (!/^l:/i.test(first)) continue;
+
+    try { _sendMetaLeadEmail(headers, values, r); }
+    catch (err) { console.error("Meta lead email failed for row " + r, err); }
+  }
+
+  props.setProperty("lastMetaEmailedRow", String(lastRow));
+}
+
+/**
+ * One-time backfill — emails every Meta lead currently in Sheet1 that
+ * has not been emailed yet. Safe to re-run; the row tracker prevents
+ * duplicate sends. Run manually from the Apps Script editor.
+ */
+function backfillEmailAllMetaLeads() {
+  PropertiesService.getScriptProperties().deleteProperty("lastMetaEmailedRow");
+  onMetaLeadArrived({});
+  const emailed = PropertiesService.getScriptProperties().getProperty("lastMetaEmailedRow") || "0";
+  SpreadsheetApp.getUi().alert("✅ Backfill complete. Emailed all Meta leads through row " + emailed + ".");
+}
+
+/**
+ * Reset — run this if you want to re-email everything from scratch.
+ * (Use with care — will send an email per Meta row on the next
+ * onMetaLeadArrived tick.)
+ */
+function resetMetaEmailTracker() {
+  PropertiesService.getScriptProperties().deleteProperty("lastMetaEmailedRow");
+  SpreadsheetApp.getUi().alert("Tracker cleared. Next trigger will email all rows.");
+}
+
+function _sendMetaLeadEmail(headers, values, rowNum) {
+  // Try to pull the Name/E-Mail/Telefon from Meta's Q&A columns
+  // (they appear in K+ with question texts as headers).
+  let displayName = "";
+  let displayEmail = "";
+  let displayPhone = "";
+  const meta = {};
+  for (let i = 0; i < headers.length; i++) {
+    const h = String(headers[i] || "").trim();
+    const v = String(values[i] || "").trim();
+    if (!h) continue;
+    meta[h] = v;
+    const hl = h.toLowerCase();
+    if (!displayName  && /(vollständiger name|full[_ ]?name|full name|name)/i.test(hl)) displayName  = v;
+    if (!displayEmail && /(e[- ]?mail|email)/i.test(hl))                                 displayEmail = v;
+    if (!displayPhone && /(telefonnummer|telefon|phone|handy)/i.test(hl))                displayPhone = v;
+  }
+
+  const campaignName = meta["Kampagnen-Name"] || meta["campaign_name"] || "";
+  const formName     = meta["Formular-Name"]  || meta["form_name"]     || "";
+  const subjectBits  = ["Neue Meta Instant Form Anfrage"];
+  if (displayName)  subjectBits.push(displayName);
+  if (formName)     subjectBits.push(formName);
+  const subject = subjectBits.join(" · ");
+
+  let tableRows = "";
+  for (let i = 0; i < headers.length; i++) {
+    const h = String(headers[i] || "").trim();
+    const v = String(values[i] || "").trim();
+    if (!h || !v) continue;
+    tableRows +=
+      '<tr><td style="padding:4px 16px 4px 0;color:#5b6573;vertical-align:top;">' + _esc(h) + '</td>' +
+      '<td><strong>' + _esc(v) + '</strong></td></tr>';
+  }
+
+  const html =
+    '<div style="font-family:Arial,Helvetica,sans-serif;color:#0b0b0b;line-height:1.6">' +
+      '<h2 style="margin:0 0 16px">Neue Anfrage über Meta Instant Form</h2>' +
+      (campaignName ? '<p style="margin:0 0 12px;color:#5b6573">Kampagne: <strong>' + _esc(campaignName) + '</strong></p>' : '') +
+      '<table cellpadding="0" cellspacing="0" style="font-size:15px">' + tableRows + '</table>' +
+      '<p style="margin-top:20px;color:#98a1ad;font-size:12px">Automatisch weitergeleitet vom Meta → Google Sheets Bridge · Zeile ' + rowNum + '</p>' +
+    '</div>';
+
+  const textLines = ["Neue Anfrage über Meta Instant Form", ""];
+  for (let i = 0; i < headers.length; i++) {
+    const h = String(headers[i] || "").trim();
+    const v = String(values[i] || "").trim();
+    if (!h || !v) continue;
+    textLines.push(h + ": " + v);
+  }
+
+  const opts = {
+    to: META_LEAD_INBOX,
+    subject: subject,
+    htmlBody: html,
+    body: textLines.join("\n"),
+    name: "NOUH-WEHRES Meta Leads",
+  };
+  if (displayEmail) opts.replyTo = displayEmail;
+
+  MailApp.sendEmail(opts);
+}
+
+function _esc(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
