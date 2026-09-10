@@ -429,7 +429,10 @@ function _sendMetaLeadEmail(headers, values, rowNum) {
     if (!customerEmail && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(clean)) {
       customerEmail = clean; continue;
     }
-    if (!customerPhone && /^\+?\d[\d\s\-()\/]{7,}$/.test(clean)) {
+    // Phone must start with + or 0 (real phone patterns) — this rejects
+    // Meta's bare-numeric lead IDs like "2806841865280" that would
+    // otherwise match a generic \d{8,} regex.
+    if (!customerPhone && /^(?:\+|00|0)\d[\d\s\-()\/]{6,}$/.test(clean)) {
       customerPhone = clean; continue;
     }
     // Person name: 2+ words, letters only (incl. umlauts / hyphen).
@@ -570,7 +573,10 @@ function _routeMetaLeadToPageTab(headers, values, srcRow) {
     if (!customerEmail && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(clean)) {
       customerEmail = clean; continue;
     }
-    if (!customerPhone && /^\+?\d[\d\s\-()\/]{7,}$/.test(clean)) {
+    // Phone must start with + or 0 (real phone patterns) — this rejects
+    // Meta's bare-numeric lead IDs like "2806841865280" that would
+    // otherwise match a generic \d{8,} regex.
+    if (!customerPhone && /^(?:\+|00|0)\d[\d\s\-()\/]{6,}$/.test(clean)) {
       customerPhone = clean; continue;
     }
     if (!customerName &&
