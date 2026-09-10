@@ -568,7 +568,15 @@ function _routeMetaLeadToPageTab(headers, values, srcRow) {
   // Pass 2 — customer info by VALUE pattern (schema-independent). Runs
   // over every cell, including ones whose header was consumed above, so
   // Meta's "created_time = Oksana Neelova" still contributes a name.
+  // Values already captured as Meta metadata are excluded so the ad-name
+  // ('Ad Badsanierung Cartoon') never masquerades as a customer name.
+  const metadataValues = new Set([formName, campaignName, adName, adsetName, createdTime, leadId]
+    .filter(function (x) { return !!x; }));
+  // Extra guard: known "advertising-speak" words never belong in a
+  // customer name. If a candidate contains these, reject it as ad copy.
+  const adWordsRe = /\b(ad|anzeige|cartoon|video|banner|creative|kampagne|campaign|badsanierung|w[aä]rmepumpe|heizung|f[oö]rdermittel|kontaktformular|willich|umgebung|mix|beratung|kaufen)\b/i;
   for (const { v } of kv) {
+    if (metadataValues.has(v)) continue; // ← key fix: don't reuse metadata as customer data
     const clean = v.replace(/^[A-Za-z]{1,3}:/, "").trim();
     if (!customerEmail && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(clean)) {
       customerEmail = clean; continue;
@@ -580,7 +588,8 @@ function _routeMetaLeadToPageTab(headers, values, srcRow) {
       customerPhone = clean; continue;
     }
     if (!customerName &&
-        /^[A-ZÄÖÜ][a-zäöüß\-']{1,40}(\s+[A-ZÄÖÜ][a-zäöüß\-']{1,40}){1,3}$/.test(v)) {
+        /^[A-ZÄÖÜ][a-zäöüß\-']{1,40}(\s+[A-ZÄÖÜ][a-zäöüß\-']{1,40}){1,3}$/.test(v) &&
+        !adWordsRe.test(v)) {
       customerName = v;
     }
   }
