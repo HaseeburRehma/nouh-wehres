@@ -355,6 +355,70 @@ function resetMetaEmailTracker() {
 }
 
 /**
+ * Clean re-route — deletes every Meta-sourced row (Event-ID starts with
+ * "meta:") from every per-page tab, then re-runs the route-only backfill
+ * from Sheet1. Use this after script fixes (e.g. name detection tweaks)
+ * to purge any duplicates or outdated rows and re-populate clean.
+ *
+ * Never touches website-lead rows (Event-ID is a bare UUID, no "meta:"
+ * prefix) — those stay untouched.
+ */
+function resetAndBackfillMetaRouting() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const pageTabs = [
+    "Badsanierung",
+    "Wärmepumpe Beratung",
+    "Wärmepumpe Kaufen",
+    "Fördermittel",
+    "Kontakt",
+    "Startseite",
+    "Sonstige",
+  ];
+  let deleted = 0;
+  const perTabDeleted = {};
+
+  for (const tabName of pageTabs) {
+    const sheet = ss.getSheetByName(tabName);
+    if (!sheet) continue;
+    const lastRow = sheet.getLastRow();
+    const lastCol = sheet.getLastColumn();
+    if (lastRow < 2 || lastCol < 1) continue;
+
+    const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    const eventColIdx = headers.indexOf("Event-ID");
+    if (eventColIdx < 0) continue;
+
+    // Delete bottom-up so row numbers don't shift under us.
+    let tabDeleted = 0;
+    for (let r = lastRow; r >= 2; r--) {
+      const ev = String(sheet.getRange(r, eventColIdx + 1).getValue() || "");
+      if (ev.indexOf("meta:") === 0) {
+        sheet.deleteRow(r);
+        tabDeleted++;
+      }
+    }
+    if (tabDeleted > 0) {
+      perTabDeleted[tabName] = tabDeleted;
+      deleted += tabDeleted;
+    }
+  }
+
+  // Now re-run the route backfill.
+  backfillRouteMetaLeadsToPageTabs(true);
+
+  const summaryDeleted = Object.keys(perTabDeleted)
+    .map(function (t) { return "  • " + t + ": " + perTabDeleted[t]; })
+    .join("\n") || "  (none)";
+  SpreadsheetApp.getUi().alert(
+    "Reset + re-route done\n" +
+    "───────────────────\n" +
+    "Existing Meta rows removed: " + deleted + "\n\n" +
+    "By tab:\n" + summaryDeleted +
+    "\n\n(Route backfill alert above shows the new row counts.)"
+  );
+}
+
+/**
  * Route-only backfill — copies every Meta lead into its matching
  * per-page tab WITHOUT re-sending emails. Idempotent (dedup by lead-id
  * in the target tab's Event-ID column), so safe to run any number of
@@ -363,7 +427,7 @@ function resetMetaEmailTracker() {
  * Use this after adding the routing feature to populate the per-page
  * tabs with existing Meta leads that were only in Sheet1.
  */
-function backfillRouteMetaLeadsToPageTabs() {
+function backfillRouteMetaLeadsToPageTabs(suppressAlert) {
   _ensureMetaHeaders();
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName("Sheet1");
@@ -405,7 +469,7 @@ function backfillRouteMetaLeadsToPageTabs() {
     "Errors:                    " + errors.length + "\n\n" +
     "By tab:\n" + tabsSummary +
     (errors.length ? "\n\nFirst errors:\n" + errors.slice(0, 5).join("\n") : "");
-  SpreadsheetApp.getUi().alert(summary);
+  if (!suppressAlert) SpreadsheetApp.getUi().alert(summary);
 }
 
 function _sendMetaLeadEmail(headers, values, rowNum) {
