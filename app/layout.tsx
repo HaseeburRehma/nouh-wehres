@@ -4,6 +4,7 @@ import "./globals.css";
 import MetaPixel from "./components/MetaPixel";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import GoogleTagManager from "./components/GoogleTagManager";
+import MicrosoftClarity from "./components/MicrosoftClarity";
 import PhoneClickTracker from "./components/PhoneClickTracker";
 import CookieConsent from "./components/CookieConsent";
 
@@ -57,6 +58,7 @@ export default function RootLayout({
         <MetaPixel />
         <GoogleAnalytics />
         <GoogleTagManager />
+        <MicrosoftClarity />
         <PhoneClickTracker />
         {children}
         <CookieConsent />
