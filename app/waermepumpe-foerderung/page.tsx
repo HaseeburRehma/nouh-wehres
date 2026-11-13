@@ -352,7 +352,7 @@ export default function FoerderLandingPage() {
               {projects.map((p) => (
                 <figure key={p.src} className="fl-img-frame group aspect-[4/4.4] rounded-[24px] lg:aspect-auto lg:h-[420px]">
                   {p.slides ? (
-                    <AutoSlider slides={p.slides} interval={p.interval ?? 4000} sizes="(min-width:1024px) 390px, 75vw" />
+                    <AutoSlider slides={p.slides} interval={p.interval ?? 4000} zoom={false} sizes="(min-width:1024px) 390px, 75vw" />
                   ) : (
                     <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 390px, 75vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]" />
                   )}

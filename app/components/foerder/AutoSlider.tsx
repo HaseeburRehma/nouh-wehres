@@ -15,11 +15,14 @@ export default function AutoSlider({
   interval = 4500,
   sizes = "100vw",
   className = "",
+  zoom = true,
 }: {
   slides: Slide[];
   interval?: number;
   sizes?: string;
   className?: string;
+  /** Leichter Ken-Burns-Zoom auf dem aktiven Bild */
+  zoom?: boolean;
 }) {
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -77,7 +80,7 @@ export default function AutoSlider({
             fill
             sizes={sizes}
             priority={k === 0}
-            className={`object-cover transition-transform duration-[6000ms] ease-out ${k === i ? "scale-[1.06]" : "scale-100"}`}
+            className={`object-cover ${zoom ? `transition-transform duration-[6000ms] ease-out ${k === i ? "scale-[1.06]" : "scale-100"}` : ""}`}
           />
         </div>
       ))}
