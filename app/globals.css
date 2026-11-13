@@ -312,7 +312,7 @@ body {
   --color-fl-muted: #5f6670;
   --color-fl-silver: #8a9099;
   --color-fl-line: #e6e8eb;
-  --color-fl-beige: #f4f4f1;
+  --color-fl-beige: #f5f5f2;
   --color-fl-yellow: #ffcc00;
   --color-fl-yellow-deep: #f5b800;
 }
@@ -385,8 +385,12 @@ body {
 .fl-btn-arrow { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
 .fl-btn:hover .fl-btn-arrow { transform: translateX(4px); }
 .fl-btn .btn-label { white-space: nowrap; }
-@media (max-width: 380px) {
-  .fl-btn { padding-inline: 1rem; font-size: 0.9375rem; }
+/* Schmale Phones: Label bleibt einzeilig (Text-Roll), passt aber in die Karte */
+@media (max-width: 419px) {
+  .fl-btn { padding-inline: 14px; gap: 8px; font-size: 14.5px; }
+}
+@media (max-width: 359px) {
+  .fl-btn { padding-inline: 12px; font-size: 13.5px; }
 }
 
 /* Formular */
@@ -494,6 +498,18 @@ body {
   padding-bottom: 2px;
 }
 .fl-link:hover { background-size: 100% 1.5px; color: var(--color-fl-yellow); }
+
+/* Hero-Overlays exakt aus Figma Dev Mode (LP Desktop / LP Mobile). */
+.fl-hero-overlay {
+  background: linear-gradient(180deg, rgba(10, 18, 26, 0.45) 0%, rgba(10, 18, 26, 0.55) 22%, rgba(10, 18, 26, 0.9) 45%, rgba(10, 18, 26, 0.98) 100%);
+}
+@media (min-width: 1024px) {
+  .fl-hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(10, 18, 26, 0.55) 0%, rgba(10, 18, 26, 0) 25%, rgba(10, 18, 26, 0) 100%),
+      linear-gradient(90deg, rgba(10, 18, 26, 0.94) 0%, rgba(10, 18, 26, 0.78) 45%, rgba(10, 18, 26, 0.25) 75%, rgba(10, 18, 26, 0.1) 100%);
+  }
+}
 
 /* FAQ-Akkordeon (grid-rows-Trick für weiche Höhe) */
 .fl-faq-panel {

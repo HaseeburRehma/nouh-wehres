@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bis zu 70 % Förderung für Ihre neue Heizung",
     description: "Kostenlose Förder-Beratung vom Meisterbetrieb aus Willich – Förderantrag inklusive.",
-    images: ["/lp/hero-2400.webp"],
+    images: ["/lp/figma/hero-2400.webp"],
   },
 };
 
@@ -67,9 +67,9 @@ const reviews = [
 ];
 
 const projects = [
-  { src: "/projekte/7/2.webp", label: "Vorher", tone: "dark", alt: "Alte Gastherme im Heizungskeller vor dem Austausch" },
-  { src: "/projekte/6/5.webp", label: "Nachher", tone: "yellow", alt: "Neuer Speicher und Wärmepumpen-Technik nach dem Umbau" },
-  { src: "/lp/team-technikraum.jpg", label: "Montage vor Ort", tone: "yellow", alt: "Das NOUH-WEHRES Team im fertigen Technikraum" },
+  { src: "/lp/figma/problem.webp", label: "Vorher", tone: "dark", alt: "Alte Gastherme im Heizungskeller vor dem Austausch" },
+  { src: "/lp/figma/loesung.webp", label: "Nachher", tone: "yellow", alt: "Neuer Technikraum mit Wärmepumpe und Speicher" },
+  { src: "/lp/figma/montage.webp", label: "Montage vor Ort", tone: "yellow", alt: "Monteur beim Anschluss der Wärmepumpe" },
 ] as const;
 
 function Eyebrow({ children, tone = "brand", center = false }: { children: React.ReactNode; tone?: "brand" | "yellow"; center?: boolean }) {
@@ -115,25 +115,25 @@ export default function FoerderLandingPage() {
           <div data-hero-bg className="absolute inset-0 will-change-transform">
             {/* Vorab skalierte WebP-Varianten (der Dev-Optimizer hängt bei 3840w) */}
             <picture>
-              <source media="(max-width: 767px)" srcSet="/lp/hero-mobile.webp" />
+              <source media="(max-width: 1023px)" srcSet="/lp/figma/hero-mobile.webp" />
               <img
-                src="/lp/hero-2400.webp"
-                srcSet="/lp/hero-1200.webp 1200w, /lp/hero-2400.webp 2400w"
+                src="/lp/figma/hero-2400.webp"
+                srcSet="/lp/figma/hero-1200.webp 1200w, /lp/figma/hero-2400.webp 2400w"
                 sizes="100vw"
                 alt=""
                 fetchPriority="high"
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-cover object-[35%_center] max-md:object-[30%_20%]"
+                className="absolute inset-0 h-full w-full object-cover object-center"
               />
             </picture>
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,16,24,0.92)_0%,rgba(10,16,24,0.78)_42%,rgba(10,16,24,0.35)_100%)] max-lg:bg-[linear-gradient(180deg,rgba(10,16,24,0.82)_0%,rgba(10,16,24,0.88)_55%,rgba(10,16,24,0.96)_100%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-fl-navy/70 to-transparent" />
+          {/* Overlays exakt aus Figma (Dev Mode) */}
+          <div className="fl-hero-overlay absolute inset-0" />
         </div>
 
         <div className="fl-container">
           {/* Kopfzeile */}
-          <div data-hero-item className="flex items-center justify-between gap-4 py-6 lg:py-8">
+          <div data-hero-item className="flex items-center justify-between gap-4 pt-4 lg:pt-9">
             <Link href="/" aria-label="NOUH-WEHRES Startseite" className="shrink-0 transition-opacity hover:opacity-85">
               <Image src="/logo-white.png" alt="NOUH-WEHRES – Heizung · Sanitär · Wärmepumpen · Sanierung" width={466} height={90} priority className="h-9 w-auto sm:h-11" />
             </Link>
@@ -149,7 +149,7 @@ export default function FoerderLandingPage() {
             </div>
           </div>
 
-          <div className="grid items-center gap-10 pb-16 pt-6 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-14 lg:pb-[72px] lg:pt-10 xl:grid-cols-[minmax(0,1fr)_460px]">
+          <div className="mt-7 grid grid-cols-[minmax(0,1fr)] items-center gap-7 pb-10 lg:mt-[72px] lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-14 lg:pb-24 xl:grid-cols-[minmax(0,1fr)_460px]">
             <div>
               <div data-hero-item className="flex flex-wrap items-center gap-2.5">
                 <BoschBadge />
@@ -178,7 +178,7 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 02 TRUST BAR ─────────────────────── */}
-      <section aria-label="Darum NOUH-WEHRES" className="border-b border-fl-line bg-white">
+      <section aria-label="Darum NOUH-WEHRES" className="border-b border-[#E3E5E8] bg-white">
         <div className="fl-container">
           <ul data-stagger="0.07" className="grid grid-cols-2 gap-x-4 gap-y-6 py-8 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between lg:gap-0 lg:py-9">
             <li className="col-span-2 flex justify-center sm:col-span-1 sm:justify-start lg:pr-5">
@@ -198,20 +198,23 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 03 PROBLEM ───────────────────────── */}
-      <section className="bg-fl-navy py-20 text-white lg:py-28">
-        <div className="fl-container grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <div data-reveal="left" className="fl-img-frame aspect-[4/3.3] lg:aspect-[47/44]">
-            <div data-parallax="0.14" className="absolute inset-[-8%_0]">
-              <Image src="/projekte/5/5.webp" alt="Alter Heizkessel im Keller" fill sizes="(min-width:1024px) 520px, 100vw" className="object-cover grayscale-[35%] sepia-[18%]" />
-            </div>
-          </div>
-          <div>
+      {/* Figma: Desktop 128px/120px, Gap 96, Bild 560×520 r24 · Mobile 72px/16px, Kopf → Bild → Liste */}
+      <section className="bg-fl-navy py-[72px] text-white lg:py-32">
+        <div className="fl-container grid items-center gap-y-6 lg:grid-cols-[560px_minmax(0,1fr)] lg:gap-x-24 lg:gap-y-0">
+          <div className="lg:col-start-2 lg:row-start-1 lg:self-end">
             <div data-reveal="up"><Eyebrow tone="yellow">Das Problem</Eyebrow></div>
             <h2 data-reveal="up" data-delay="0.05" className="fl-h2-xl mt-4">Noch Gas oder Öl?</h2>
             <p data-reveal="up" data-delay="0.1" className="mt-4 text-[22px] font-semibold leading-snug text-white/55 sm:text-[28px]">
               Steigende Kosten, strengere Vorgaben.
             </p>
-            <ul data-stagger="0.1" className="mt-8 space-y-4">
+          </div>
+          <div data-reveal="left" className="fl-img-frame aspect-[560/520] rounded-[24px] lg:col-start-1 lg:row-span-2 lg:row-start-1">
+            <div data-parallax="0.14" className="absolute inset-[-8%_0]">
+              <Image src="/lp/figma/problem.webp" alt="Alte Gastherme mit Gaszähler im Keller" fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover" />
+            </div>
+          </div>
+          <div className="lg:col-start-2 lg:row-start-2 lg:self-start">
+            <ul data-stagger="0.1" className="space-y-4 lg:mt-8">
               {[
                 <>CO<sub className="text-[0.7em]">2</sub>-Preis steigt – Gas und Öl werden Jahr für Jahr teurer.</>,
                 "Neue Heizungen müssen strengere gesetzliche Vorgaben erfüllen.",
@@ -231,15 +234,32 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 04 LÖSUNG ────────────────────────── */}
-      <section className="bg-white py-20 lg:py-28">
-        <div className="fl-container grid items-center gap-12 lg:grid-cols-[1fr_1.08fr] lg:gap-20">
-          <div className="order-2 lg:order-1">
+      {/* Figma: Desktop 136px/120px, Gap 96, Bild 560×640 r28 · Mobile 72px/16px, Kopf → Bild → Liste */}
+      <section className="bg-white py-[72px] lg:py-[136px]">
+        <div className="fl-container grid items-center gap-y-6 lg:grid-cols-[minmax(0,1fr)_560px] lg:gap-x-24 lg:gap-y-0">
+          <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
             <div data-reveal="up"><Eyebrow>Die Lösung</Eyebrow></div>
-            <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mt-4 lg:max-w-[440px]">Ihre neue Wärmepumpe – alles aus einer Hand.</h2>
+            <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mt-4 lg:max-w-[515px]">Ihre neue Wärmepumpe – alles aus einer Hand.</h2>
             <p data-reveal="up" data-delay="0.1" className="mt-5 max-w-[460px] text-[16px] leading-relaxed text-fl-muted sm:text-[17px]">
               Von der ersten Beratung bis zur fertigen Anlage: ein Ansprechpartner, ein Festpreis, ein Meisterbetrieb aus Ihrer Region.
             </p>
-            <ul data-stagger="0.08" className="mt-7 space-y-3.5">
+          </div>
+          <div data-reveal="right" className="relative mb-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mb-0">
+            <div className="fl-img-frame aspect-[560/640] rounded-[28px]">
+              <div data-parallax="0.12" className="absolute inset-[-8%_0]">
+                <Image src="/lp/figma/loesung.webp" alt="Moderner Technikraum mit Wärmepumpe und Speicher" fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover" />
+              </div>
+            </div>
+            <div className="fl-float absolute -bottom-5 left-4 flex items-center gap-3.5 rounded-[18px] bg-white py-[18px] pl-5 pr-6 shadow-[0_20px_40px_-8px_rgba(0,0,0,0.16)] sm:bottom-12 sm:left-[-36px]">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-fl-yellow text-fl-navy"><DocCheck /></span>
+              <span>
+                <span className="block text-[14px] font-bold text-fl-ink">Förder-Papierkram?</span>
+                <span className="block text-[13px] text-fl-muted">Übernehmen wir für Sie.</span>
+              </span>
+            </div>
+          </div>
+          <div className="lg:col-start-1 lg:row-start-2 lg:self-start">
+            <ul data-stagger="0.08" className="space-y-3.5 lg:mt-7">
               {["Beratung & Förderung aus einer Hand", "Bosch-Qualität", "Bis zu 70 % gefördert", "Festpreis – ohne Überraschungen", "Meisterbetrieb aus der Region"].map((t) => (
                 <li key={t} className="group flex items-center gap-3 text-[16px] font-medium text-fl-ink">
                   <span className="transition-transform duration-300 group-hover:scale-110"><CheckDot tone="brand" size={22} /></span>
@@ -249,32 +269,18 @@ export default function FoerderLandingPage() {
             </ul>
             <div data-reveal="up" className="mt-9"><CtaButton /></div>
           </div>
-          <div data-reveal="right" className="relative order-1 lg:order-2">
-            <div className="fl-img-frame aspect-[4/4.2] sm:aspect-[7/8]">
-              <div data-parallax="0.12" className="absolute inset-[-8%_0]">
-                <Image src="/lp/technikraum.webp" alt="Moderner Technikraum mit Wärmepumpe und Speicher" fill sizes="(min-width:1024px) 520px, 100vw" className="object-cover" />
-              </div>
-            </div>
-            <div className="fl-float absolute -bottom-5 left-4 flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.25)] ring-1 ring-black/5 sm:left-[-36px] sm:bottom-12">
-              <span className="grid h-10 w-10 place-items-center rounded-lg bg-fl-yellow text-fl-navy"><DocCheck /></span>
-              <span>
-                <span className="block text-[14px] font-bold text-fl-ink">Förder-Papierkram?</span>
-                <span className="block text-[13px] text-fl-muted">Übernehmen wir für Sie.</span>
-              </span>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* ─────────────────────────── 05 FÖRDERUNG ─────────────────────── */}
-      <section className="bg-fl-beige py-20 lg:py-28">
+      <section className="bg-fl-beige py-[72px] lg:py-[136px]">
         <div className="fl-container">
           <div data-reveal="up"><Eyebrow center>Förderung einfach erklärt</Eyebrow></div>
           <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mx-auto mt-4 max-w-[760px] text-center">
             Der Staat zahlt bis zu 70&nbsp;%<br className="max-sm:hidden" /> Ihrer neuen Heizung.
           </h2>
 
-          <div className="mx-auto mt-12 grid gap-4 lg:mt-14 lg:grid-cols-2 lg:gap-5">
+          <div className="mx-auto mt-10 grid gap-4 lg:mt-16 lg:grid-cols-2 lg:gap-5">
             <div data-reveal="scale" className="fl-hover-lift relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#0B1622_0%,#06324A_60%,#03506F_100%)] p-8 text-white sm:p-10">
               <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-fl-brand/25 blur-3xl" aria-hidden />
               <p className="text-[22px] font-semibold text-white/80 sm:text-[26px]">bis zu</p>
@@ -298,11 +304,11 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 06 ABLAUF ────────────────────────── */}
-      <section className="bg-white py-20 lg:py-28">
+      <section className="bg-white py-[72px] lg:py-[136px]">
         <div className="fl-container">
           <div data-reveal="up"><Eyebrow center>So einfach geht’s</Eyebrow></div>
           <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mt-4 text-center">In 3 Schritten zur neuen Heizung.</h2>
-          <ol data-stagger="0.14" className="mx-auto mt-12 grid gap-4 md:grid-cols-3 lg:mt-14">
+          <ol data-stagger="0.14" className="mx-auto mt-10 grid gap-4 md:grid-cols-3 lg:mt-16">
             <Step n="01" title="Anfrage senden" text="Kurzes Formular ausfüllen – dauert keine Minute." />
             <Step n="02" title="Kostenlose Beratung & Förder-Check" text="Wir prüfen Ihr Haus und Ihre Förderung persönlich vor Ort." />
             <Step n="03" title="Einbau vom Meisterbetrieb" text="Montage, Inbetriebnahme und Übergabe – alles aus einer Hand." dark />
@@ -312,15 +318,15 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 07 REFERENZEN ────────────────────── */}
-      <section className="bg-fl-beige py-20 lg:py-28">
+      <section className="bg-fl-beige py-[72px] lg:py-[136px]">
         <div className="fl-container">
           <div data-reveal="up"><Eyebrow center>Referenzen</Eyebrow></div>
           <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mx-auto mt-4 max-w-[520px] text-center">Echte Projekte aus Willich &amp; Umgebung.</h2>
 
-          <div data-reveal="up" className="mx-auto mt-12 lg:mt-14">
-            <SnapDots count={projects.length} label="Projektbilder" className="fl-snap--imgs lg:grid lg:grid-cols-3 lg:gap-4">
+          <div data-reveal="up" className="mx-auto mt-10 lg:mt-14">
+            <SnapDots count={projects.length} label="Projektbilder" className="fl-snap--imgs lg:grid lg:grid-cols-3 lg:gap-6">
               {projects.map((p) => (
-                <figure key={p.src} className="fl-img-frame group aspect-[4/4.4]">
+                <figure key={p.src} className="fl-img-frame group aspect-[4/4.4] rounded-[24px] lg:aspect-auto lg:h-[420px]">
                   <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 330px, 70vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]" />
                   <figcaption className={`absolute left-3.5 top-3.5 rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.08em] ${p.tone === "dark" ? "bg-fl-ink text-white" : "bg-fl-yellow text-fl-ink"}`}>
                     {p.label}
@@ -362,14 +368,14 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 08 FORMULAR ──────────────────────── */}
-      <section className="relative isolate overflow-hidden bg-fl-navy py-20 text-white lg:py-28">
+      <section className="relative isolate overflow-hidden bg-fl-navy py-[72px] text-white lg:py-32">
         <div className="absolute inset-0 -z-10">
           <div data-parallax="0.18" className="absolute inset-[-10%_0]">
-            <Image src="/lp/waermepumpe-aussen-1.jpg" alt="" fill sizes="100vw" className="object-cover object-center" />
+            <Image src="/lp/figma/form-bg.webp" alt="" fill sizes="100vw" className="object-cover object-center" />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,16,24,0.94)_0%,rgba(10,16,24,0.86)_50%,rgba(10,16,24,0.7)_100%)] max-lg:bg-fl-navy/90" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,18,26,0.96)_0%,rgba(10,18,26,0.85)_55%,rgba(10,18,26,0.55)_100%)] max-lg:bg-fl-navy" />
         </div>
-        <div className="fl-container grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_460px]">
+        <div className="fl-container grid grid-cols-[minmax(0,1fr)] items-center gap-6 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-24 xl:grid-cols-[minmax(0,1fr)_460px]">
           <div>
             <div data-reveal="up"><Eyebrow tone="yellow">Jetzt anfragen</Eyebrow></div>
             <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mt-4 !text-white lg:max-w-[480px]">Sichern Sie sich Ihre kostenlose Förder-Beratung.</h2>
@@ -398,8 +404,8 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 09 FAQ ───────────────────────────── */}
-      <section className="bg-white py-20 lg:py-28">
-        <div className="fl-container grid gap-10 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-20">
+      <section className="bg-white py-[72px] lg:py-[136px]">
+        <div className="fl-container grid gap-6 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-24">
           <div>
             <div data-reveal="up"><Eyebrow>FAQ</Eyebrow></div>
             <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mt-4">Häufige Fragen.</h2>
@@ -413,7 +419,7 @@ export default function FoerderLandingPage() {
       </section>
 
       {/* ─────────────────────────── 10 FOOTER ────────────────────────── */}
-      <footer className="bg-[#0A0A0A] pb-24 pt-10 text-white md:pb-10">
+      <footer className="bg-[#0B0B0B] pb-24 pt-10 text-white md:py-12">
         <div className="fl-container flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <Link href="/" aria-label="NOUH-WEHRES Startseite" className="transition-opacity hover:opacity-80">
             <Image src="/logo-white.png" alt="NOUH-WEHRES" width={466} height={90} className="h-10 w-auto" />
