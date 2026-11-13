@@ -67,11 +67,20 @@ const reviews = [
   },
 ];
 
-const projects = [
+type Project = { src: string; alt: string; slides?: { src: string; alt: string }[] };
+const projects: Project[] = [
   { src: "/lp/ref-montage.webp", alt: "NOUH-WEHRES Monteur beim Anschluss einer Bosch Wärmepumpe" },
-  { src: "/lp/technikraum.webp", alt: "Fertiger Technikraum mit Wärmepumpe und Speicher" },
+  {
+    // Mitte: automatischer Slider (Außengerät + Technikraum)
+    src: "/lp/ref-bosch-aussen.webp",
+    alt: "Bosch Wärmepumpe – Außengerät und Technikraum",
+    slides: [
+      { src: "/lp/ref-bosch-aussen.webp", alt: "Bosch Wärmepumpe im geschützten Außenbereich auf Kiesbett" },
+      { src: "/lp/ref-bosch-technikraum.webp", alt: "Neuer Bosch Technikraum mit Inneneinheit, Speicher und Hydraulik" },
+    ],
+  },
   { src: "/lp/team-technikraum.jpg", alt: "Das NOUH-WEHRES Team im neu installierten Heizungsraum" },
-] as const;
+];
 
 function Eyebrow({ children, tone = "brand", center = false }: { children: React.ReactNode; tone?: "brand" | "yellow"; center?: boolean }) {
   return (
@@ -331,7 +340,11 @@ export default function FoerderLandingPage() {
             <SnapDots count={projects.length} label="Projektbilder" className="fl-snap--imgs lg:grid lg:grid-cols-3 lg:gap-6">
               {projects.map((p) => (
                 <figure key={p.src} className="fl-img-frame group aspect-[4/4.4] rounded-[24px] lg:aspect-auto lg:h-[420px]">
-                  <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 330px, 70vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]" />
+                  {p.slides ? (
+                    <AutoSlider slides={p.slides} interval={4000} sizes="(min-width:1024px) 390px, 75vw" />
+                  ) : (
+                    <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 390px, 75vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]" />
+                  )}
                 </figure>
               ))}
             </SnapDots>
