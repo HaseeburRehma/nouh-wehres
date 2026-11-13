@@ -201,12 +201,12 @@ export default function FoerderLandingPage() {
       {/* ─────────────────────────── 02 TRUST BAR ─────────────────────── */}
       <section aria-label="Darum NOUH-WEHRES" className="border-b border-[#E3E5E8] bg-white">
         <div className="fl-container">
-          <ul data-stagger="0.07" className="grid grid-cols-2 gap-x-4 gap-y-6 py-8 lg:flex lg:items-center lg:justify-between lg:gap-0 lg:py-9">
+          <ul data-stagger="0.07" className="grid grid-cols-1 gap-x-4 gap-y-5 py-7 min-[375px]:grid-cols-2 min-[375px]:gap-y-6 sm:py-8 lg:flex lg:items-center lg:justify-between lg:gap-0 lg:py-9">
             <TrustItem icon={<Star size={18} />} tone="bg-[#FFF4CC] text-[#E0A800]" title="Meisterbetrieb" sub="Handwerkskammer-geprüft" first />
             <TrustItem
               icon={<GoogleG />}
               tone="bg-white ring-1 ring-[#E3E5E8] shadow-sm"
-              title={<><span className="tracking-[0.06em] text-fl-yellow-deep">★★★★★</span> Google</>}
+              title={<><span className="whitespace-nowrap text-[0.85em] tracking-[0.04em] text-fl-yellow-deep">★★★★★</span> Google</>}
               sub="Ø 4,4 aus 25 Bewertungen"
             />
             <TrustItem icon={<Clock size={18} />} tone="bg-fl-brand-50 text-fl-brand" title="29 Jahre Erfahrung" sub="Familienbetrieb mit Handschlag" />
@@ -218,7 +218,7 @@ export default function FoerderLandingPage() {
       {/* ─────────────────────────── 03 PROBLEM ───────────────────────── */}
       {/* Figma: Desktop 128px/120px, Gap 96, Bild 560×520 r24 · Mobile 72px/16px, Kopf → Bild → Liste */}
       <section className="bg-fl-navy py-[72px] text-white lg:py-32">
-        <div className="fl-container grid items-center gap-y-6 lg:grid-cols-[560px_minmax(0,1fr)] lg:gap-x-24 lg:gap-y-0">
+        <div className="fl-container grid items-center gap-y-6 lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)] lg:gap-x-14 lg:gap-y-0 xl:grid-cols-[560px_minmax(0,1fr)] xl:gap-x-24">
           <div className="lg:col-start-2 lg:row-start-1 lg:self-end">
             <div data-reveal="up"><Eyebrow tone="yellow">Das Problem</Eyebrow></div>
             <h2 data-reveal="up" data-delay="0.05" className="fl-h2-xl mt-4">Noch Gas oder Öl?</h2>
@@ -254,7 +254,7 @@ export default function FoerderLandingPage() {
       {/* ─────────────────────────── 04 LÖSUNG ────────────────────────── */}
       {/* Figma: Desktop 136px/120px, Gap 96, Bild 560×640 r28 · Mobile 72px/16px, Kopf → Bild → Liste */}
       <section className="bg-white py-[72px] lg:py-[136px]">
-        <div className="fl-container grid items-center gap-y-6 lg:grid-cols-[minmax(0,1fr)_560px] lg:gap-x-24 lg:gap-y-0">
+        <div className="fl-container grid items-center gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,460px)] lg:gap-x-14 lg:gap-y-0 xl:grid-cols-[minmax(0,1fr)_560px] xl:gap-x-24">
           <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
             <div data-reveal="up"><Eyebrow>Die Lösung</Eyebrow></div>
             <h2 data-reveal="up" data-delay="0.05" className="fl-h2 mt-4 lg:max-w-[515px]">Ihre neue Wärmepumpe – alles aus einer Hand.</h2>
@@ -455,8 +455,8 @@ export default function FoerderLandingPage() {
           </Link>
           <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-[15px]">
             <span className="text-white/55 max-sm:w-full">© {new Date().getFullYear()} Nouh-Wehres GmbH</span>
-            <Link href="/impressum" className="fl-link font-semibold">Impressum</Link>
-            <Link href="/datenschutz" className="fl-link font-semibold">Datenschutz</Link>
+            <Link href="/impressum" className="fl-link-wrap inline-flex min-h-11 items-center font-semibold"><span className="fl-link">Impressum</span></Link>
+            <Link href="/datenschutz" className="fl-link-wrap inline-flex min-h-11 items-center font-semibold"><span className="fl-link">Datenschutz</span></Link>
           </div>
         </div>
       </footer>
@@ -478,13 +478,13 @@ function GoogleG({ size = 22 }: { size?: number }) {
 
 function TrustItem({ icon, tone, title, sub, first = false, last = false }: { icon: React.ReactNode; tone: string; title: React.ReactNode; sub: string; first?: boolean; last?: boolean }) {
   return (
-    <li className={`group flex min-w-0 items-center gap-3 lg:flex-1 lg:justify-center lg:px-5 ${first ? "lg:justify-start lg:pl-0" : ""} ${last ? "lg:justify-end lg:pr-0" : "lg:border-r lg:border-fl-line"}`}>
-      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-translate-y-1 group-hover:rotate-[-6deg] ${tone}`}>
+    <li className={`group flex min-w-0 items-center gap-2.5 sm:gap-3 lg:flex-1 lg:justify-center lg:px-4 xl:px-5 ${first ? "lg:justify-start lg:pl-0" : ""} ${last ? "lg:justify-end lg:pr-0" : "lg:border-r lg:border-fl-line"}`}>
+      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl sm:h-11 sm:w-11 transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-translate-y-1 group-hover:rotate-[-6deg] ${tone}`}>
         {icon}
       </span>
-      <span className="min-w-0 lg:whitespace-nowrap">
-        <span className="block text-[15px] font-bold leading-tight text-fl-ink sm:text-[17px] lg:text-[16px] xl:text-[17px]">{title}</span>
-        <span className="mt-0.5 block text-[12.5px] leading-snug text-fl-muted sm:text-[13.5px] lg:text-[12.5px] xl:text-[13.5px]">{sub}</span>
+      <span lang="de" className="min-w-0 hyphens-auto break-words xl:whitespace-nowrap">
+        <span className="block text-[14px] font-bold leading-tight text-fl-ink sm:text-[17px] lg:text-[15px] xl:text-[17px]">{title}</span>
+        <span className="mt-0.5 block text-[12px] leading-snug text-fl-muted sm:text-[13.5px] lg:text-[12.5px] xl:text-[13.5px]">{sub}</span>
       </span>
     </li>
   );

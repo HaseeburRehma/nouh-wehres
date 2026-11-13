@@ -502,7 +502,9 @@ body {
   transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
   padding-bottom: 2px;
 }
-.fl-link:hover { background-size: 100% 1.5px; color: var(--color-fl-yellow); }
+.fl-link:hover,
+.fl-link-wrap:hover .fl-link,
+.fl-link-wrap:focus-visible .fl-link { background-size: 100% 1.5px; color: var(--color-fl-yellow); }
 
 /* Hero-Overlays exakt aus Figma Dev Mode (LP Desktop / LP Mobile). */
 .fl-hero-overlay {
