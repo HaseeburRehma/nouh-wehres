@@ -67,7 +67,7 @@ const reviews = [
   },
 ];
 
-type Project = { src: string; alt: string; slides?: { src: string; alt: string }[] };
+type Project = { src: string; alt: string; interval?: number; slides?: { src: string; alt: string }[] };
 const projects: Project[] = [
   { src: "/lp/ref-montage.webp", alt: "NOUH-WEHRES Monteur beim Anschluss einer Bosch Wärmepumpe" },
   {
@@ -79,7 +79,18 @@ const projects: Project[] = [
       { src: "/lp/ref-bosch-technikraum.webp", alt: "Neuer Bosch Technikraum mit Inneneinheit, Speicher und Hydraulik" },
     ],
   },
-  { src: "/lp/team-technikraum.jpg", alt: "Das NOUH-WEHRES Team im neu installierten Heizungsraum" },
+  {
+    // Rechts: automatischer Slider (Heizraum-Modernisierung)
+    src: "/lp/ref-heizraum-1.webp",
+    interval: 5200, // versetzt zum mittleren Slider
+    alt: "Heizraum-Modernisierung von NOUH-WEHRES",
+    slides: [
+      { src: "/lp/ref-heizraum-1.webp", alt: "Neue Hydraulik mit Ausdehnungsgefäß und Sicherheitsgruppe" },
+      { src: "/lp/ref-heizraum-2.webp", alt: "Neu installierter Brötje Heizkessel mit Pumpengruppe" },
+      { src: "/lp/ref-heizraum-3.webp", alt: "Kondensatpumpe und Abgasleitung nach der Modernisierung" },
+      { src: "/lp/ref-heizraum-4.webp", alt: "Brötje Heizkessel mit Regelung und Ölfilter" },
+    ],
+  },
 ];
 
 function Eyebrow({ children, tone = "brand", center = false }: { children: React.ReactNode; tone?: "brand" | "yellow"; center?: boolean }) {
@@ -341,7 +352,7 @@ export default function FoerderLandingPage() {
               {projects.map((p) => (
                 <figure key={p.src} className="fl-img-frame group aspect-[4/4.4] rounded-[24px] lg:aspect-auto lg:h-[420px]">
                   {p.slides ? (
-                    <AutoSlider slides={p.slides} interval={4000} sizes="(min-width:1024px) 390px, 75vw" />
+                    <AutoSlider slides={p.slides} interval={p.interval ?? 4000} sizes="(min-width:1024px) 390px, 75vw" />
                   ) : (
                     <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 390px, 75vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]" />
                   )}
