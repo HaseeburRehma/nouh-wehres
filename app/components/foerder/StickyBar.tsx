@@ -41,7 +41,7 @@ export default function StickyBar() {
               <Phone size={16} />
             </a>
             <a href="#anfrage" tabIndex={show ? 0 : -1} className="fl-btn btn-cta !hidden !h-11 !px-5 !text-[14px] md:!inline-flex">
-              <span className="btn-label" data-text="Beratung sichern">Beratung sichern</span>
+              <span className="btn-label" data-text="Förder-Beratung sichern">Förder-Beratung sichern</span>
               <ArrowRight className="fl-btn-arrow" size={14} />
             </a>
           </div>

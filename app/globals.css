@@ -511,6 +511,10 @@ body {
   }
 }
 
+/* Auto-Slider: Fortschrittsbalken pro Bild */
+.fl-slide-progress { animation: fl-slide-progress linear forwards; transform: scaleX(0); }
+@keyframes fl-slide-progress { to { transform: scaleX(1); } }
+
 /* FAQ-Akkordeon (grid-rows-Trick für weiche Höhe) */
 .fl-faq-panel {
   display: grid;

@@ -159,8 +159,8 @@ export default function LeadForm({ className = "" }: { className?: string }) {
       )}
 
       <button type="submit" disabled={status === "sending"} className="fl-btn btn-cta mt-5 w-full">
-        <span className="btn-label" data-text={status === "sending" ? "Wird gesendet …" : "Kostenlose Förder-Beratung sichern"}>
-          {status === "sending" ? "Wird gesendet …" : "Kostenlose Förder-Beratung sichern"}
+        <span className="btn-label" data-text={status === "sending" ? "Wird gesendet …" : "Förder-Beratung sichern"}>
+          {status === "sending" ? "Wird gesendet …" : "Förder-Beratung sichern"}
         </span>
         <ArrowRight className="fl-btn-arrow" />
       </button>

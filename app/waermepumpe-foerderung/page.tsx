@@ -6,6 +6,7 @@ import Motion from "../components/foerder/Motion";
 import Faq, { type FaqItem } from "../components/foerder/Faq";
 import SnapDots from "../components/foerder/SnapDots";
 import StickyBar from "../components/foerder/StickyBar";
+import AutoSlider from "../components/foerder/AutoSlider";
 import { ArrowRight, CheckDot, Clock, DocCheck, Phone, Pin, Star } from "../components/foerder/icons";
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bis zu 70 % Förderung für Ihre neue Heizung",
     description: "Kostenlose Förder-Beratung vom Meisterbetrieb aus Willich – Förderantrag inklusive.",
-    images: ["/lp/figma/hero-2400.webp"],
+    images: ["/lp/hero/hero-2000.webp"],
   },
 };
 
@@ -78,7 +79,7 @@ function Eyebrow({ children, tone = "brand", center = false }: { children: React
   );
 }
 
-function CtaButton({ children = "Kostenlose Förder-Beratung sichern", className = "" }: { children?: string; className?: string }) {
+function CtaButton({ children = "Förder-Beratung sichern", className = "" }: { children?: string; className?: string }) {
   return (
     <a href="#anfrage" className={`fl-btn btn-cta ${className}`}>
       <span className="btn-label" data-text={children}>{children}</span>
@@ -112,18 +113,18 @@ export default function FoerderLandingPage() {
       {/* ─────────────────────────── 01 HERO ─────────────────────────── */}
       <section data-hero className="relative isolate overflow-hidden bg-fl-navy text-white">
         <div className="absolute inset-0 -z-10">
-          <div data-hero-bg className="absolute inset-0 will-change-transform">
-            {/* Vorab skalierte WebP-Varianten (der Dev-Optimizer hängt bei 3840w) */}
+          {/* Desktop: ganzes Motiv · Mobile/Tablet: 4:5-Ausschnitt um die Wärmepumpe, nur im oberen Bereich */}
+          <div data-hero-bg className="absolute inset-x-0 top-0 h-[min(100%,820px)] will-change-transform lg:inset-0 lg:h-full">
             <picture>
-              <source media="(max-width: 1023px)" srcSet="/lp/figma/hero-mobile.webp" />
+              <source media="(max-width: 1023px)" srcSet="/lp/hero/hero-mobile.webp" />
               <img
-                src="/lp/figma/hero-2400.webp"
-                srcSet="/lp/figma/hero-1200.webp 1200w, /lp/figma/hero-2400.webp 2400w"
+                src="/lp/hero/hero-2000.webp"
+                srcSet="/lp/hero/hero-1200.webp 1200w, /lp/hero/hero-2000.webp 2000w"
                 sizes="100vw"
                 alt=""
                 fetchPriority="high"
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-cover object-center"
+                className="absolute inset-0 h-full w-full object-cover object-[50%_35%] lg:object-[45%_60%]"
               />
             </picture>
           </div>
@@ -145,7 +146,7 @@ export default function FoerderLandingPage() {
               <a href={PHONE_HREF} aria-label={`Anrufen: ${PHONE}`} className="grid h-11 w-11 place-items-center rounded-full bg-white/10 ring-1 ring-white/20 transition hover:bg-white/20 sm:hidden">
                 <Phone size={18} />
               </a>
-              <CtaButton className="!hidden lg:!inline-flex">Jetzt Beratung sichern</CtaButton>
+              <CtaButton className="!hidden lg:!inline-flex" />
             </div>
           </div>
 
@@ -180,11 +181,8 @@ export default function FoerderLandingPage() {
       {/* ─────────────────────────── 02 TRUST BAR ─────────────────────── */}
       <section aria-label="Darum NOUH-WEHRES" className="border-b border-[#E3E5E8] bg-white">
         <div className="fl-container">
-          <ul data-stagger="0.07" className="grid grid-cols-2 gap-x-4 gap-y-6 py-8 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between lg:gap-0 lg:py-9">
-            <li className="col-span-2 flex justify-center sm:col-span-1 sm:justify-start lg:pr-5">
-              <BoschBadge dashed />
-            </li>
-            <TrustItem icon={<Star size={18} />} tone="bg-[#FFF4CC] text-[#E0A800]" title="Meisterbetrieb" sub="Handwerkskammer-geprüft" />
+          <ul data-stagger="0.07" className="grid grid-cols-2 gap-x-4 gap-y-6 py-8 lg:flex lg:items-center lg:justify-between lg:gap-0 lg:py-9">
+            <TrustItem icon={<Star size={18} />} tone="bg-[#FFF4CC] text-[#E0A800]" title="Meisterbetrieb" sub="Handwerkskammer-geprüft" first />
             <TrustItem
               icon={<span className="text-[16px] font-bold text-[#4285F4]">G</span>}
               tone="bg-[#EEF3FE]"
@@ -210,7 +208,7 @@ export default function FoerderLandingPage() {
           </div>
           <div data-reveal="left" className="fl-img-frame aspect-[560/520] rounded-[24px] lg:col-start-1 lg:row-span-2 lg:row-start-1">
             <div data-parallax="0.14" className="absolute inset-[-8%_0]">
-              <Image src="/lp/figma/problem.webp" alt="Alte Gastherme mit Gaszähler im Keller" fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover" />
+              <Image src="/lp/waermepumpe-aussen-4.jpg" alt="Anschluss der Wärmepumpe: gedämmte Leitungen und Fundament" fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover object-[50%_45%]" />
             </div>
           </div>
           <div className="lg:col-start-2 lg:row-start-2 lg:self-start">
@@ -246,11 +244,17 @@ export default function FoerderLandingPage() {
           </div>
           <div data-reveal="right" className="relative mb-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mb-0">
             <div className="fl-img-frame aspect-[560/640] rounded-[28px]">
-              <div data-parallax="0.12" className="absolute inset-[-8%_0]">
-                <Image src="/lp/figma/loesung.webp" alt="Moderner Technikraum mit Wärmepumpe und Speicher" fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover" />
-              </div>
+              <AutoSlider
+                sizes="(min-width:1024px) 560px, 100vw"
+                slides={[
+                  { src: "/lp/waermepumpe-aussen-1.jpg", alt: "Bosch Wärmepumpe vor der Hauswand – von NOUH-WEHRES montiert" },
+                  { src: "/lp/waermepumpe-aussen-3.jpg", alt: "Wärmepumpe auf Betonfundament mit Kondensatablauf" },
+                  { src: "/lp/waermepumpe-aussen-2.jpg", alt: "Bosch Wärmepumpe mit gedämmter Leitungsführung ins Haus" },
+                  { src: "/lp/waermepumpe-aussen-4.jpg", alt: "Rückseite der Wärmepumpe mit Anschlüssen und Fundament" },
+                ]}
+              />
             </div>
-            <div className="fl-float absolute -bottom-5 left-4 flex items-center gap-3.5 rounded-[18px] bg-white py-[18px] pl-5 pr-6 shadow-[0_20px_40px_-8px_rgba(0,0,0,0.16)] sm:bottom-12 sm:left-[-36px]">
+            <div className="fl-float absolute -bottom-5 left-4 flex items-center gap-3.5 rounded-[18px] bg-white py-[18px] pl-5 pr-6 shadow-[0_20px_40px_-8px_rgba(0,0,0,0.16)] lg:bottom-12 lg:left-[-36px]">
               <span className="grid h-10 w-10 place-items-center rounded-lg bg-fl-yellow text-fl-navy"><DocCheck /></span>
               <span>
                 <span className="block text-[14px] font-bold text-fl-ink">Förder-Papierkram?</span>
@@ -280,7 +284,7 @@ export default function FoerderLandingPage() {
             Der Staat zahlt bis zu 70&nbsp;%<br className="max-sm:hidden" /> Ihrer neuen Heizung.
           </h2>
 
-          <div className="mx-auto mt-10 grid gap-4 lg:mt-16 lg:grid-cols-2 lg:gap-5">
+          <div className="mx-auto mt-10 grid grid-cols-[minmax(0,1fr)] gap-4 lg:mt-16 lg:grid-cols-2 lg:gap-5">
             <div data-reveal="scale" className="fl-hover-lift relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#0B1622_0%,#06324A_60%,#03506F_100%)] p-8 text-white sm:p-10">
               <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-fl-brand/25 blur-3xl" aria-hidden />
               <p className="text-[22px] font-semibold text-white/80 sm:text-[26px]">bis zu</p>
@@ -291,7 +295,7 @@ export default function FoerderLandingPage() {
                 Zuschuss über die KfW-Heizungsförderung (Programm 458) – direkt aufs Konto, nicht als Kredit.
               </p>
             </div>
-            <div data-stagger="0.12" className="grid gap-4">
+            <div data-stagger="0.12" className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4">
               <FoerderRow badge="30 %" badgeTone="bg-fl-brand-50 text-fl-brand" title="Grundförderung" text="Für jeden Eigentümer beim Tausch auf eine Wärmepumpe." />
               <FoerderRow badge="+ Boni" badgeTone="bg-[#FFF4CC] text-[#7A5B00]" title="Klima- & Einkommensbonus" text="Z. B. für den Austausch alter Gas- oder Ölheizungen und abhängig vom Haushaltseinkommen." />
               <FoerderRow badge="0 €" badgeTone="bg-[#EEF0F2] text-fl-ink" title="Aufwand für Sie" text="„Wir übernehmen den Förder-Papierkram.“ Antrag, Nachweise, Abwicklung – alles dabei." />
@@ -371,9 +375,13 @@ export default function FoerderLandingPage() {
       <section className="relative isolate overflow-hidden bg-fl-navy py-[72px] text-white lg:py-32">
         <div className="absolute inset-0 -z-10">
           <div data-parallax="0.18" className="absolute inset-[-10%_0]">
-            <Image src="/lp/figma/form-bg.webp" alt="" fill sizes="100vw" className="object-cover object-center" />
+            {/* Gleiches Motiv wie der Hero */}
+            <picture>
+              <source media="(max-width: 1023px)" srcSet="/lp/hero/hero-mobile.webp" />
+              <img src="/lp/hero/hero-2000.webp" srcSet="/lp/hero/hero-1200.webp 1200w, /lp/hero/hero-2000.webp 2000w" sizes="100vw" alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-center" />
+            </picture>
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,18,26,0.96)_0%,rgba(10,18,26,0.85)_55%,rgba(10,18,26,0.55)_100%)] max-lg:bg-fl-navy" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,18,26,0.96)_0%,rgba(10,18,26,0.85)_55%,rgba(10,18,26,0.55)_100%)] max-lg:bg-[linear-gradient(180deg,rgba(10,18,26,0.82)_0%,rgba(10,18,26,0.9)_40%,rgba(10,18,26,0.97)_100%)]" />
         </div>
         <div className="fl-container grid grid-cols-[minmax(0,1fr)] items-center gap-6 lg:grid-cols-[minmax(0,1fr)_440px] lg:gap-24 xl:grid-cols-[minmax(0,1fr)_460px]">
           <div>
@@ -435,9 +443,9 @@ export default function FoerderLandingPage() {
   );
 }
 
-function TrustItem({ icon, tone, title, sub, last = false }: { icon: React.ReactNode; tone: string; title: React.ReactNode; sub: string; last?: boolean }) {
+function TrustItem({ icon, tone, title, sub, first = false, last = false }: { icon: React.ReactNode; tone: string; title: React.ReactNode; sub: string; first?: boolean; last?: boolean }) {
   return (
-    <li className={`group flex min-w-0 items-center gap-3 lg:px-5 ${last ? "lg:pr-0" : "lg:border-r lg:border-fl-line"}`}>
+    <li className={`group flex min-w-0 items-center gap-3 lg:flex-1 lg:justify-center lg:px-5 ${first ? "lg:justify-start lg:pl-0" : ""} ${last ? "lg:justify-end lg:pr-0" : "lg:border-r lg:border-fl-line"}`}>
       <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-translate-y-1 group-hover:rotate-[-6deg] ${tone}`}>
         {icon}
       </span>
@@ -451,12 +459,12 @@ function TrustItem({ icon, tone, title, sub, last = false }: { icon: React.React
 
 function FoerderRow({ badge, badgeTone, title, text }: { badge: string; badgeTone: string; title: string; text: string }) {
   return (
-    <div className="fl-hover-lift group flex items-center gap-5 rounded-[18px] bg-white p-5 ring-1 ring-black/[0.04] sm:p-6">
-      <span className={`grid h-16 w-20 shrink-0 place-items-center rounded-xl text-[19px] font-extrabold tracking-tight transition-transform duration-500 group-hover:scale-105 ${badgeTone}`}>
+    <div className="fl-hover-lift group flex min-w-0 items-center gap-3.5 rounded-[18px] bg-white p-4 ring-1 ring-black/[0.04] sm:gap-5 sm:p-6">
+      <span className={`grid h-14 w-16 shrink-0 place-items-center rounded-xl text-[16px] font-extrabold tracking-tight transition-transform duration-500 group-hover:scale-105 sm:h-16 sm:w-20 sm:text-[19px] ${badgeTone}`}>
         {badge}
       </span>
-      <span>
-        <span className="block text-[17px] font-bold text-fl-ink">{title}</span>
+      <span className="min-w-0 hyphens-auto break-words" lang="de">
+        <span className="block text-[16px] font-bold text-fl-ink sm:text-[17px]">{title}</span>
         <span className="mt-1 block text-[14px] leading-relaxed text-fl-muted">{text}</span>
       </span>
     </div>
