@@ -68,9 +68,9 @@ const reviews = [
 ];
 
 const projects = [
-  { src: "/lp/waermepumpe-aussen-1.jpg", alt: "Bosch Wärmepumpe vor der Hauswand – montiert von NOUH-WEHRES" },
-  { src: "/lp/waermepumpe-aussen-3.jpg", alt: "Bosch Wärmepumpe auf Betonfundament mit Kondensatablauf" },
-  { src: "/lp/waermepumpe-aussen-2.jpg", alt: "Bosch Wärmepumpe mit gedämmter Leitungsführung ins Haus" },
+  { src: "/lp/ref-montage.webp", alt: "NOUH-WEHRES Monteur beim Anschluss einer Bosch Wärmepumpe" },
+  { src: "/lp/technikraum.webp", alt: "Fertiger Technikraum mit Wärmepumpe und Speicher" },
+  { src: "/lp/team-technikraum.jpg", alt: "Das NOUH-WEHRES Team im neu installierten Heizungsraum" },
 ] as const;
 
 function Eyebrow({ children, tone = "brand", center = false }: { children: React.ReactNode; tone?: "brand" | "yellow"; center?: boolean }) {
@@ -208,7 +208,7 @@ export default function FoerderLandingPage() {
           </div>
           <div data-reveal="left" className="fl-img-frame aspect-[560/520] rounded-[24px] lg:col-start-1 lg:row-span-2 lg:row-start-1">
             <div data-parallax="0.14" className="absolute inset-[-8%_0]">
-              <Image src="/lp/waermepumpe-aussen-4.jpg" alt="Anschluss der Wärmepumpe: gedämmte Leitungen und Fundament" fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover object-[50%_45%]" />
+              <Image src="/lp/problem-heizkessel.webp" alt="Alter Öl-Heizkessel mit Warmwasserspeicher im Keller" fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover object-[58%_center]" />
             </div>
           </div>
           <div className="lg:col-start-2 lg:row-start-2 lg:self-start">
