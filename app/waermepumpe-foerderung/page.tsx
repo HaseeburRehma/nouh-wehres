@@ -68,9 +68,9 @@ const reviews = [
 ];
 
 const projects = [
-  { src: "/lp/figma/problem.webp", label: "Vorher", tone: "dark", alt: "Alte Gastherme im Heizungskeller vor dem Austausch" },
-  { src: "/lp/figma/loesung.webp", label: "Nachher", tone: "yellow", alt: "Neuer Technikraum mit Wärmepumpe und Speicher" },
-  { src: "/lp/figma/montage.webp", label: "Montage vor Ort", tone: "yellow", alt: "Monteur beim Anschluss der Wärmepumpe" },
+  { src: "/lp/waermepumpe-aussen-1.jpg", alt: "Bosch Wärmepumpe vor der Hauswand – montiert von NOUH-WEHRES" },
+  { src: "/lp/waermepumpe-aussen-3.jpg", alt: "Bosch Wärmepumpe auf Betonfundament mit Kondensatablauf" },
+  { src: "/lp/waermepumpe-aussen-2.jpg", alt: "Bosch Wärmepumpe mit gedämmter Leitungsführung ins Haus" },
 ] as const;
 
 function Eyebrow({ children, tone = "brand", center = false }: { children: React.ReactNode; tone?: "brand" | "yellow"; center?: boolean }) {
@@ -332,9 +332,6 @@ export default function FoerderLandingPage() {
               {projects.map((p) => (
                 <figure key={p.src} className="fl-img-frame group aspect-[4/4.4] rounded-[24px] lg:aspect-auto lg:h-[420px]">
                   <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 330px, 70vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]" />
-                  <figcaption className={`absolute left-3.5 top-3.5 rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.08em] ${p.tone === "dark" ? "bg-fl-ink text-white" : "bg-fl-yellow text-fl-ink"}`}>
-                    {p.label}
-                  </figcaption>
                 </figure>
               ))}
             </SnapDots>
