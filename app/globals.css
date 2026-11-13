@@ -298,3 +298,261 @@ body {
   font-weight: 600;
   line-height: 1.55;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Förder-LP · Wärmepumpe  (/foerdermittel)
+   Figma "NOUH-WEHRES" › Förder-LP · Wärmepumpe (LP Desktop 1440 / Mobile)
+   ══════════════════════════════════════════════════════════════ */
+@theme {
+  --color-fl-brand: #0099cc;
+  --color-fl-brand-dark: #0083b0;
+  --color-fl-brand-50: #e6f5fb;
+  --color-fl-navy: #0f1720;
+  --color-fl-ink: #0b0b0b;
+  --color-fl-muted: #5f6670;
+  --color-fl-silver: #8a9099;
+  --color-fl-line: #e6e8eb;
+  --color-fl-beige: #f4f4f1;
+  --color-fl-yellow: #ffcc00;
+  --color-fl-yellow-deep: #f5b800;
+}
+
+@layer components {
+.fl-container {
+  width: 100%;
+  max-width: 1264px; /* 1200 Inhalt + 2×32 Gutter (Figma: 120 px Rand bei 1440) */
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 640px) {
+  .fl-container { padding-inline: 32px; }
+}
+
+/* Typografie */
+.fl-h1 {
+  font-weight: 800;
+  font-size: clamp(2.5rem, 1.2rem + 4.6vw, 4.5rem); /* 40 → 72 */
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.fl-h2 {
+  font-weight: 800;
+  font-size: clamp(2rem, 1.35rem + 2.2vw, 3rem); /* 32 → 48 */
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--color-fl-ink);
+  text-wrap: balance;
+}
+.fl-h2-xl {
+  font-weight: 800;
+  font-size: clamp(2.5rem, 1.6rem + 2.8vw, 3.5rem); /* 40 → 56 */
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.fl-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Buttons */
+.fl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  height: 3.5rem;
+  padding-inline: 1.5rem;
+  border-radius: 12px;
+  background: var(--color-fl-brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.005em;
+  box-shadow: 0 12px 28px -12px rgba(0, 153, 204, 0.75);
+  transition: background-color 0.3s, box-shadow 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fl-btn:hover {
+  background: var(--color-fl-brand-dark);
+  box-shadow: 0 18px 38px -12px rgba(0, 153, 204, 0.85);
+  transform: translateY(-2px);
+}
+.fl-btn:active { transform: translateY(0) scale(0.98); }
+.fl-btn:focus-visible { outline: 3px solid var(--color-fl-yellow); outline-offset: 3px; }
+.fl-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.fl-btn-arrow { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+.fl-btn:hover .fl-btn-arrow { transform: translateX(4px); }
+.fl-btn .btn-label { white-space: nowrap; }
+@media (max-width: 380px) {
+  .fl-btn { padding-inline: 1rem; font-size: 0.9375rem; }
+}
+
+/* Formular */
+.fl-card-form {
+  position: relative;
+  background: #fff;
+  color: var(--color-fl-ink);
+  border-radius: 22px;
+  padding: 22px 18px;
+}
+@media (min-width: 640px) {
+  .fl-card-form { padding: 28px; }
+}
+.fl-input {
+  width: 100%;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--color-fl-line);
+  background: #f6f7f9;
+  padding-inline: 14px;
+  font-size: 15px;
+  color: var(--color-fl-ink);
+  transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
+}
+.fl-input::placeholder { color: #9aa1aa; }
+.fl-input:hover { border-color: #cfd4da; }
+.fl-input:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--color-fl-brand);
+  box-shadow: 0 0 0 4px rgba(0, 153, 204, 0.14);
+}
+.fl-input[aria-invalid="true"] { border-color: #e5484d; background: #fff7f7; }
+.fl-chip {
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--color-fl-line);
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-fl-ink);
+  transition: border-color 0.25s, background-color 0.25s, color 0.25s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
+}
+.fl-chip:hover { border-color: rgba(0, 153, 204, 0.5); transform: translateY(-1px); }
+.fl-chip.is-active {
+  border: 2px solid var(--color-fl-brand);
+  background: var(--color-fl-brand-50);
+  color: #00739a;
+  box-shadow: 0 6px 16px -10px rgba(0, 153, 204, 0.8);
+}
+@media (max-width: 380px) {
+  .fl-chip { font-size: 12.5px; }
+}
+.fl-pulse-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: #e5484d;
+}
+.fl-pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: rgba(229, 72, 77, 0.35);
+  animation: fl-pulse 1.8s ease-out infinite;
+}
+@keyframes fl-pulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+.fl-success-ring { animation: fl-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes fl-pop {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Bilder & Karten */
+.fl-img-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #1b2430;
+  isolation: isolate;
+}
+.fl-hover-lift {
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) {
+  .fl-hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 50px -24px rgba(15, 23, 32, 0.35);
+  }
+}
+.fl-float { animation: fl-float 5s ease-in-out infinite; }
+@keyframes fl-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.fl-link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+  transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
+  padding-bottom: 2px;
+}
+.fl-link:hover { background-size: 100% 1.5px; color: var(--color-fl-yellow); }
+
+/* FAQ-Akkordeon (grid-rows-Trick für weiche Höhe) */
+.fl-faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fl-faq.is-open .fl-faq-panel { grid-template-rows: 1fr; }
+.fl-faq-panel p { opacity: 0; transform: translateY(-6px); transition: opacity 0.4s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.fl-faq.is-open .fl-faq-panel p { opacity: 1; transform: none; transition-delay: 0.08s; }
+.fl-faq-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  background: #f0f1f3;
+  color: var(--color-fl-ink);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s, color 0.3s;
+}
+.fl-faq button:hover .fl-faq-icon { background: var(--color-fl-brand-50); color: var(--color-fl-brand); }
+.fl-faq.is-open .fl-faq-icon { transform: rotate(180deg); background: var(--color-fl-brand); color: #fff; }
+.fl-faq-v { transform-origin: center; transform-box: fill-box; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.fl-faq.is-open .fl-faq-v { transform: scaleY(0); }
+
+/* Mobile-Slider → ab lg Grid */
+.fl-snap {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  margin-inline: -16px;
+  padding-inline: 16px;
+  scroll-padding-inline: 16px;
+}
+.fl-snap > * { scroll-snap-align: start; flex: 0 0 auto; }
+.fl-snap--imgs > * { width: min(72vw, 320px); }
+.fl-snap--cards > * { width: min(84vw, 360px); }
+@media (min-width: 640px) {
+  .fl-snap { margin-inline: -32px; padding-inline: 32px; scroll-padding-inline: 32px; }
+}
+@media (min-width: 1024px) {
+  .fl-snap { overflow: visible; margin-inline: 0; padding-inline: 0; }
+  .fl-snap > * { width: auto; }
+}
+
+/* Reveal-Startzustände – nur wenn JS aktiv (html.fl-js, gesetzt vor dem Paint) */
+html.fl-js [data-reveal],
+html.fl-js [data-stagger] > *,
+html.fl-js [data-hero-item],
+html.fl-js [data-hero-card] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fl-float, .fl-pulse-dot::after, .fl-success-ring { animation: none; }
+  .fl-hover-lift, .fl-btn, .fl-chip { transition: none; }
+}
+} /* @layer components – Förder-LP */

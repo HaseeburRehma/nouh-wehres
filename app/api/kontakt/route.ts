@@ -26,6 +26,10 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ error: "Ungültige Anfrage." }, { status: 400 });
   }
+  // `null` / Zahlen / Arrays sind gültiges JSON, aber kein Formular-Objekt.
+  if (!data || typeof data !== "object" || Array.isArray(data)) {
+    return NextResponse.json({ error: "Ungültige Anfrage." }, { status: 400 });
+  }
 
   const name = String(data.name ?? "").trim().slice(0, 120);
   const email = String(data.email ?? "").trim().slice(0, 160);
