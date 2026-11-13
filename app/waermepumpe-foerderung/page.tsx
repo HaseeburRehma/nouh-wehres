@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Wärmepumpe & Heizung vom Meisterbetrieb aus Willich: bis zu 70 % KfW-Zuschuss, Förderantrag inklusive, Festpreis, Bosch-Qualität. Jetzt kostenlose Förder-Beratung sichern.",
   metadataBase: new URL("https://www.nouh-wehres.de"),
-  alternates: { canonical: "/foerdermittel" },
+  alternates: { canonical: "/waermepumpe-foerderung" },
   openGraph: {
     title: "Bis zu 70 % Förderung für Ihre neue Heizung",
     description: "Kostenlose Förder-Beratung vom Meisterbetrieb aus Willich – Förderantrag inklusive.",

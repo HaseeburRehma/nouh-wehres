@@ -30,6 +30,7 @@ const TAB_MAP = [
   { prefix: "/badsanierung",         tab: "Badsanierung" },
   { prefix: "/waermepumpe-beratung", tab: "Wärmepumpe Beratung" },
   { prefix: "/waermepumpe-kaufen",   tab: "Wärmepumpe Kaufen" },
+  { prefix: "/waermepumpe-foerderung", tab: "Fördermittel" }, // Förder-LP (vorher /foerdermittel)
   { prefix: "/foerdermittel",        tab: "Fördermittel" },
   { prefix: "/kontakt",              tab: "Kontakt" },
   { prefix: "/",                     tab: "Startseite" }, // "/" only
